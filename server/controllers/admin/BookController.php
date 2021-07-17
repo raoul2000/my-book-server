@@ -3,6 +3,7 @@
 namespace app\controllers\admin;
 
 use Yii;
+use yii\filters\AccessControl;
 use app\models\Book;
 use app\models\BookSearch;
 use yii\web\Controller;
@@ -26,6 +27,15 @@ class BookController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],            
         ];
     }
 
