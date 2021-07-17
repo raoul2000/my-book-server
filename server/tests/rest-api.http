@@ -1,22 +1,22 @@
 
 ### Read All
-GET http://localhost:8080/index.php?r=api/book
+GET {{baseUrl}}?r=api/book
 
 ### Read All - only field title
-GET http://localhost:8080/index.php?r=api/book&fields=title
+GET {{baseUrl}}?r=api/book&fields=title
 
 ### Read One by Id
-GET http://localhost:8080/index.php?r=api/book/view&id=1
+GET {{baseUrl}}?r=api/book/view&id=1
 
 ### Read One by Id, only field title
-GET http://localhost:8080/index.php?r=api/book/view&id=1&fields=title
+GET {{baseUrl}}?r=api/book/view&id=1&fields=title
 
 
 ### show header info
-HEAD http://localhost:8080/index.php?r=api/book
+HEAD {{baseUrl}}?r=api/book
 
 ### Create
-POST http://localhost:8080/index.php?r=api/book/create
+POST {{baseUrl}}?r=api/book/create
 Content-Type:application/json
 
 {
@@ -28,7 +28,7 @@ Content-Type:application/json
 ### Update
 # id query param is required - id property is optional unless 
 # it should also be updated
-PATCH http://localhost:8080/index.php?r=api/book/update&id=3
+PATCH {{baseUrl}}?r=api/book/update&id=3
 Content-Type:application/json
 
 {
@@ -38,4 +38,4 @@ Content-Type:application/json
 }
 
 ### Delete
-DELETE http://localhost:8080/index.php?r=api/book/delete&id=3
+DELETE {{baseUrl}}?r=api/book/delete&id=3
