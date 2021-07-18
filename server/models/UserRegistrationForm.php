@@ -11,7 +11,7 @@ use yii\base\Model;
  * @property-read User|null $user This property is read-only.
  *
  */
-class UserRegisterForm extends Model
+class UserRegistrationForm extends Model
 {
     public $username;
     public $email;
@@ -25,7 +25,10 @@ class UserRegisterForm extends Model
     {
         return [
             [['username', 'password', 'password_confirm', 'email'], 'required'],
-            ['password', 'compare', 'compareAttribute' => 'password_confirm'],
+            ['username', 'unique', 'targetClass' => User::class, 'targetAttribute' => 'username'],
+            ['email', 'unique', 'targetClass' => User::class, 'targetAttribute' => 'email'],
+            ['email', 'email'],
+            ['password_confirm', 'compare', 'compareAttribute' => 'password'],
         ];
     }
 
@@ -41,8 +44,14 @@ class UserRegisterForm extends Model
             $user->username = $this->username;
             $user->email = $this->email;
             $user->new_password = $this->password;
-            return $user->save();
+            if ($user->validate()) {
+                return $user->save(false);
+            } else {
+                $this->addErrors($user->getErrors());
+            }
         }
+        $this->password = '';
+        $this->password_confirm = '';
         return false;
     }
 }

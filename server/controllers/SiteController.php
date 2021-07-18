@@ -9,7 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
-use app\models\UserRegisterForm;
+use app\models\UserRegistrationForm;
 
 class SiteController extends Controller
 {
@@ -93,7 +93,7 @@ class SiteController extends Controller
             return $this->goHome();
         }
 
-        $model = new UserRegisterForm();
+        $model = new UserRegistrationForm();
         if ($model->load(Yii::$app->request->post()) && $model->register()) {
             Yii::$app->session->setFlash('success', "Registration success ! .. welcome " . $model->username . " !");
             return $this->goBack();
