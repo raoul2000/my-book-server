@@ -48,6 +48,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'username' => 'Username',
             'email' => 'Email',
             'password_hash' => 'Password Hash',
+            'api_key' => 'API Key'
         ];
     }
 
@@ -61,6 +62,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         }
         if ($this->getScenario() == self::SCENARIO_REGISTER) {
             $this->password_hash = Yii::$app->security->generatePasswordHash($this->new_password);
+            $this->api_key = Yii::$app->security->generateRandomString();
         }
         return true;
     }
@@ -115,6 +117,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
+        return static::findOne('1');
     }
     /**
      * {@inheritdoc}
