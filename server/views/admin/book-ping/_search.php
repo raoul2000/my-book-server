@@ -19,8 +19,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'book_id') ?>
 
-    <?= $form->field($model, 'text') ?>
-
     <?= $form->field($model, 'created_at') ?>
 
     <div class="form-group">

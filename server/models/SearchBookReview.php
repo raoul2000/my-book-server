@@ -18,7 +18,7 @@ class SearchBookReview extends BookReview
     {
         return [
             [['id'], 'integer'],
-            [['book_id', 'text'], 'safe'],
+            [['book_id', 'text','created_at'], 'safe'],
         ];
     }
 
@@ -59,6 +59,7 @@ class SearchBookReview extends BookReview
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'created_at' => $this->created_at,
         ]);
 
         $query->andFilterWhere(['like', 'book_id', $this->book_id])

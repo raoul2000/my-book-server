@@ -18,7 +18,7 @@ class SearchBookPing extends BookPing
     {
         return [
             [['id'], 'integer'],
-            [['book_id', 'text', 'created_at'], 'safe'],
+            [['book_id', 'created_at'], 'safe'],
         ];
     }
 
@@ -62,8 +62,7 @@ class SearchBookPing extends BookPing
             'created_at' => $this->created_at,
         ]);
 
-        $query->andFilterWhere(['like', 'book_id', $this->book_id])
-            ->andFilterWhere(['like', 'text', $this->text]);
+        $query->andFilterWhere(['like', 'book_id', $this->book_id]);
 
         return $dataProvider;
     }

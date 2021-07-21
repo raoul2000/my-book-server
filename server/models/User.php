@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "{{%user}}".
@@ -28,10 +30,22 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     /**
      * {@inheritdoc}
      */
+    public function behaviors()
+    {
+        return [[
+            'class' => TimestampBehavior::className(),
+            'value' => new Expression('NOW()'),
+        ]];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function rules()
     {
         return [
             [['username', 'email'], 'required'],
+            [['created_at', 'updated_at'], 'safe'],
             [['new_password'], 'required', 'on' => self::SCENARIO_REGISTER],
             [['username', 'email', 'new_password'], 'string', 'max' => 255],
             [['username', 'email'], 'unique'],
@@ -48,7 +62,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'username' => 'Username',
             'email' => 'Email',
             'password_hash' => 'Password Hash',
-            'api_key' => 'API Key'
+            'api_key' => 'API Key',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',            
         ];
     }
 

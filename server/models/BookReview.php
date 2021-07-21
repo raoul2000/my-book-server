@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "{{%book_review}}".
@@ -22,6 +24,18 @@ class BookReview extends \yii\db\ActiveRecord
     {
         return '{{%book_review}}';
     }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [[
+            'class' => TimestampBehavior::className(),
+            'updatedAtAttribute' => false,
+            'value' => new Expression('NOW()'),
+        ]];
+    }
 
     /**
      * {@inheritdoc}
@@ -31,6 +45,7 @@ class BookReview extends \yii\db\ActiveRecord
         return [
             [['book_id', 'text'], 'required'],
             [['text'], 'string'],
+            [['created_at'], 'safe'],
             [['book_id'], 'string', 'max' => 32],
             [['book_id'], 'exist', 'skipOnError' => true, 'targetClass' => Book::className(), 'targetAttribute' => ['book_id' => 'id']],
         ];
@@ -45,6 +60,7 @@ class BookReview extends \yii\db\ActiveRecord
             'id' => 'ID',
             'book_id' => 'Book ID',
             'text' => 'Text',
+            'created_at' => 'Created At',
         ];
     }
 

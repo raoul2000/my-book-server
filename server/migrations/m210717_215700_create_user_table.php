@@ -18,11 +18,13 @@ class m210717_215700_create_user_table extends Migration
             'username' => $this->string()->notNull()->unique(),
             'email' => $this->string()->notNull()->unique(),
             'password_hash' => $this->string()->notNull(),
-            'api_key' => $this->string(32)
+            'api_key' => $this->string(32),
+            'created_at' => $this->dateTime(),
+            'updated_at' => $this->dateTime()            
         ]);
         
-        $this->createIndex('idx_user_username', self::TABLE_NAME, 'username', true);
-        $this->createIndex('idx_user_email', self::TABLE_NAME, 'email', true);
+        $this->createIndex('idx_user_username', self::TABLE_NAME, 'username', true, 'NOW()');
+        $this->createIndex('idx_user_email', self::TABLE_NAME, 'email', true, 'NOW()');
 
         $this->insert(self::TABLE_NAME, [
             'id' => '0',
