@@ -12,17 +12,12 @@ class m210717_215800_create_book_table extends Migration
      */
     public function safeUp()
     {
-        $tableOptions = null;
-
-        if ($this->db->driverName === 'mysql') {
-            $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
-        }
 
         $this->createTable('{{%book}}', [
             'id' => $this->string(32)->notNull()->unique(),
             'title' => $this->string(255)->notNull(),
             'author' => $this->string(255)
-        ], $tableOptions);
+        ]);
     }
 
     /**
