@@ -113,3 +113,8 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+/* -------------------------- */
+.book-ping .book-review .btn-submit-review {
+    width: 100%;
+}
