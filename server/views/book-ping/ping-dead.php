@@ -2,4 +2,6 @@
 /* @var $this yii\web\View */
 use yii\helpers\Html;
 ?>
-<h1>Ce livre n'est plus répertorié</h1>
+<div class="book-ping">
+    <h2>Si un jour ce livre a été répertorié ici, il ne l'est plus...</h2>
+</div>

@@ -32,6 +32,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'book_id',
             'text:ntext',
+            'rate',
+            'location_name',
+            'email',            
         ],
     ]) ?>
 

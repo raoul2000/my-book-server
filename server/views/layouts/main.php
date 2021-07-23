@@ -47,8 +47,9 @@ AppAsset::register($this);
                     ? ([
                         'label' => 'Admin',
                         'items' => [
-                            ['label' => 'Books',  'url' => ['/admin/book']],
                             ['label' => 'Users',  'url' => ['/admin/user']],
+                            '<li class="divider"></li>',
+                            ['label' => 'Books',  'url' => ['/admin/book']],
                             ['label' => 'Book Reviews',  'url' => ['/admin/book-review']],
                             ['label' => 'Book Pings',  'url' => ['/admin/book-ping']]
                         ]

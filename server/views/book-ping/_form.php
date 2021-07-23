@@ -12,6 +12,7 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
         <?= $form->field($model, 'book_id') ?>
+        <?= $form->field($model, 'rate') ?>
         <?= $form->field($model, 'text') ?>
         <?= $form->field($model, 'created_at') ?>
     

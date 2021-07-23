@@ -15,7 +15,8 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'book_id')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'text')->textarea(['rows' => 6]) ?>
-
+    <?= $form->field($model, 'location_name') ?>
+    <?= $form->field($model, 'email') ?>
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>

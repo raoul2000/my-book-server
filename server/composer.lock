@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8e07effe528ac4e027aedc1c4c541c07",
+    "content-hash": "aed5fc2ba05a52a8b0fbcba85a1cd4f2",
     "packages": [
         {
             "name": "2amigos/qrcode-library",
@@ -201,6 +201,27 @@
                 "reference": "38c8d3131a82567bfef18da09f7f4db68c84f8a3"
             },
             "type": "bower-asset"
+        },
+        {
+            "name": "bower-asset/raty",
+            "version": "v2.8.0",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:wbotelhos/raty.git",
+                "reference": "fc11036f44fd8349f47083272b32471dca66cb9d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wbotelhos/raty/zipball/fc11036f44fd8349f47083272b32471dca66cb9d",
+                "reference": "fc11036f44fd8349f47083272b32471dca66cb9d"
+            },
+            "require": {
+                "bower-asset/jquery": ">=3.2.1,<4.0.0"
+            },
+            "type": "bower-asset",
+            "license": [
+                "MIT"
+            ]
         },
         {
             "name": "bower-asset/yii2-pjax",
@@ -1025,6 +1046,51 @@
                 }
             ],
             "time": "2021-05-27T09:17:38+00:00"
+        },
+        {
+            "name": "yii2mod/yii2-star-rating",
+            "version": "1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yii2mod/yii2-star-rating.git",
+                "reference": "50e33bb270fd115dad788de6d125bf1cd64fe065"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yii2mod/yii2-star-rating/zipball/50e33bb270fd115dad788de6d125bf1cd64fe065",
+                "reference": "50e33bb270fd115dad788de6d125bf1cd64fe065",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/raty": "*",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "yii2mod\\rating\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Igor Chepurnoy",
+                    "email": "igorzfort@gmail.com"
+                }
+            ],
+            "description": "Star rating widget based on jQuery Raty https://github.com/wbotelhos/raty",
+            "keywords": [
+                "module",
+                "yii2"
+            ],
+            "support": {
+                "issues": "https://github.com/yii2mod/yii2-star-rating/issues",
+                "source": "https://github.com/yii2mod/yii2-star-rating/tree/master"
+            },
+            "time": "2018-08-27T07:49:47+00:00"
         },
         {
             "name": "yiisoft/yii2",

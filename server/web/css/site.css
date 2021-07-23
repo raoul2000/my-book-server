@@ -115,6 +115,27 @@ a.desc:after {
 }
 
 /* -------------------------- */
+body.naked .wrap > .container {
+    padding-top: 1em;
+}
 .book-ping .book-review .btn-submit-review {
     width: 100%;
+}
+.book-ping .intro {
+    font-size: 1.3em;
+    color: #337ab7;
+    margin-bottom: 2em;
+}
+.book-ping .outro {
+    text-align: right;
+    font-size: 1.3em;
+    color: #337ab7;
+    margin-bottom: 2em;
+}
+
+.book-ping .hint-block {
+    font-size: 0.9em;
+}
+.book-ping .field-bookreview-rate {
+    text-align: center;
 }

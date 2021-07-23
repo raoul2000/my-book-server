@@ -25,7 +25,12 @@ class BookPingController extends \yii\web\Controller
         $bookReview = new BookReview();
         // submiting a book review
         if (Yii::$app->request->isPost) {
-            if ($bookReview->load(Yii::$app->request->post())) {
+            $bookReview->book_id = $book->id;
+            $bookReview->load(Yii::$app->request->post());
+            $bookReview->validate();
+
+            
+            if ($bookReview->load(Yii::$app->request->post()) && $bookReview->save()) {
                 Yii::$app->session->setFlash('contactFormSubmitted');
                 return $this->render('review-submited');
             }

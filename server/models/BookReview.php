@@ -43,11 +43,13 @@ class BookReview extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['book_id', 'text'], 'required'],
-            [['text'], 'string'],
-            [['created_at'], 'safe'],
+            [['book_id' ], 'required'],
             [['book_id'], 'string', 'max' => 32],
             [['book_id'], 'exist', 'skipOnError' => true, 'targetClass' => Book::className(), 'targetAttribute' => ['book_id' => 'id']],
+            [['text'], 'string'],
+            [['rate'], 'integer'],
+            [['created_at'], 'safe'],
+            [['location_name', 'email'], 'string', 'max' => 150],
         ];
     }
 
@@ -59,7 +61,10 @@ class BookReview extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'book_id' => 'Book ID',
+            'email' => "Email",
+            'rate' => 'Rate',
             'text' => 'Text',
+            'location_name' => 'Location',
             'created_at' => 'Created At',
         ];
     }
