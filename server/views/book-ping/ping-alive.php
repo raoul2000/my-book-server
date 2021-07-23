@@ -53,7 +53,7 @@ use yii2mod\rating\StarRating;
             ... et aidez-le à poursuivre sa route vers son prochain lecteur.
         </div>
         <div class="form-group">
-            <?= Html::submitButton('Envoyer', ['class' => 'btn btn-primary btn-submit-review']) ?>
+            <?= Html::submitButton('C\'est parti !', ['class' => 'btn btn-primary btn-submit-review']) ?>
         </div>
         <?php ActiveForm::end(); ?>
 

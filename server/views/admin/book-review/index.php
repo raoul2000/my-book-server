@@ -29,6 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'rate',
             'location_name',
             'email',
+            'created_at',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

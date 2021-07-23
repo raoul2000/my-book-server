@@ -34,7 +34,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'text:ntext',
             'rate',
             'location_name',
-            'email',            
+            'email',    
+            'created_at',        
         ],
     ]) ?>
 
