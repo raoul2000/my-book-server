@@ -22,26 +22,52 @@ class BookPingController extends \yii\web\Controller
             return $this->render('ping-dead');
         }
 
+        if($this->isBookReviewSubmited()) {
+            return $this->render('review-submited');
+        } 
+
         $bookReview = new BookReview();
         // submiting a book review
-        if (Yii::$app->request->isPost) {
+        if ($bookReview->load(Yii::$app->request->post())) {
             $bookReview->book_id = $book->id;
-            $bookReview->load(Yii::$app->request->post());
-            $bookReview->validate();
-
-            
-            if ($bookReview->load(Yii::$app->request->post()) && $bookReview->save()) {
-                Yii::$app->session->setFlash('contactFormSubmitted');
-                return $this->render('review-submited');
+            if ($this->deserveToBeSaved($bookReview) ) {
+                $bookReview->save();
+                $this->setBookReviewSubmited(true);
             }
+            return $this->render('review-submited');
         } else {
-            $ping = new BookPing();
-            $ping->book_id = $book->id;
-            $ping->save();
+            if ($this->canSavePing()) {
+                $ping = new BookPing();
+                $ping->book_id = $book->id;
+                $ping->save();
+                $this->setPingSaved(true);
+            }
+
+            return $this->render('ping-alive', [
+                'book' => $book,
+                'bookReview' => $bookReview
+            ]);
         }
-        return $this->render('ping-alive', [
-            'book' => $book,
-            'bookReview' => $bookReview
-        ]);
+    }
+
+    private function isBookReviewSubmited() {
+        return Yii::$app->session['bookReviewSubmited'] === true;
+    }
+    private function setBookReviewSubmited($val) {
+        Yii::$app->session['bookReviewSubmited'] = $val;
+    }
+    private function isPingSaved() {
+        return Yii::$app->session['saveBookPing'] === true;
+    }
+    private function setPingSaved($saved) {
+        Yii::$app->session['saveBookPing'] = $saved;
+    }
+    private function canSavePing() {
+        return Yii::$app->params['saveBookPing'] && $this->isPingSaved() === false;
+    }
+    private function deserveToBeSaved($bookReview) {
+        return  !empty($bookReview->text) 
+                || !empty($bookReview->rate)
+                || !empty($bookReview->location_name);
     }
 }
