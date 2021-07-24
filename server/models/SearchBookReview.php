@@ -4,12 +4,12 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Book;
+use app\models\BookReview;
 
 /**
- * BookSearch represents the model behind the search form of `app\models\Book`.
+ * SearchBookReview represents the model behind the search form of `app\models\BookReview`.
  */
-class BookSearch extends Book
+class SearchBookReview extends BookReview
 {
     /**
      * {@inheritdoc}
@@ -17,7 +17,8 @@ class BookSearch extends Book
     public function rules()
     {
         return [
-            [['id', 'title', 'author', 'created_at', 'updated_at'], 'safe'],
+            [['id'], 'integer'],
+            [['book_id', 'text','created_at'], 'safe'],
         ];
     }
 
@@ -39,7 +40,7 @@ class BookSearch extends Book
      */
     public function search($params)
     {
-        $query = Book::find();
+        $query = BookReview::find();
 
         // add conditions that should always apply here
 
@@ -56,11 +57,13 @@ class BookSearch extends Book
         }
 
         // grid filtering conditions
-        $query->andFilterWhere(['like', 'id', $this->id])
-            ->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'created_at', $this->created_at])
-            ->andFilterWhere(['like', 'updated_at', $this->updated_at])
-            ->andFilterWhere(['like', 'author', $this->author]);
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'created_at' => $this->created_at,
+        ]);
+
+        $query->andFilterWhere(['like', 'book_id', $this->book_id])
+            ->andFilterWhere(['like', 'text', $this->text]);
 
         return $dataProvider;
     }

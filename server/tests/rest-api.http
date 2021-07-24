@@ -1,6 +1,7 @@
 
 ### Read All
 GET {{baseUrl}}?r=api/book
+X-Api-Key: apikey
 
 ### Read All - only field title
 GET {{baseUrl}}?r=api/book&fields=title
