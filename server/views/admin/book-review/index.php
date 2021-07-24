@@ -25,13 +25,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             'book_id',
+            'book.title',
             'text:ntext',
             'rate',
             'location_name',
             'email',
             'user_ip',
             'created_at',
-
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
