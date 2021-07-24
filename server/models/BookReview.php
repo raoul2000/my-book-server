@@ -46,6 +46,7 @@ class BookReview extends \yii\db\ActiveRecord
             [['book_id' ], 'required'],
             [['book_id'], 'string', 'max' => 32],
             [['book_id'], 'exist', 'skipOnError' => true, 'targetClass' => Book::className(), 'targetAttribute' => ['book_id' => 'id']],
+            [['user_ip'], 'string', 'max' => 50],
             [['text'], 'string'],
             [['rate'], 'integer'],
             [['created_at'], 'safe'],
@@ -66,6 +67,7 @@ class BookReview extends \yii\db\ActiveRecord
             'text' => 'Text',
             'location_name' => 'Location',
             'created_at' => 'Created At',
+            'user_ip' => 'User IP'
         ];
     }
 

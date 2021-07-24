@@ -19,6 +19,7 @@ class m210717_215900_create_book_review_table extends Migration
             'email' => $this->string(),
             'rate' => $this->tinyInteger(),
             'location_name' => $this->string(),
+            'user_ip' => $this->string(50),
             'text' => $this->text(),
             'created_at' => $this->dateTime()
         ]);

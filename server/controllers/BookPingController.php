@@ -30,6 +30,7 @@ class BookPingController extends \yii\web\Controller
         // submiting a book review
         if ($bookReview->load(Yii::$app->request->post())) {
             $bookReview->book_id = $book->id;
+            $bookReview->user_ip = Yii::$app->request->getUserIP();
             if ($this->deserveToBeSaved($bookReview) ) {
                 $bookReview->save();
                 $this->setBookReviewSubmited(true);
@@ -39,6 +40,7 @@ class BookPingController extends \yii\web\Controller
             if ($this->canSavePing()) {
                 $ping = new BookPing();
                 $ping->book_id = $book->id;
+                $ping->user_ip = Yii::$app->request->getUserIP();
                 $ping->save();
                 $this->setPingSaved(true);
             }

@@ -35,6 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'rate',
             'location_name',
             'email',    
+            'user_ip',
             'created_at',        
         ],
     ]) ?>

@@ -46,6 +46,7 @@ class BookPing extends \yii\db\ActiveRecord
             [['book_id'], 'required'],
             [['created_at'], 'safe'],
             [['book_id'], 'string', 'max' => 32],
+            [['user_ip'], 'string', 'max' => 50],
             [['book_id'], 'exist', 'skipOnError' => true, 'targetClass' => Book::className(), 'targetAttribute' => ['book_id' => 'id']],
         ];
     }
@@ -59,6 +60,7 @@ class BookPing extends \yii\db\ActiveRecord
             'id' => 'ID',
             'book_id' => 'Book ID',
             'created_at' => 'Created At',
+            'user_ip' => 'User IP'
         ];
     }
 
