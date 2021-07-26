@@ -1,7 +1,17 @@
 
+### login
+
+POST {{baseUrl}}?r=api/auth/login
+Content-Type: application/json
+
+{
+    "username": "bob",
+    "password": "bob"
+}
+
 ### Read All
 GET {{baseUrl}}?r=api/book
-X-Api-Key: apikey
+X-Api-Key: X3j-XYx04oxmoczpvY-4t496mqWYU96J
 
 ### Read All - only field title
 GET {{baseUrl}}?r=api/book&fields=title
