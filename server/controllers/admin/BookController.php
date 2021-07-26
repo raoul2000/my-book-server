@@ -5,7 +5,7 @@ namespace app\controllers\admin;
 use Yii;
 use yii\filters\AccessControl;
 use app\models\Book;
-use app\models\BookSearch;
+use app\models\SearchBook;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -45,7 +45,7 @@ class BookController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new BookSearch();
+        $searchModel = new SearchBook();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [

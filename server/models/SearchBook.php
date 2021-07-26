@@ -7,9 +7,9 @@ use yii\data\ActiveDataProvider;
 use app\models\Book;
 
 /**
- * BookSearch represents the model behind the search form of `app\models\Book`.
+ * SearchBook represents the model behind the search form of `app\models\Book`.
  */
-class BookSearch extends Book
+class SearchBook extends Book
 {
     /**
      * {@inheritdoc}
