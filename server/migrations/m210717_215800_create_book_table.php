@@ -17,6 +17,7 @@ class m210717_215800_create_book_table extends Migration
             'id' => $this->string(32)->notNull()->unique(),
             'title' => $this->string(255)->notNull(),
             'author' => $this->string(255),
+            'isbn' => $this->string(15),
             'created_at' => $this->dateTime(),
             'updated_at' => $this->dateTime()
         ]);

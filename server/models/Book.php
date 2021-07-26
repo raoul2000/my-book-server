@@ -42,6 +42,7 @@ class Book extends \yii\db\ActiveRecord
         return [
             [['id', 'title'], 'required'],
             [['id'], 'string', 'max' => 32],
+            [['isbn'], 'string', 'max' => 15],
             [['created_at', 'updated_at'], 'safe'],
             [['title', 'author'], 'string', 'max' => 255],
             [['id'], 'unique'],
@@ -57,6 +58,7 @@ class Book extends \yii\db\ActiveRecord
             'id' => 'ID',
             'title' => 'Title',
             'author' => 'Author',
+            'isbn' => 'ISBN',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
