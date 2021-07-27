@@ -13,6 +13,7 @@ use yii\base\Model;
  */
 class UserRegistrationForm extends Model
 {
+    private $user_id;
     public $username;
     public $email;
     public $password;
@@ -32,6 +33,10 @@ class UserRegistrationForm extends Model
         ];
     }
 
+    public function getUserId() 
+    {
+        return $this->user_id;
+    }
     /**
      * Register a user using the provided data.
      * @return bool whether the user is registered successfully
@@ -45,7 +50,9 @@ class UserRegistrationForm extends Model
             $user->email = $this->email;
             $user->new_password = $this->password;
             if ($user->validate()) {
-                return $user->save(false);
+                $saveSuccess = $user->save(false);
+                $this->user_id = $user->id;
+                return $saveSuccess;
             } else {
                 $this->addErrors($user->getErrors());
             }
