@@ -49,6 +49,8 @@ class UserRegistrationForm extends Model
             $user->username = $this->username;
             $user->email = $this->email;
             $user->new_password = $this->password;
+            $user->status = User::STATUS_INACTIVE;
+            $user->generateAccountActivationToken();
             if ($user->validate()) {
                 $saveSuccess = $user->save(false);
                 $this->user_id = $user->id;

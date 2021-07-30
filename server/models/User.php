@@ -13,10 +13,26 @@ use yii\db\Expression;
  * @property string $username
  * @property string $email
  * @property string $password_hash
+ * @property int $status
+ * @property string $account_activation_token
  */
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
     const SCENARIO_REGISTER = 'register';
+
+    const STATUS_ACTIVE   = 10;
+    const STATUS_INACTIVE = 1;
+    const STATUS_DELETED  = 0;
+
+    /**
+     * List of names for each status.
+     * @var array
+     */
+    public $statusList = [
+        self::STATUS_ACTIVE   => 'Active',
+        self::STATUS_INACTIVE => 'Inactive',
+        self::STATUS_DELETED  => 'Deleted'
+    ];
 
     public $new_password;
     /**
@@ -49,6 +65,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             [['new_password'], 'required', 'on' => self::SCENARIO_REGISTER],
             [['username', 'email', 'new_password'], 'string', 'max' => 255],
             [['username', 'email'], 'unique'],
+            ['status', 'required'],
         ];
     }
 
@@ -64,7 +81,8 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'password_hash' => 'Password Hash',
             'api_key' => 'API Key',
             'created_at' => 'Created At',
-            'updated_at' => 'Updated At',            
+            'updated_at' => 'Updated At',
+            'status' => 'Status'
         ];
     }
 
@@ -111,6 +129,21 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return static::findOne(['email' => $email]);
     }
+
+    /**
+     * Finds user by account activation token.
+     *
+     * @param  string $token Account activation token.
+     * @return static|null
+     */
+    public static function findByAccountActivationToken($token)
+    {
+        return static::findOne([
+            'account_activation_token' => $token,
+            'status' => User::STATUS_INACTIVE,
+        ]);
+    }
+
     /**
      * Validates password
      *
@@ -147,4 +180,19 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function validateAuthKey($authKey)
     {
     }
+    /**
+     * Generates new account activation token.
+     */
+    public function generateAccountActivationToken()
+    {
+        $this->account_activation_token = Yii::$app->security->generateRandomString() . '_' . time();
+    }
+
+    /**
+     * Removes account activation token.
+     */
+    public function removeAccountActivationToken()
+    {
+        $this->account_activation_token = null;
+    }    
 }
