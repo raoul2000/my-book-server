@@ -27,6 +27,7 @@ class AccountController extends \yii\web\Controller
             'success' => $success
         ]);
     }
+    
     /**
      * Create a user Account
      */
