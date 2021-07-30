@@ -19,18 +19,14 @@ class LoginForm extends Model
 
     private $_user = false;
 
-
     /**
      * @return array the validation rules.
      */
     public function rules()
     {
         return [
-            // username and password are both required
             [['username', 'password'], 'required'],
-            // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
-            // password is validated by validatePassword()
             ['password', 'validatePassword'],
         ];
     }
@@ -55,12 +51,18 @@ class LoginForm extends Model
 
     /**
      * Logs in a user using the provided username and password.
+     * 
      * @return bool whether the user is logged in successfully
      */
     public function login()
     {
         if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
+            $user = $this->getUser();
+            if( $user && $user->status !== User::STATUS_ACTIVE) {
+                $this->addError('username', 'Account not activated.');
+            } elseif( $user ) {          
+                return Yii::$app->user->login($user, $this->rememberMe ? 3600*24*30 : 0);
+            }
         }
         return false;
     }

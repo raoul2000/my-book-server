@@ -9,6 +9,9 @@ use yii\helpers\Url;
 
 class AccountController extends \yii\web\Controller
 {
+    /**
+     * Activate user account related to the provided token
+     */
     public function actionActivate($token)
     {
         $model = User::findByAccountActivationToken($token);
@@ -36,6 +39,7 @@ class AccountController extends \yii\web\Controller
         $model = new UserRegistrationForm();
         if ($model->load(Yii::$app->request->post()) && $model->register()) {
 
+            $userEmail = '';
             if (Yii::$app->params['enableAccountActivation']) {
                 $user =  User::findOne($model->getUserId());
                 Yii::$app->mailer->compose(
@@ -53,13 +57,13 @@ class AccountController extends \yii\web\Controller
                     ->setReplyTo('no-reply@email.com')
                     ->setSubject('account activation')
                     ->send();
+                $userEmail = $user->email;
+            } 
 
-                Yii::$app->session->setFlash('success', "Your account has been created and you must now activate it."
-                    . "Check out your mail box for the account activation email");
-            } else {
-                Yii::$app->session->setFlash('success', "Registration success ! .. welcome " . $model->username . ", you can now login");
-            }
-            return $this->goBack();
+            return $this->render('create-success', [
+                'activationRequired' => Yii::$app->params['enableAccountActivation'],
+                'email' => $userEmail
+            ]);            
         }
 
         $model->password = '';
@@ -67,7 +71,4 @@ class AccountController extends \yii\web\Controller
             'model' => $model,
         ]);
     }
-
-
-
 }
