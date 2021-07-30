@@ -22,16 +22,16 @@ class BookPingController extends \yii\web\Controller
             return $this->render('ping-dead');
         }
 
-        if($this->isBookReviewSubmited()) {
+        if ($this->isBookReviewSubmited()) {
             return $this->render('review-submited');
-        } 
+        }
 
         $bookReview = new BookReview();
         // submiting a book review
         if ($bookReview->load(Yii::$app->request->post())) {
             $bookReview->book_id = $book->id;
             $bookReview->user_ip = Yii::$app->request->getUserIP();
-            if ($this->deserveToBeSaved($bookReview) ) {
+            if ($this->deserveToBeSaved($bookReview)) {
                 $bookReview->save();
                 $this->setBookReviewSubmited(true);
             }
@@ -52,24 +52,30 @@ class BookPingController extends \yii\web\Controller
         }
     }
 
-    private function isBookReviewSubmited() {
+    private function isBookReviewSubmited()
+    {
         return Yii::$app->session['bookReviewSubmited'] === true;
     }
-    private function setBookReviewSubmited($val) {
+    private function setBookReviewSubmited($val)
+    {
         Yii::$app->session['bookReviewSubmited'] = $val;
     }
-    private function isPingSaved() {
+    private function isPingSaved()
+    {
         return Yii::$app->session['saveBookPing'] === true;
     }
-    private function setPingSaved($saved) {
+    private function setPingSaved($saved)
+    {
         Yii::$app->session['saveBookPing'] = $saved;
     }
-    private function canSavePing() {
+    private function canSavePing()
+    {
         return Yii::$app->params['saveBookPing'] && $this->isPingSaved() === false;
     }
-    private function deserveToBeSaved($bookReview) {
-        return  !empty($bookReview->text) 
-                || !empty($bookReview->rate)
-                || !empty($bookReview->location_name);
+    private function deserveToBeSaved($bookReview)
+    {
+        return !empty($bookReview->text)
+            || !empty($bookReview->rate)
+            || !empty($bookReview->location_name);
     }
 }

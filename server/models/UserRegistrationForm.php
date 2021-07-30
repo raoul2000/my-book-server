@@ -33,7 +33,7 @@ class UserRegistrationForm extends Model
         ];
     }
 
-    public function getUserId() 
+    public function getUserId()
     {
         return $this->user_id;
     }
@@ -44,11 +44,21 @@ class UserRegistrationForm extends Model
     public function register()
     {
         if ($this->validate()) {
+
             $user = new User();
+            
             $user->setScenario(User::SCENARIO_REGISTER);
-            $user->username = $this->username;
-            $user->email = $this->email;
+            $user->username     = $this->username;
+            $user->email        = $this->email;
             $user->new_password = $this->password;
+
+            if (Yii::$app->params['enableAccountActivation']) {
+                $user->status = User::STATUS_INACTIVE;
+                $user->generateAccountActivationToken();
+            } else {
+                $user->status = User::STATUS_ACTIVE;
+            }
+
             if ($user->validate()) {
                 $saveSuccess = $user->save(false);
                 $this->user_id = $user->id;

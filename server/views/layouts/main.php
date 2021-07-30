@@ -45,6 +45,7 @@ AppAsset::register($this);
                         'label' => 'Admin',
                         'items' => [
                             ['label' => 'Users',  'url' => ['/admin/user']],
+                            ['label' => 'Email',  'url' => ['/admin/email']],
                             '<li class="divider"></li>',
                             ['label' => 'Books',  'url' => ['/admin/book']],
                             ['label' => 'Book Reviews',  'url' => ['/admin/book-review']],
@@ -53,7 +54,7 @@ AppAsset::register($this);
                     ]) : '',
 
                 Yii::$app->user->isGuest
-                    ? (['label' => 'Register', 'url' => ['/site/register']])
+                    ? (['label' => 'Register', 'url' => ['/account/create']])
                     : ['label' => 'Settings', 'url' => ['/user-settings']],
 
                 Yii::$app->user->isGuest

@@ -37,15 +37,15 @@ class UserSettingsController extends \yii\web\Controller
     public function actionIndex()
     {
         $userModel = $this->findModel(Yii::$app->user->id);
-        
+
         $qrCode = null;
-        if( !empty($userModel->api_key) ) {
+        if (!empty($userModel->api_key)) {
             $qrCode = (new QrCode($userModel->api_key))
                 ->setSize(250)
                 ->setMargin(5)
                 ->useForegroundColor(51, 153, 255);
         }
-            
+
         return $this->render('index', [
             'userModel' => $userModel,
             'qrCode' => $qrCode
@@ -65,5 +65,4 @@ class UserSettingsController extends \yii\web\Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
-
 }
