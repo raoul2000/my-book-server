@@ -49,7 +49,7 @@ class AccountController extends \yii\web\Controller
                         'text' => 'account/activation-text',
                     ],
                     [
-                        'activationUrl' => Url::to(['site/account-activation', 'token' => $user->account_activation_token], true),
+                        'activationUrl' => Url::to(['account/activate', 'token' => $user->account_activation_token], true),
                         'username'      => $user->username
                     ]
                 )
