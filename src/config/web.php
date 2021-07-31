@@ -32,6 +32,13 @@ $config = [
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
             'useFileTransport' => true,
+            /*'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.ionos.fr',
+                'port' => '587',
+                'username' => 'username',
+                'password' => '******',
+            ]*/            
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
