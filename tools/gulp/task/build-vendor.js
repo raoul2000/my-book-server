@@ -3,24 +3,36 @@ const exec = require('child_process').exec;
 const del = require('del');
 const zip = require('gulp-zip');
 const path = require('path');
+const workingDir = path.join(__dirname, "..", "..", "..");
 
 function cleanComposer() {
-    return del('../../build/composer/**', { force: true });
+    return del('build/composer/**', { force: true, cwd: workingDir});
 }
 
 function copyComposer() {
-    return src([
-        '../../src/composer.lock',
-        '../../src/composer.json'   
-    ], { base: '../../src/' })
-        .pipe(dest('../../build/composer'));
+    return src(
+        [
+            'src/composer.lock',
+            'src/composer.json'   
+        ], 
+        { 
+            cwd: workingDir 
+        }
+    ).pipe(
+        dest('build/composer' ,
+        {
+            cwd: workingDir, 
+        })
+    );
 }
 
 function composerInstall() {
     return new Promise((resolve, reject) => {
-        const composer = exec('php ../../tools/composer install --no-dev --prefer-dist',
+        const composerPath =  path.join(workingDir, 'tools/composer');
+
+        const composer = exec(`php ${composerPath} install --no-dev --prefer-dist`,
             {
-                cwd: '../../build/composer'
+                cwd: path.join(workingDir, 'build', 'composer')
             });
         composer.stdout.on('data', (data) => {
             console.log(data.toString().replace(/(\n|\r)+$/, ''));
@@ -45,11 +57,15 @@ function composerInstall() {
 }
 
 function zipVendor() {
-    return src([
-        '../../build/composer/vendor/**'
-    ])
+    return src(
+        [
+            'build/composer/vendor/**'
+        ],
+        {
+            cwd: workingDir
+        })
     .pipe(zip('vendor.zip'))
-    .pipe(dest('../../build/zip'));
+    .pipe(dest('build/zip', {cwd: workingDir}));
 }
 
 

@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start-server": "php ./src/yii serve",
-    "build": "gulp --gulpfile ./tools/gulp/gulpfile.js "
+    "build": "gulp --gulpfile ./tools/gulp/gulpfile.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
   "homepage": "https://github.com/raoul2000/my-books-server#readme",
   "devDependencies": {
     "gulp": "^4.0.2",
+    "gulp-chmod": "^3.0.0",
     "gulp-notify": "^3.2.0",
     "gulp-rename": "^1.4.0",
     "gulp-ssh": "^0.7.0",

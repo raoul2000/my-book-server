@@ -1,11 +1,13 @@
 const { series, src, dest } = require('gulp');
 const del = require('del');
+const path = require('path');
+const workingDir = path.join(__dirname, "..", "..", "..");
 
 /**
  * Delete the content of the folder ./build/src/vendor
  */
 function cleanSourceVendor() {
-    return del('../../build/src/vendor/*/**', { force: true });
+    return del('build/source/vendor/**/**', { force: true, cwd: workingDir});
 }
 
 /**
@@ -13,10 +15,14 @@ function cleanSourceVendor() {
  * Prior to this task, the task buildVendor should have been executed
  */
 function mergeSourceVendor() {
-    return src([
-        '../../build/composer/vendor/**'
-    ], { base: '../../build/composer/vendor/' })
-        .pipe(dest('../../build/src/vendor'));
+    return src(
+        [
+            'build/composer/vendor/**'
+        ], 
+        { 
+            cwd: workingDir 
+        })
+        .pipe(dest('build/source/vendor', {cwd: workingDir}));
 }
 
 exports.cleanSourceVendor = cleanSourceVendor;

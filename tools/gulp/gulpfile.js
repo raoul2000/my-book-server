@@ -1,4 +1,5 @@
-const { series, parallel } = require("gulp");
+const { src, dest, series, parallel } = require("gulp");
+const del = require("del");
 const {
     zipVendor,
     buildVendor,
@@ -11,6 +12,7 @@ const {
     zipSource,
     copySource,
     copyConfig,
+    cleanSource
 } = require("./task/build-source");
 const {
     cleanSourceVendor,
@@ -19,11 +21,13 @@ const {
 const { deploySFtp } = require("./task/deploy-sftp");
 const { deployFtp } = require("./task/deploy-ftp");
 
-const del = require("del");
 const exec = require("child_process").exec;
+const path = require("path");
 
-function clean() {
-    return del("./build/**", { force: true });
+const workingDir = path.join(__dirname, "..", "..", "..");
+
+function cleanBuildDir() {
+    return del("build/**", { force: true, cwd: workingDir });
 }
 
 function ping() {
@@ -47,7 +51,7 @@ exports.cleanSourceVendor = cleanSourceVendor;
 exports.mergeSourceVendor = mergeSourceVendor;
 exports.updateIndex = updateIndex;
 
-exports.clean = clean;
+exports.cleanBuildDir = cleanBuildDir;
 exports.ping = ping;
 exports.copyComposer = copyComposer;
 exports.composerInstall = composerInstall;
@@ -55,12 +59,12 @@ exports.buildVendor = buildVendor;
 exports.zipSource = zipSource;
 exports.zipVendor = zipVendor;
 exports.copySource = copySource;
-
+exports.cleanSource = cleanSource;
 exports.buildSource = buildSource;
 
 // default task : build source and vendor and produce a folder ready to deploy
 exports.default = series(
-    clean,
+    cleanBuildDir,
     parallel(buildSource, buildVendor),
     mergeSourceVendor,
     zipSource

@@ -3,6 +3,10 @@ const rename = require("gulp-rename");
 const del = require("del");
 const zip = require("gulp-zip");
 const fs = require("fs");
+const path = require("path");
+const chmod = require('gulp-chmod');
+
+const workingDir = path.join(__dirname, "..", "..", "..");
 
 function createBuildTs() {
     const now = new Date();
@@ -24,10 +28,10 @@ function createBuildTs() {
  */
 function updateIndex() {
     // @ts-ignore
-    var pkg = JSON.parse(fs.readFileSync("../../package.json"));
+    var pkg = JSON.parse(fs.readFileSync(path.join(workingDir, "package.json")));
 
     return new Promise((resolve, reject) => {
-        const filepath = "../../build/src/web/index.php";
+        const filepath = path.join(workingDir,"build/source/web/index.php");
         const buildTs = createBuildTs();
 
         fs.readFile(filepath, "utf-8", (err, data) => {
@@ -36,12 +40,12 @@ function updateIndex() {
             } else {
                 const result = data
                     .replace(
-                        "defined('YII_DEBUG') or define('YII_DEBUG', true);",
-                        "//defined('YII_DEBUG') or define('YII_DEBUG', true);"
+                        "defined('YII_DEBUG') || define('YII_DEBUG', true);",
+                        "//defined('YII_DEBUG') || define('YII_DEBUG', true);"
                     )
                     .replace(
-                        "defined('YII_ENV') or define('YII_ENV', 'dev');",
-                        "//defined('YII_ENV') or define('YII_ENV', 'dev');"
+                        "defined('YII_ENV') || define('YII_ENV', 'dev');",
+                        "//defined('YII_ENV') || define('YII_ENV', 'dev');"
                     )
                     .replace("%%VERSION%%", pkg.version)
                     .replace("%%BUILD%%", buildTs);
@@ -59,30 +63,30 @@ function updateIndex() {
 }
 
 function cleanSource() {
-    return del("../../build/source/**", { force: true });
+    return del("build/source/**", { force: true, cwd: workingDir});
 }
 
 function copySource() {
     return src(
         [
-            "../../src/**",
-            "!../../src/runtime/*/**",
-            "!../../src/vendor/*/**",
-            "!../../src/tests/**",
-            "!../../src/web/assets/*/**",
-            "!../../src/*.yml",
-            "!../../src/*.json",
-            "!../../src/*.lock",
-            "!../../src/*.md",
-            "!../../src/*.xml",
-            "!../../src/yii",
-            "!../../src/yii.bat",
-            "!../../src/install-dev.bat",
-            "!../../src/web/index-test.php",
+            "src/**", 
+            "!src/README.md", 
+            "!src/LICENSE.md", 
+            "!src/requirement.php", 
+            "!src/*.yml", 
+            "!src/composer.*", 
+            "!src/yii", 
+            "!src/runtime/*/**",
+            "!src/web/assets/*/**",
+            "!src/web/index-test.php",
         ],
-        { cwd : '../../src' }
-    ).pipe(dest("../../build/src"));
-}
+        { cwd: workingDir }
+    ).pipe(
+        dest("build/source", {
+            cwd: workingDir,
+        })
+    );
+};
 
 /**
  * Example on how to create an empty folder in build
@@ -94,6 +98,7 @@ function createSourceFolders() {
         .pipe(dest("../../build/src/runtime/logs"));
 }
 
+
 function copyConfig() {
     return src(
         [
@@ -103,12 +108,12 @@ function copyConfig() {
         { base: "../../src/" }
     )
         .pipe(
-            rename((path) => {
-                if (path.basename.endsWith(".prod")) {
+            rename((filePath) => {
+                if (filePath.basename.endsWith(".prod")) {
                     console.log(
-                        `   renaming PROD file : ${path.basename}${path.extname}`
+                        `   renaming PROD file : ${filePath.basename}${filePath.extname}`
                     );
-                    path.basename = path.basename.replace(/\.prod$/, "");
+                    filePath.basename = filePath.basename.replace(/\.prod$/, "");
                 }
             })
         )
@@ -116,9 +121,10 @@ function copyConfig() {
 }
 
 function zipSource() {
-    return src(["../../build/src/**"])
+    return src(["build/source/**"], {cwd: workingDir})
+        .pipe(chmod(0o755, 0o755))
         .pipe(zip("source.zip"))
-        .pipe(dest("../../build/zip"));
+        .pipe(dest("build/zip", {cwd: workingDir}));
 }
 
 exports.copySource = copySource;
