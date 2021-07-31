@@ -40,6 +40,10 @@ class AuthController extends BaseApiController
             throw new UnauthorizedHttpException('invalid credentials');
         }
         
+        if($user->status !== User::STATUS_ACTIVE) {
+            throw new UnauthorizedHttpException('invalid account');
+        }
+        
         if ($user->validatePassword($params['password'])) {
             Yii::$app->response->setStatusCode(200);
             return [
