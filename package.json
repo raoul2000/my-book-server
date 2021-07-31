@@ -1,0 +1,34 @@
+{
+  "name": "yii2-assoc",
+  "version": "0.0.10",
+  "description": "assoc manager app",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "build": "gulp --gulpfile ./tools/gulp/gulpfile.js "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raoul2000/yii2-assoc.git"
+  },
+  "author": "raoul2000",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/raoul2000/yii2-assoc/issues"
+  },
+  "homepage": "https://github.com/raoul2000/yii2-assoc#readme",
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-notify": "^3.2.0",
+    "gulp-rename": "^1.4.0",
+    "gulp-ssh": "^0.7.0",
+    "gulp-util": "^3.0.8",
+    "gulp-zip": "^4.2.0",
+    "vinyl-ftp": "^0.6.1"
+  },
+  "dependencies": {
+    "del": "^4.1.1"
+  }
+}
