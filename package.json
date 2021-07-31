@@ -1,24 +1,25 @@
 {
-  "name": "yii2-assoc",
-  "version": "0.0.10",
-  "description": "assoc manager app",
+  "name": "project",
+  "version": "0.0.1",
+  "description": "project",
   "main": "index.js",
   "directories": {
     "doc": "doc"
   },
   "scripts": {
+    "start-server": "php ./src/yii serve",
     "build": "gulp --gulpfile ./tools/gulp/gulpfile.js "
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/raoul2000/yii2-assoc.git"
+    "url": "git+https://github.com/raoul2000/my-books-server.git"
   },
   "author": "raoul2000",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/raoul2000/yii2-assoc/issues"
+    "url": "https://github.com/raoul2000/my-books-server/issues"
   },
-  "homepage": "https://github.com/raoul2000/yii2-assoc#readme",
+  "homepage": "https://github.com/raoul2000/my-books-server#readme",
   "devDependencies": {
     "gulp": "^4.0.2",
     "gulp-notify": "^3.2.0",

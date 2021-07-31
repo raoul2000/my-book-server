@@ -71,16 +71,16 @@ function copySource() {
             "!../../src/tests/**",
             "!../../src/web/assets/*/**",
             "!../../src/*.yml",
-            "!/src/*.json",
-            "!./src/*.lock",
-            "!*.md",
+            "!../../src/*.json",
+            "!../../src/*.lock",
+            "!../../src/*.md",
             "!../../src/*.xml",
             "!../../src/yii",
             "!../../src/yii.bat",
             "!../../src/install-dev.bat",
             "!../../src/web/index-test.php",
         ],
-        { base: "../../src" }
+        { cwd : '../../src' }
     ).pipe(dest("../../build/src"));
 }
 
