@@ -26,7 +26,7 @@ class BookPingController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['admin'],
                     ]
                 ],
             ],               

@@ -5,6 +5,7 @@ namespace app\controllers\admin;
 use Yii;
 use app\models\EmailForm;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 
 class EmailController extends \yii\web\Controller
 {
@@ -19,10 +20,16 @@ class EmailController extends \yii\web\Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['admin'],
                     ],
                 ],
-            ],            
+            ],     
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'index' => ['POST', 'GET'],
+                ],
+            ],                   
         ];
     }
     public function actionIndex()
