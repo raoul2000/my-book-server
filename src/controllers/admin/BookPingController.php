@@ -51,6 +51,7 @@ class BookPingController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'savePingEnabled' => Yii::$app->params['saveBookPing']
         ]);
     }
 
