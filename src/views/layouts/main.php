@@ -45,6 +45,7 @@ AppAsset::register($this);
                         'label' => 'Admin',
                         'items' => [
                             ['label' => 'Users',         'url' => ['/admin/user']],
+                            ['label' => 'User Token',    'url' => ['/admin/user-token']],
                             ['label' => 'Email',         'url' => ['/admin/email']],
                             '<li class="divider"></li>',
                             ['label' => 'Books',         'url' => ['/admin/book']],

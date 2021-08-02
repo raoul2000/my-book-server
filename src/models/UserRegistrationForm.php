@@ -14,6 +14,7 @@ use yii\base\Model;
 class UserRegistrationForm extends Model
 {
     private $user_id;
+    private $account_activation_token;
     public $username;
     public $email;
     public $password;
@@ -37,9 +38,15 @@ class UserRegistrationForm extends Model
     {
         return $this->user_id;
     }
+
+    public function getAccountActivationToken()
+    {
+        return $this->account_activation_token;
+    }
+
     /**
      * Register a user using the provided data.
-     * @return bool whether the user is registered successfully
+     * @return bool registration failure or success
      */
     public function register()
     {
@@ -48,27 +55,33 @@ class UserRegistrationForm extends Model
             $user = new User();
             
             $user->setScenario(User::SCENARIO_REGISTER);
+
             $user->username     = $this->username;
             $user->email        = $this->email;
             $user->new_password = $this->password;
+            $user->status       = User::STATUS_ACTIVE;
 
-            if (Yii::$app->params['enableAccountActivation']) {
-                $user->status = User::STATUS_INACTIVE;
-                $user->generateAccountActivationToken();
-            } else {
-                $user->status = User::STATUS_ACTIVE;
-            }
+            if($user->save()) {
 
-            if ($user->validate()) {
-                $saveSuccess = $user->save(false);
-                $this->user_id = $user->id;
-                return $saveSuccess;
+                $this->user_id = $user->id; // expose to caller
+
+                if (Yii::$app->params['enableAccountActivation']) {
+                    $user->status = User::STATUS_INACTIVE;
+                    $userToken    = UserToken::generate($user->id, UserToken::TYPE_EMAIL_ACTIVATE);
+                    $this->account_activation_token = $userToken->token;
+                    $success = $user->update(true, ['status']) === 1;
+                } 
             } else {
+                $success = false;
                 $this->addErrors($user->getErrors());
             }
+
+            if(!$success) {
+                $this->account_activation_token = '';
+                $this->password = '';
+                $this->password_confirm = '';
+            }
+            return $success;
         }
-        $this->password = '';
-        $this->password_confirm = '';
-        return false;
     }
 }
