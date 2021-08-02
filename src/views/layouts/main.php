@@ -34,28 +34,28 @@ AppAsset::register($this);
             'brandLabel' => Yii::$app->name,
             'brandUrl' => Yii::$app->homeUrl,
             'options' => [
-                'class' => 'navbar-fixed-top',
+                'class' => 'navbar-fixed-top navbar-default',
             ],
         ]);
         echo Nav::widget([
             'options' => ['class' => 'navbar-nav navbar-right'],
             'items' => [
-                (Yii::$app->user->isGuest == false && Yii::$app->user->id == 1)
+                (Yii::$app->user->isGuest === false && Yii::$app->user->id == 1)
                     ? ([
                         'label' => 'Admin',
                         'items' => [
-                            ['label' => 'Users',  'url' => ['/admin/user']],
-                            ['label' => 'Email',  'url' => ['/admin/email']],
+                            ['label' => 'Users',         'url' => ['/admin/user']],
+                            ['label' => 'Email',         'url' => ['/admin/email']],
                             '<li class="divider"></li>',
-                            ['label' => 'Books',  'url' => ['/admin/book']],
+                            ['label' => 'Books',         'url' => ['/admin/book']],
                             ['label' => 'Book Reviews',  'url' => ['/admin/book-review']],
-                            ['label' => 'Book Pings',  'url' => ['/admin/book-ping']]
+                            ['label' => 'Book Pings',    'url' => ['/admin/book-ping']]
                         ]
                     ]) : '',
 
                 Yii::$app->user->isGuest
                     ? (['label' => 'Register', 'url' => ['/account/create']])
-                    : ['label' => 'Settings', 'url' => ['/user-settings']],
+                    : ['label' => 'Settings',  'url' => ['/user-settings']],
 
                 Yii::$app->user->isGuest
                     ? (['label' => 'Login', 'url' => ['/site/login']])
