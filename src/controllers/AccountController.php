@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\UserRegistrationForm;
 use app\models\User;
+use app\models\UserToken;
 use yii\helpers\Url;
 
 class AccountController extends \yii\web\Controller
@@ -14,11 +15,14 @@ class AccountController extends \yii\web\Controller
      */
     public function actionActivate($token)
     {
-        $model = User::findByAccountActivationToken($token);
+        $model = UserToken::findByToken($token, UserToken::TYPE_EMAIL_ACTIVATE);
+        
         if ($model) {
-            $model->removeAccountActivationToken();
-            $model->status = User::STATUS_ACTIVE;
-            $success = $model->save(false);
+            $user = $model->user;
+            $user->status = User::STATUS_ACTIVE;
+            $user->update(false, ['status']);
+            $model->delete();
+            $success = true;
         } else {
             $success = false;
         }

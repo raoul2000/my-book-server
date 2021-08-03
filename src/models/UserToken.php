@@ -148,7 +148,7 @@ class UserToken extends \yii\db\ActiveRecord
         $query = static::find()->where([$field => $value, "type" => $type ]);
         if ($checkExpiration) {
             $now = gmdate("Y-m-d H:i:s");
-            $query->andWhere("([[expired_at]] >= '$now' or [[expired_at]] is NULL)");
+            $query->andWhere("([[expire_at]] >= '$now' or [[expire_at]] is NULL)");
         }
         return $query->one();
     }
