@@ -33,6 +33,8 @@ class m210717_215701_create_user_token_table extends Migration
      */
     public function safeDown()
     {
+        $this->dropForeignKey('{{%user_token_user_id}}', self::TABLE_NAME);
+        
         $this->dropTable(self::TABLE_NAME);
     }
 }

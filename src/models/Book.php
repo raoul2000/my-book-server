@@ -64,11 +64,36 @@ class Book extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * Gets query for [[BookPings]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
     public function getPings()
     {
         return $this->hasMany(BookPing::class, ['book_id' => 'id']);
     }
 
+    /**
+     * Gets query for [[BookReviews]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getReviews()
+    {
+        return $this->hasMany(BookReview::class, ['book_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[UserBooks]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserBooks()
+    {
+        return $this->hasMany(UserBook::className(), ['book_id' => 'id']);
+    }
+    
     public function getPingsCount()
     {
         //TODO: requires extra query - could be optimized (or not used)
@@ -90,10 +115,6 @@ class Book extends \yii\db\ActiveRecord
             ->asArray(true);
     }
 
-    public function getReviews()
-    {
-        return $this->hasMany(BookReview::class, ['book_id' => 'id']);
-    }
     public function getReviewsCount()
     {
         if ($this->isNewRecord) {
