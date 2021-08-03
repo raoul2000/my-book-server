@@ -41,7 +41,7 @@ class AuthController extends BaseApiController
         }
         
         if($user->status !== User::STATUS_ACTIVE) {
-            throw new UnauthorizedHttpException('invalid account');
+            throw new UnauthorizedHttpException('inactive account');
         }
         
         if ($user->validatePassword($params['password'])) {
