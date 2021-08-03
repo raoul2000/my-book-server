@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\UserRegistrationForm;
 use app\models\User;
+use app\models\UserToken;
 use yii\helpers\Url;
 
 class AccountController extends \yii\web\Controller
@@ -14,11 +15,14 @@ class AccountController extends \yii\web\Controller
      */
     public function actionActivate($token)
     {
-        $model = User::findByAccountActivationToken($token);
+        $model = UserToken::findByToken($token, UserToken::TYPE_EMAIL_ACTIVATE);
+        
         if ($model) {
-            $model->removeAccountActivationToken();
-            $model->status = User::STATUS_ACTIVE;
-            $success = $model->save(false);
+            $user = $model->user;
+            $user->status = User::STATUS_ACTIVE;
+            $user->update(false, ['status']);
+            $model->delete();
+            $success = true;
         } else {
             $success = false;
         }
@@ -27,7 +31,7 @@ class AccountController extends \yii\web\Controller
             'success' => $success
         ]);
     }
-    
+
     /**
      * Create a user Account
      */
@@ -43,28 +47,29 @@ class AccountController extends \yii\web\Controller
             $userEmail = '';
             if (Yii::$app->params['enableAccountActivation']) {
                 $user =  User::findOne($model->getUserId());
+                $userEmail = $user->email;
+
                 Yii::$app->mailer->compose(
                     [
                         'html' => 'account/activation-html',
                         'text' => 'account/activation-text',
                     ],
                     [
-                        'activationUrl' => Url::to(['account/activate', 'token' => $user->account_activation_token], true),
+                        'activationUrl' => Url::to(['account/activate', 'token' => $model->getAccountActivationToken()], true),
                         'username'      => $user->username
                     ]
                 )
-                    ->setTo($user->email)
+                    ->setTo($userEmail)
                     ->setFrom(['Raoul@ass-team.fr' => 'raoul'])
                     ->setReplyTo('no-reply@email.com')
                     ->setSubject('account activation')
                     ->send();
-                $userEmail = $user->email;
-            } 
+            }
 
             return $this->render('create-success', [
                 'activationRequired' => Yii::$app->params['enableAccountActivation'],
-                'email' => $userEmail
-            ]);            
+                'email'              => $userEmail
+            ]);
         }
 
         $model->password = '';

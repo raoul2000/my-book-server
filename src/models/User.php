@@ -14,7 +14,6 @@ use yii\db\Expression;
  * @property string $email
  * @property string $password_hash
  * @property int $status
- * @property string $account_activation_token
  */
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
@@ -131,20 +130,6 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     }
 
     /**
-     * Finds user by account activation token.
-     *
-     * @param  string $token Account activation token.
-     * @return static|null
-     */
-    public static function findByAccountActivationToken($token)
-    {
-        return static::findOne([
-            'account_activation_token' => $token,
-            'status' => User::STATUS_INACTIVE,
-        ]);
-    }
-
-    /**
      * Validates password
      *
      * @param string $password password to validate
@@ -179,20 +164,6 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public function validateAuthKey($authKey)
     {
+        
     }
-    /**
-     * Generates new account activation token.
-     */
-    public function generateAccountActivationToken()
-    {
-        $this->account_activation_token = Yii::$app->security->generateRandomString() . '_' . time();
-    }
-
-    /**
-     * Removes account activation token.
-     */
-    public function removeAccountActivationToken()
-    {
-        $this->account_activation_token = null;
-    }    
 }

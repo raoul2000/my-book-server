@@ -20,7 +20,6 @@ class m210717_215700_create_user_table extends Migration
             'password_hash' => $this->string()->notNull(),
             'api_key' => $this->string(32),
             'status' => $this->smallInteger()->notNull(),
-            'account_activation_token' => $this->string(),    
             'created_at' => $this->dateTime(),
             'updated_at' => $this->dateTime()            
         ]);
