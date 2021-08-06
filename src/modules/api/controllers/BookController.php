@@ -7,11 +7,14 @@ use Yii;
 use yii\rest\ActiveController;
 use yii\filters\auth\HttpHeaderAuth;
 
+
 /**
  * BookController implements the CRUD actions for Book model.
  */
-class BookController extends BaseApiController
+class BookController extends ActiveController
 {
+    use \app\modules\api\controllers\ControllerBehaviorTrait;
+
     public $modelClass = 'app\models\Book';
 
     protected function verbs()
@@ -24,5 +27,4 @@ class BookController extends BaseApiController
             'delete' => ['DELETE', 'OPTIONS'],
         ];
     }
- 
 }

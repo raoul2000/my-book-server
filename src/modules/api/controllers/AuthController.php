@@ -7,9 +7,16 @@ use Yii;
 use app\models\User;
 use yii\web\BadRequestHttpException;
 use yii\web\UnauthorizedHttpException;
+use yii\rest\ActiveController;
+use app\modules\api\controllers\ControllerBehaviorTrait;
 
-class AuthController extends BaseApiController
+
+class AuthController extends ActiveController
 {
+    use ControllerBehaviorTrait {
+        behaviors as defaultBehaviors;
+    }
+
     public $modelClass = 'app\models\Book';
 
     protected function verbs()
@@ -23,7 +30,7 @@ class AuthController extends BaseApiController
      */
     public function behaviors()
     {
-        $behaviors = parent::behaviors();
+        $behaviors = $this->defaultBehaviors();
         unset($behaviors['authenticator']);
         return $behaviors;
     }    

@@ -87,4 +87,24 @@ class UserBook extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
+    /**
+     * Required to be able to return the related book from REST API
+     */
+    public function extraFields()
+    {
+        return ['book'];
+    }
+
+    /**
+     * Hides sensitive fields so they are not exposed to REST API
+     */
+    public function fields()
+    {
+        $fields = parent::fields();
+
+        // remove fields that contain sensitive information
+        unset($fields['id'], $fields['user_id']);
+
+        return $fields;
+    }
 }
