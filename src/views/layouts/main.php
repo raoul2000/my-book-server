@@ -49,6 +49,7 @@ AppAsset::register($this);
                             ['label' => 'Email',         'url' => ['/admin/email']],
                             '<li class="divider"></li>',
                             ['label' => 'Books',         'url' => ['/admin/book']],
+                            ['label' => 'Users/Books',         'url' => ['/admin/user-book']],
                             ['label' => 'Book Reviews',  'url' => ['/admin/book-review']],
                             ['label' => 'Book Pings',    'url' => ['/admin/book-ping']]
                         ]

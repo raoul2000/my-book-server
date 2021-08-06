@@ -61,6 +61,7 @@ class UserRegistrationForm extends Model
             $user->new_password = $this->password;
             $user->status       = User::STATUS_ACTIVE;
 
+            $success = false;
             if($user->save()) {
 
                 $this->user_id = $user->id; // expose to caller
@@ -72,7 +73,6 @@ class UserRegistrationForm extends Model
                     $success = $user->update(true, ['status']) === 1;
                 } 
             } else {
-                $success = false;
                 $this->addErrors($user->getErrors());
             }
 

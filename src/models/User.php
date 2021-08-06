@@ -86,6 +86,26 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     }
 
     /**
+     * Gets query for [[UserBooks]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserBooks()
+    {
+        return $this->hasMany(UserBook::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[UserTokens]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserTokens()
+    {
+        return $this->hasMany(UserToken::className(), ['user_id' => 'id']);
+    }
+
+    /**
      * @inheritdoc
      */
     public function beforeSave($insert)
@@ -99,6 +119,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         }
         return true;
     }
+    
     /**
      * {@inheritdoc}
      */
@@ -164,6 +185,5 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public function validateAuthKey($authKey)
     {
-        
     }
 }

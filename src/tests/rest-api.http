@@ -11,7 +11,7 @@ Content-Type: application/json
 
 ### Read All
 GET {{baseUrl}}?r=api/book
-X-Api-Key: X3j-XYx04oxmoczpvY-4t496mqWYU96J
+X-Api-Key: hKbbiGgOO4gPurvbJAbpw6r5-pBvL-N1
 
 ### Read All - only field title
 GET {{baseUrl}}?r=api/book&fields=title

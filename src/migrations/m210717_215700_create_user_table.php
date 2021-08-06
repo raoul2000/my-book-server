@@ -24,8 +24,8 @@ class m210717_215700_create_user_table extends Migration
             'updated_at' => $this->dateTime()            
         ]);
         
-        $this->createIndex('idx_user_username', self::TABLE_NAME, 'username', true, 'NOW()');
-        $this->createIndex('idx_user_email', self::TABLE_NAME, 'email', true, 'NOW()');
+        $this->createIndex('idx_user_username', self::TABLE_NAME, 'username', true);
+        $this->createIndex('idx_user_email', self::TABLE_NAME, 'email', true);
 
         $this->insert(self::TABLE_NAME, [
             'id' => '0',
@@ -41,6 +41,9 @@ class m210717_215700_create_user_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('{{%user}}');
+        $this->dropIndex('idx_user_username',self::TABLE_NAME);
+        $this->dropIndex('idx_user_email',self::TABLE_NAME);
+        
+        $this->dropTable(self::TABLE_NAME);
     }
 }
