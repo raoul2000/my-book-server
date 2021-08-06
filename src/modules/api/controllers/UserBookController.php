@@ -6,6 +6,7 @@ use Yii;
 
 use yii\rest\Controller;
 use yii\web\ServerErrorHttpException;
+use yii\web\NotFoundHttpException;
 use app\models\Book;
 use app\models\User;
 use app\models\UserBook;
@@ -82,10 +83,16 @@ class UserBookController extends Controller
      */
     public function actionView($id)
     {
-        return UserBook::find()
+        $userBook = UserBook::find()
             ->where(['user_id' => Yii::$app->user->getId()])
             ->andWhere(['book_id' => $id])
             ->one();
+
+        if(!$userBook) {
+            throw new NotFoundHttpException("Object not found");
+        }
+
+        return $userBook;
     }
 
     public function actionUpdate($id)
@@ -96,9 +103,15 @@ class UserBookController extends Controller
             ->with('book')
             ->one();
 
+        if(!$userBook) {
+            throw new NotFoundHttpException("Object not found");
+        }
+
         // FIXME: book id (and all other primary keys) should be protected from user updates
         // TODO: allow user to update userBook model
+
         $book = $userBook->book;
+
         $params = Yii::$app->getRequest()->getBodyParams();
         $book->load($params , '');
         if ($book->update()) {
@@ -107,7 +120,6 @@ class UserBookController extends Controller
         } else {
             throw new ServerErrorHttpException('Failed to update book.');
         }        
-        return $userBook;
     }
 
     /**
@@ -121,11 +133,12 @@ class UserBookController extends Controller
             ->andWhere(['book_id' => $id])
             ->with('book')
             ->one(); 
+            
         if($userBook) {
             $userBook->delete();
             $userBook->book->delete();
         } else {
-            throw new ServerErrorHttpException('Failed to delete book.');
+            throw new NotFoundHttpException("Object not found");
         }
     }
 

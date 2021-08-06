@@ -28,18 +28,18 @@ X-Api-Key: {{apiKey}}
 Cookie: XDEBUG_SESSION=XDEBUG_ECLIPSE
 
 ### View One
-GET {{baseUrl}}?r=api/user-book/view&id=5&expand=book
+GET {{baseUrl}}?r=api/user-book/view&id=7&expand=book
 X-Api-Key: {{apiKey}}
 Cookie: XDEBUG_SESSION=XDEBUG_ECLIPSE
 
 ### Update One
-PUT {{baseUrl}}?r=api/user-book/update&id=5
+PUT {{baseUrl}}?r=api/user-book/update&id=7
 Content-Type:application/json
 X-Api-Key: {{apiKey}}
 Cookie: XDEBUG_SESSION=XDEBUG_ECLIPSE
 
 {
-    "title": "Babylon9999",
+    "title": "Babylon 99",
     "author": "Bobby"
 }
 
