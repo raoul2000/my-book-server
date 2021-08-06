@@ -6,6 +6,7 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use app\models\User;
+use app\models\forms\UpdatePasswordForm;
 use yii\web\NotFoundHttpException;
 use Da\QrCode\QrCode;
 
@@ -52,9 +53,17 @@ class UserSettingsController extends \yii\web\Controller
         ]);
     }
 
-    public function actionUpdate()
+    public function actionUpdatePassword()
     {
-        return $this->render('update');
+        $model = new UpdatePasswordForm();
+        if ($model->load(Yii::$app->request->post()) && $model->updatePassword()) {
+            Yii::$app->session->setFlash('success','Mot de passe mis à jour');
+            return $this->redirect(['/user-settings']);
+        }
+
+        return $this->render('update-password', [
+            'model' => $model
+        ]);
     }
 
     protected function findModel($id)

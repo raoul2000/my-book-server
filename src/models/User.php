@@ -18,6 +18,7 @@ use yii\db\Expression;
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
     const SCENARIO_REGISTER = 'register';
+    const SCENARIO_UPDATE_PASSWORD = 'update_pwd';
 
     const STATUS_ACTIVE   = 10;
     const STATUS_INACTIVE = 1;
@@ -61,7 +62,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return [
             [['username', 'email'], 'required'],
             [['created_at', 'updated_at'], 'safe'],
-            [['new_password'], 'required', 'on' => self::SCENARIO_REGISTER],
+            [['new_password'], 'required', 'on' => [self::SCENARIO_REGISTER, self::SCENARIO_UPDATE_PASSWORD]],
             [['username', 'email', 'new_password'], 'string', 'max' => 255],
             [['username', 'email'], 'unique'],
             ['status', 'required'],
@@ -113,9 +114,12 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         if (!parent::beforeSave($insert)) {
             return false;
         }
-        if ($this->getScenario() == self::SCENARIO_REGISTER) {
+        if ($this->getScenario() == self::SCENARIO_REGISTER || $this->getScenario() == self::SCENARIO_UPDATE_PASSWORD) {
             $this->password_hash = Yii::$app->security->generatePasswordHash($this->new_password);
-            $this->api_key = Yii::$app->security->generateRandomString();
+
+            if($this->getScenario() == self::SCENARIO_REGISTER) {
+                $this->api_key = Yii::$app->security->generateRandomString();
+            }
         }
         return true;
     }
