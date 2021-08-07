@@ -8,7 +8,7 @@ use app\models\UserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use app\models\UserRegistrationForm;
+use app\models\forms\UserRegistrationForm;
 use yii\filters\AccessControl;
 
 /**

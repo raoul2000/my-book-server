@@ -1,10 +1,11 @@
 <?php
 
-namespace app\models;
+namespace app\models\forms;
 
 use Yii;
 use yii\base\Model;
-
+use app\models\User;
+use app\models\UserToken;
 /**
  * LoginForm is the model behind the login form.
  *
@@ -71,7 +72,9 @@ class UserRegistrationForm extends Model
                     $userToken    = UserToken::generate($user->id, UserToken::TYPE_EMAIL_ACTIVATE);
                     $this->account_activation_token = $userToken->token;
                     $success = $user->update(true, ['status']) === 1;
-                } 
+                } else {
+                    $success = true;
+                }
             } else {
                 $this->addErrors($user->getErrors());
             }

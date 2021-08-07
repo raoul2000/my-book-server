@@ -3,10 +3,10 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\UserRegistrationForm;
+use yii\helpers\Url;
 use app\models\User;
 use app\models\UserToken;
-use yii\helpers\Url;
+use app\models\forms\UserRegistrationForm;
 
 class AccountController extends \yii\web\Controller
 {

@@ -3,7 +3,7 @@
 namespace app\controllers\admin;
 
 use Yii;
-use app\models\EmailForm;
+use app\models\forms\EmailForm;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 
