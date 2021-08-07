@@ -17,8 +17,7 @@ Content-Type:application/json
 X-Api-Key: {{apiKey}}
 
 {
-    "id": "8",
-    "title": "Babylon99",
+    "title": "___Babylon99",
     "author": "Inconnu"
 }
 
@@ -39,12 +38,12 @@ X-Api-Key: {{apiKey}}
 Cookie: XDEBUG_SESSION=XDEBUG_ECLIPSE
 
 {
-    "title": "Babylon 99",
+    "title": "**Babylon 99",
     "author": "Bobby"
 }
 
 ### delete One
-DELETE {{baseUrl}}?r=api/user-book/delete&id=8
+DELETE {{baseUrl}}?r=api/user-book/delete&id=7
 X-Api-Key: {{apiKey}}
 Cookie: XDEBUG_SESSION=XDEBUG_ECLIPSE
 

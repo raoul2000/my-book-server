@@ -17,7 +17,7 @@ class m210717_215801_create_user_book_table extends Migration
         $this->createTable(self::TABLE_NAME, [
             'id' => $this->primaryKey(),
             'user_id' => $this->integer()->notNull(),
-            'book_id' => $this->string(32)->notNull(),
+            'book_id' => $this->string(40)->notNull(),
             'created_at' => $this->dateTime(),
             'updated_at' => $this->dateTime()
         ]);

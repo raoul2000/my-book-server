@@ -67,6 +67,7 @@ class UserBookController extends Controller
             if ($userBook->save()) {
                 $response = Yii::$app->getResponse();
                 $response->setStatusCode(201);
+                return $book;
             } else {
                 // rollback : delete book
                 $book->delete();
@@ -117,6 +118,7 @@ class UserBookController extends Controller
         if ($book->update()) {
             $response = Yii::$app->getResponse();
             $response->setStatusCode(201);
+            return $book;
         } else {
             throw new ServerErrorHttpException('Failed to update book.');
         }        

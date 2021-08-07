@@ -5,6 +5,7 @@ namespace app\models;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
+use \thamtech\uuid\helpers\UuidHelper;
 
 /**
  * This is the model class for table "books".
@@ -40,12 +41,10 @@ class Book extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'title'], 'required'],
-            [['id'], 'string', 'max' => 32],
+            [['title'], 'required'],
             [['isbn'], 'string', 'max' => 15],
             [['created_at', 'updated_at'], 'safe'],
             [['title', 'author'], 'string', 'max' => 255],
-            [['id'], 'unique'],
         ];
     }
 
@@ -55,7 +54,6 @@ class Book extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
             'title' => 'Title',
             'author' => 'Author',
             'isbn' => 'ISBN',
@@ -63,7 +61,19 @@ class Book extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
         ];
     }
-
+    /**
+     * @inheritdoc
+     */
+    public function beforeSave($insert)
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+        if($insert) {
+            $this->id = UuidHelper::uuid();
+        }
+        return true;
+    }
     /**
      * Gets query for [[BookPings]].
      *

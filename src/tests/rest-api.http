@@ -1,3 +1,4 @@
+@apiKey = hKbbiGgOO4gPurvbJAbpw6r5-pBvL-N1
 
 ### login
 
@@ -11,42 +12,46 @@ Content-Type: application/json
 
 ### Read All
 GET {{baseUrl}}?r=api/book
-X-Api-Key: hKbbiGgOO4gPurvbJAbpw6r5-pBvL-N1
+X-Api-Key: {{apiKey}}
 
 ### Read All - only field title
 GET {{baseUrl}}?r=api/book&fields=title
+X-Api-Key: {{apiKey}}
 
 ### Read One by Id
 GET {{baseUrl}}?r=api/book/view&id=1
+X-Api-Key: {{apiKey}}
 
 ### Read One by Id, only field title
 GET {{baseUrl}}?r=api/book/view&id=1&fields=title
-
+X-Api-Key: {{apiKey}}
 
 ### show header info
 HEAD {{baseUrl}}?r=api/book
+X-Api-Key: {{apiKey}}
 
 ### Create
 POST {{baseUrl}}?r=api/book/create
 Content-Type:application/json
+X-Api-Key: {{apiKey}}
 
 {
-    "id": "3",
-    "title": "Babylon99",
+    "title": "___Babylon99",
     "author": "Inconnu"
 }
 
 ### Update
 # id query param is required - id property is optional unless 
 # it should also be updated
-PATCH {{baseUrl}}?r=api/book/update&id=3
+PATCH {{baseUrl}}?r=api/book/update&id=f6a9fca2-f723-4914-94a9-7644e8a0fe4b
 Content-Type:application/json
+X-Api-Key: {{apiKey}}
 
 {
-    "id": "3",
-    "title": "Babylon99...",
+    "title": "...Babylon99...",
     "author": "Inconnu"
 }
 
 ### Delete
 DELETE {{baseUrl}}?r=api/book/delete&id=3
+X-Api-Key: {{apiKey}}
