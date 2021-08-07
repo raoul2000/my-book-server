@@ -21,10 +21,14 @@ class BookController extends ActiveController
     {
         return [
             'index' => ['GET', 'HEAD','OPTIONS'],
-            'view' => ['GET', 'HEAD', 'OPTIONS'],
-            'create' => ['POST', 'OPTIONS'],
-            'update' => ['PUT', 'PATCH', 'OPTIONS'],
-            'delete' => ['DELETE', 'OPTIONS'],
+            'view' => ['GET', 'HEAD', 'OPTIONS']
         ];
+    }
+    public function actions()
+    {
+        $actions = parent::actions();
+        unset($actions['create']);
+        unset($actions['update']);
+        unset($actions['delete']);
     }
 }

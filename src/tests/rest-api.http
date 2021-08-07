@@ -30,17 +30,17 @@ X-Api-Key: {{apiKey}}
 HEAD {{baseUrl}}?r=api/book
 X-Api-Key: {{apiKey}}
 
-### Create
+### Create _____DISABLED______
 POST {{baseUrl}}?r=api/book/create
 Content-Type:application/json
 X-Api-Key: {{apiKey}}
 
 {
-    "title": "___Babylon99",
+    "title": "__xxx_Babylon99",
     "author": "Inconnu"
 }
 
-### Update
+### Update _____DISABLED______
 # id query param is required - id property is optional unless 
 # it should also be updated
 PATCH {{baseUrl}}?r=api/book/update&id=f6a9fca2-f723-4914-94a9-7644e8a0fe4b
@@ -52,6 +52,6 @@ X-Api-Key: {{apiKey}}
     "author": "Inconnu"
 }
 
-### Delete
+### Delete _____DISABLED______
 DELETE {{baseUrl}}?r=api/book/delete&id=3
 X-Api-Key: {{apiKey}}
