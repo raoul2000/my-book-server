@@ -12,8 +12,12 @@ $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="book-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
+    <h1>
+        <span class="glyphicon glyphicon-book" aria-hidden="true"></span>     
+        <?= Html::encode($this->title) ?>
+    </h1>
+    <hr/>
+    
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>

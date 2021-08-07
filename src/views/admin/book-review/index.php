@@ -13,7 +13,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="book-review-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
+    <hr/>
+    
     <p>
         <?= Html::a('Create Book Review', ['create'], ['class' => 'btn btn-success']) ?>
     </p>

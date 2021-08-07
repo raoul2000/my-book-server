@@ -11,8 +11,12 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="book-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
+    <h1>
+        <span class="glyphicon glyphicon-book" aria-hidden="true"></span>     
+        <?= Html::encode($this->title) ?>
+    </h1>
+    <hr/>
+    
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>

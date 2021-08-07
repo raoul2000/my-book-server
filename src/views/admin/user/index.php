@@ -12,8 +12,12 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
+    <h1>
+        <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 
+        <?= Html::encode($this->title) ?>
+    </h1>
+    <hr/>
+    
     <p>
         <?= Html::a('Create User', ['create'], ['class' => 'btn btn-success']) ?>
     </p>

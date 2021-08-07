@@ -13,6 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="book-ping-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
+    <hr/>
     
     <?php if(!$savePingEnabled): ?>
         <div class="alert alert-danger">La sauvegarde des Pings est actuellement <b>désactivée</b></div>

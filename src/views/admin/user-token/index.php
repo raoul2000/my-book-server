@@ -13,7 +13,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="user-token-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
+    <hr/>
+    
     <p>
         <?= Html::a('Create User Token', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
