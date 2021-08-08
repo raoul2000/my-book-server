@@ -10,6 +10,9 @@ Content-Type: application/json
     "password": "bob"
 }
 
+### Check Token
+GET {{baseUrl}}?r=api/auth/check-api-key&token=hKbbiGgOO4gPurvbJAbpw6r5-pBvL-N1
+
 
 ### Create
 POST {{baseUrl}}?r=api/user-book/create

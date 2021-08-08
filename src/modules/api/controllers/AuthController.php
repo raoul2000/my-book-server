@@ -22,7 +22,7 @@ class AuthController extends ActiveController
     protected function verbs()
     {
         return [
-            'login' => ['POST', 'OPTIONS'],
+            'login' => ['POST', 'OPTIONS']
         ];
     }
     /**
@@ -33,7 +33,7 @@ class AuthController extends ActiveController
         $behaviors = $this->defaultBehaviors();
         unset($behaviors['authenticator']);
         return $behaviors;
-    }    
+    }
 
     public function actionLogin()
     {
@@ -43,14 +43,14 @@ class AuthController extends ActiveController
         }
 
         $user = User::findByUsername($params['username']);
-        if(empty($user)) {
+        if (empty($user)) {
             throw new UnauthorizedHttpException('invalid credentials');
         }
-        
-        if($user->status !== User::STATUS_ACTIVE) {
+
+        if ($user->status !== User::STATUS_ACTIVE) {
             throw new UnauthorizedHttpException('inactive account');
         }
-        
+
         if ($user->validatePassword($params['password'])) {
             Yii::$app->response->setStatusCode(200);
             return [
@@ -60,5 +60,13 @@ class AuthController extends ActiveController
         } else {
             throw new UnauthorizedHttpException('invalid credentials');
         }
+    }
+
+    public function actionCheckApiKey($token)
+    {
+        $token = User::findIdentityByAccessToken($token);
+        return [
+            'isValid' => $token !== null
+        ];
     }
 }
