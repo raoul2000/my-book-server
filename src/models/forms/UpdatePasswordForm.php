@@ -6,9 +6,14 @@ use Yii;
 use app\models\User;
 use yii\base\Model;
 
-
+/**
+ * Handle both password update and password Reset actions
+ */
 class UpdatePasswordForm extends Model
 {
+    const SCENARIO_RESET  = 'reset';
+    const SCENARIO_UPDATE = 'update';
+
     public $old_password;
     public $new_password;
     public $new_password_confirm;
@@ -20,10 +25,12 @@ class UpdatePasswordForm extends Model
     {
         return [
             // name, email, subject and body are required
-            [['old_password', 'new_password', 'new_password_confirm'], 'required'],
-            ['new_password_confirm', 'compare', 'compareAttribute' => 'new_password'],
+            [['old_password'], 'required', 'on' => [self::SCENARIO_UPDATE]],
+            [['new_password', 'new_password_confirm'], 'required', 'on' =>  [self::SCENARIO_UPDATE, self::SCENARIO_RESET]],
+            ['new_password_confirm', 'compare', 'compareAttribute' => 'new_password', 'on' =>  [self::SCENARIO_UPDATE, self::SCENARIO_RESET]],
         ];
     }
+
 
     /**
      * @return array customized attribute labels
@@ -37,15 +44,23 @@ class UpdatePasswordForm extends Model
         ];
     }
 
-    public function updatePassword()
+    public function updatePassword($userId = null)
     {
+        if ($this->getScenario() === self::SCENARIO_RESET && $userId === null) {
+            throw new \Exception('missing user id');
+        }
+
         if ($this->validate()) {
 
-            $user = User::findOne(Yii::$app->user->getId());
+            $actualUserId = $userId !== null
+                ? $userId
+                : Yii::$app->user->getId();
+
+            $user =  User::findOne($actualUserId);
             $user->setScenario(User::SCENARIO_UPDATE_PASSWORD);
 
-            if($user->validatePassword($this->old_password) === false) {
-                $this->addError('old_password','mot de passe incorrect');
+            if ($this->getScenario() === self::SCENARIO_UPDATE &&  $user->validatePassword($this->old_password) === false) {
+                $this->addError('old_password', 'mot de passe incorrect');
             } else {
                 $user->new_password = $this->new_password;
                 return $user->save();

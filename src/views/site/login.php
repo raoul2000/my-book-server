@@ -22,6 +22,10 @@ $this->title = 'Login';
 
         <?= $form->field($model, 'password')->passwordInput() ?>
 
+        <div class="col-sm-offset-3 col-sm-19">
+            <?= html::a('Mot de passe Oublié ?', ['password-reset/request']) ?>
+        </div>
+        
         <?= $form->field($model, 'rememberMe')->checkbox([
             'template' => "<div class=\"col-sm-offset-3 col-sm-9\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
         ]) ?>

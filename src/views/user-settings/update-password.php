@@ -6,6 +6,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use app\models\forms\UpdatePasswordForm;
 
 $this->title = 'Update Password';
 $this->params['breadcrumbs'][] = ['label' => 'User Settings', 'url' => ['/user-settings']];
@@ -19,7 +20,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'layout' => 'horizontal'
     ]); ?>
 
-        <?= $form->field($model, 'old_password')->passwordInput() ?>
+        <?php if($model->getScenario() === UpdatePasswordForm::SCENARIO_UPDATE) :?>
+            <?= $form->field($model, 'old_password')->passwordInput() ?>
+        <?php endif; ?>
+        
         <?= $form->field($model, 'new_password')->passwordInput() ?>
         <?= $form->field($model, 'new_password_confirm')->passwordInput() ?>
 

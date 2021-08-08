@@ -56,6 +56,8 @@ class UserSettingsController extends \yii\web\Controller
     public function actionUpdatePassword()
     {
         $model = new UpdatePasswordForm();
+        $model->setScenario(UpdatePasswordForm::SCENARIO_UPDATE);
+        
         if ($model->load(Yii::$app->request->post()) && $model->updatePassword()) {
             Yii::$app->session->setFlash('success','Mot de passe mis à jour');
             return $this->redirect(['/user-settings']);
