@@ -8,7 +8,7 @@ class UserTest extends \Codeception\Test\Unit
 {
     public function testFindUserById()
     {
-        expect_that($user = User::findIdentity(100));
+        expect_that($user = User::findIdentity(0));
         expect($user->username)->equals('admin');
 
         expect_not(User::findIdentity(999));

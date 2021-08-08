@@ -116,10 +116,6 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         }
         if ($this->getScenario() == self::SCENARIO_REGISTER || $this->getScenario() == self::SCENARIO_UPDATE_PASSWORD) {
             $this->password_hash = Yii::$app->security->generatePasswordHash($this->new_password);
-
-            if($this->getScenario() == self::SCENARIO_REGISTER) {
-                $this->api_key = Yii::$app->security->generateRandomString();
-            }
         }
         return true;
     }
@@ -176,7 +172,19 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        return static::findOne(['api_key' => $token]);
+        $userToken = UserToken::find()
+            ->where([
+                'type' => UserToken::TYPE_API_KEY,
+                'token' => $token
+            ])
+            ->with('user')
+            ->one();
+        if($userToken) {
+            return $userToken->user;
+        } else {
+            return null;
+        }
+        //return static::findOne(['api_key' => $token]);
     }
     /**
      * {@inheritdoc}

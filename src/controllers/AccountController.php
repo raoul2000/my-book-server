@@ -22,6 +22,8 @@ class AccountController extends \yii\web\Controller
             $user->status = User::STATUS_ACTIVE;
             $user->update(false, ['status']);
             $model->delete();
+            // create API Key token
+            UserToken::generate($user->id,UserToken::TYPE_API_KEY);
             $success = true;
         } else {
             $success = false;

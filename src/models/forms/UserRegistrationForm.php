@@ -68,11 +68,14 @@ class UserRegistrationForm extends Model
                 $this->user_id = $user->id; // expose to caller
 
                 if (Yii::$app->params['enableAccountActivation']) {
+                    // API Key token is created only on account activation
                     $user->status = User::STATUS_INACTIVE;
                     $userToken    = UserToken::generate($user->id, UserToken::TYPE_EMAIL_ACTIVATE);
                     $this->account_activation_token = $userToken->token;
                     $success = $user->update(true, ['status']) === 1;
                 } else {
+                    // no account activation step : create API Key now
+                    UserToken::generate($this->user_id, UserToken::TYPE_API_KEY);
                     $success = true;
                 }
             } else {
