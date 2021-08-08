@@ -62,6 +62,18 @@ function updateIndex() {
     });
 }
 
+function preserveEmptyfolders() {
+    return new Promise((resolve, reject) => {
+        const filepath = path.join(workingDir,"build/source/web/assets/keep");
+        fs.writeFile(filepath, 'keep this folder', (err) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(true);
+            }
+        });
+    });
+}
 function cleanSource() {
     return del("build/source/**", { force: true, cwd: workingDir});
 }
@@ -133,4 +145,4 @@ exports.zipSource = zipSource;
 exports.copyConfig = copyConfig;
 exports.updateIndex = updateIndex;
 
-exports.buildSource = series(cleanSource, copySource, updateIndex);
+exports.buildSource = series(cleanSource, copySource, preserveEmptyfolders,  updateIndex);
