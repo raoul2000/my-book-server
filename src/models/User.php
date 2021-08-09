@@ -17,7 +17,7 @@ use yii\db\Expression;
  */
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
-    const SCENARIO_REGISTER = 'register';
+    const SCENARIO_REGISTER        = 'register';
     const SCENARIO_UPDATE_PASSWORD = 'update_pwd';
 
     const STATUS_ACTIVE   = 10;
@@ -119,7 +119,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         }
         return true;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -174,17 +174,15 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         $userToken = UserToken::find()
             ->where([
-                'type' => UserToken::TYPE_API_KEY,
+                'type'  => UserToken::TYPE_API_KEY,
                 'token' => $token
             ])
             ->with('user')
             ->one();
-        if($userToken) {
-            return $userToken->user;
-        } else {
-            return null;
-        }
-        //return static::findOne(['api_key' => $token]);
+
+        return $userToken
+            ? $userToken->user
+            : null;
     }
     /**
      * {@inheritdoc}

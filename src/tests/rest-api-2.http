@@ -1,4 +1,4 @@
-@apiKey = hKbbiGgOO4gPurvbJAbpw6r5-pBvL-N1
+@apiKey = uBm5GB7CHhBr18TKO6ORC_Ws-fFlABc4
 
 ### login
 
@@ -11,7 +11,7 @@ Content-Type: application/json
 }
 
 ### Check Token
-GET {{baseUrl}}?r=api/auth/check-api-key&token=hKbbiGgOO4gPurvbJAbpw6r5-pBvL-N1
+GET {{baseUrl}}?r=api/auth/check-api-key&token={{apiKey}}
 
 
 ### Create
