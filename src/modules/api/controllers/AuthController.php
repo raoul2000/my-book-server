@@ -9,7 +9,7 @@ use yii\web\BadRequestHttpException;
 use yii\web\UnauthorizedHttpException;
 use yii\rest\ActiveController;
 use app\modules\api\controllers\ControllerBehaviorTrait;
-
+use app\models\UserToken;
 
 class AuthController extends ActiveController
 {
@@ -53,10 +53,17 @@ class AuthController extends ActiveController
 
         if ($user->validatePassword($params['password'])) {
             Yii::$app->response->setStatusCode(200);
-            return [
-                'success' => true,
-                'api_key' => $user->api_key
-            ];
+            $apiKey = UserToken::find()
+                ->where([
+                    'type'    => UserToken::TYPE_API_KEY,
+                    'user_id' => $user->id
+                ])
+                ->one();
+            $responseBody =  ['success' => true];
+            if ($apiKey) {
+                $responseBody['api_key'] = $apiKey->token;
+            }
+            return $responseBody;
         } else {
             throw new UnauthorizedHttpException('invalid credentials');
         }

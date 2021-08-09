@@ -40,6 +40,10 @@ class UserToken extends \yii\db\ActiveRecord
      * @var int Token for logging in via email
      */
     const TYPE_EMAIL_LOGIN = 4;
+    /**
+     * @var string token to authenticate from app
+     */
+    const TYPE_API_KEY     = 5;
 
     /**
      * {@inheritdoc}

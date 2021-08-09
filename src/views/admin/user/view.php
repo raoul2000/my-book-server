@@ -39,7 +39,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'email:email',
             'status',
             'password_hash',
-            'api_key',        
             'created_at',
             'updated_at'
         ],

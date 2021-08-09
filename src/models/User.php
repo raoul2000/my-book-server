@@ -17,7 +17,7 @@ use yii\db\Expression;
  */
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
-    const SCENARIO_REGISTER = 'register';
+    const SCENARIO_REGISTER        = 'register';
     const SCENARIO_UPDATE_PASSWORD = 'update_pwd';
 
     const STATUS_ACTIVE   = 10;
@@ -79,7 +79,6 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'username' => 'Username',
             'email' => 'Email',
             'password_hash' => 'Password Hash',
-            'api_key' => 'API Key',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'status' => 'Status'
@@ -116,14 +115,10 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         }
         if ($this->getScenario() == self::SCENARIO_REGISTER || $this->getScenario() == self::SCENARIO_UPDATE_PASSWORD) {
             $this->password_hash = Yii::$app->security->generatePasswordHash($this->new_password);
-
-            if($this->getScenario() == self::SCENARIO_REGISTER) {
-                $this->api_key = Yii::$app->security->generateRandomString();
-            }
         }
         return true;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -176,7 +171,17 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        return static::findOne(['api_key' => $token]);
+        $userToken = UserToken::find()
+            ->where([
+                'type'  => UserToken::TYPE_API_KEY,
+                'token' => $token
+            ])
+            ->with('user')
+            ->one();
+
+        return $userToken
+            ? $userToken->user
+            : null;
     }
     /**
      * {@inheritdoc}

@@ -7,6 +7,7 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use app\models\User;
 use app\models\forms\UpdatePasswordForm;
+use app\models\UserToken;
 use yii\web\NotFoundHttpException;
 use Da\QrCode\QrCode;
 
@@ -39,9 +40,16 @@ class UserSettingsController extends \yii\web\Controller
     {
         $userModel = $this->findModel(Yii::$app->user->id);
 
+        $apiKey = UserToken::find()
+            ->where([
+                'type'    => UserToken::TYPE_API_KEY,
+                'user_id' => $userModel->id
+            ])
+            ->one();
+        
         $qrCode = null;
-        if (!empty($userModel->api_key)) {
-            $qrCode = (new QrCode($userModel->api_key))
+        if ($apiKey) {
+            $qrCode = (new QrCode($apiKey->token))
                 ->setSize(250)
                 ->setMargin(5)
                 ->useForegroundColor(51, 153, 255);
@@ -49,6 +57,7 @@ class UserSettingsController extends \yii\web\Controller
 
         return $this->render('index', [
             'userModel' => $userModel,
+            'apiKey' => $apiKey,
             'qrCode' => $qrCode
         ]);
     }
