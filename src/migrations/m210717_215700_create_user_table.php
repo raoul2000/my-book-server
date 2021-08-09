@@ -18,7 +18,6 @@ class m210717_215700_create_user_table extends Migration
             'username' => $this->string()->notNull()->unique(),
             'email' => $this->string()->notNull()->unique(),
             'password_hash' => $this->string()->notNull(),
-            'api_key' => $this->string(32),
             'status' => $this->smallInteger()->notNull(),
             'created_at' => $this->dateTime(),
             'updated_at' => $this->dateTime()            

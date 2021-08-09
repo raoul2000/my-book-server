@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="col-sm-10">
                 
                 <?php if(!empty($qrCode)): ?>
-                    <?= $userModel->api_key ?><br/>
+                    <?= $apiKey->token ?><br/>
                     <img src="<?=  $qrCode->writeDataUri()?>" title="api key : QR code" alt="api key qr code"/>
                 <?php else: ?>
                     <em>no set</em>

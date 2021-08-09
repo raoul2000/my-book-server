@@ -79,7 +79,6 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'username' => 'Username',
             'email' => 'Email',
             'password_hash' => 'Password Hash',
-            'api_key' => 'API Key',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'status' => 'Status'
