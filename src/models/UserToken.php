@@ -45,6 +45,13 @@ class UserToken extends \yii\db\ActiveRecord
      */
     const TYPE_API_KEY     = 5;
 
+    public $tokenTypeList = [
+        self::TYPE_EMAIL_ACTIVATE => 'email activate',
+        self::TYPE_EMAIL_CHANGE => 'email change',
+        self::TYPE_PASSWORD_RESET => 'password reset',
+        self::TYPE_EMAIL_LOGIN => 'email login',
+        self::TYPE_API_KEY => 'API Key',
+    ];
     /**
      * {@inheritdoc}
      */

@@ -1,5 +1,6 @@
 <?php
 
+use app\models\User;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -13,16 +14,17 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="user-index">
 
     <h1>
-        <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 
+        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
         <?= Html::encode($this->title) ?>
     </h1>
-    <hr/>
-    
+    <hr />
+
     <p>
         <?= Html::a('Create User', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); 
+    ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -31,9 +33,18 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'username',
             'email:email',
-            'status',
+            [
+                'attribute' => 'status',
+                'label'     => 'Status',
+                'filter'    => $searchModel->statusList,
+                'value'     => function ($model, $key, $index, $column) use ($searchModel) {
+                    return $model->status != null
+                        ? Html::encode($searchModel->statusList[$model->status])
+                        : null;
+                }
+            ],
             'updated_at',
-            
+
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

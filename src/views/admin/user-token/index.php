@@ -13,13 +13,14 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="user-token-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <hr/>
-    
+    <hr />
+
     <p>
         <?= Html::a('Create User Token', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); 
+    ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -27,7 +28,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             'id',
             'user_id',
-            'type',
+            [
+                'attribute' => 'type',
+                'label'     => 'Type',
+                'filter'    => $searchModel->tokenTypeList,
+                'value'     => function ($model, $key, $index, $column) use ($searchModel) {
+                    return $model->type != null
+                        ? Html::encode($searchModel->tokenTypeList[$model->type])
+                        : null;
+                }
+            ],
             'token',
             'data',
             'created_at',
