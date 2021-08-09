@@ -75,6 +75,7 @@ class AccountController extends \yii\web\Controller
         }
 
         $model->password = '';
+        $model->password_confirm = '';
         return $this->render('create', [
             'model' => $model,
         ]);
