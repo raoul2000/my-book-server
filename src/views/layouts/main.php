@@ -47,6 +47,7 @@ AppAsset::register($this);
                             ['label' => 'Users',         'url' => ['/admin/user']],
                             ['label' => 'User Token',    'url' => ['/admin/user-token']],
                             ['label' => 'Email',         'url' => ['/admin/email']],
+                            ['label' => 'ISBN Service',  'url' => ['/admin/isbn-service']],
                             '<li class="divider"></li>',
                             ['label' => 'Books',         'url' => ['/admin/book']],
                             ['label' => 'Users/Books',         'url' => ['/admin/user-book']],
