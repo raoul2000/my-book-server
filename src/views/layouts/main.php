@@ -11,6 +11,7 @@ use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
 AppAsset::register($this);
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -31,7 +32,7 @@ AppAsset::register($this);
     <div class="wrap">
         <?php
         NavBar::begin([
-            'brandLabel' => Yii::$app->name,
+            'brandLabel' => Yii::$app->name . (Yii::$app->user->id == 1 ? ' - <small>' . APP_BUILD_NUMBER . '</small>': ''),
             'brandUrl' => Yii::$app->homeUrl,
             'options' => [
                 'class' => 'navbar-fixed-top navbar-default',
