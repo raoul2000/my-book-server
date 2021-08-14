@@ -13,6 +13,7 @@ use \thamtech\uuid\helpers\UuidHelper;
  * @property string $id
  * @property string $title
  * @property string|null $author
+ * @property string|null $isbn
  */
 class Book extends \yii\db\ActiveRecord
 {
