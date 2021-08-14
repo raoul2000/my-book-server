@@ -9,7 +9,7 @@ use yii\filters\VerbFilter;
 
 class EmailController extends \yii\web\Controller
 {
-        /**
+    /**
      * {@inheritdoc}
      */
     public function behaviors()

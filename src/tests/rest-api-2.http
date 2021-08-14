@@ -13,6 +13,9 @@ Content-Type: application/json
 ### Check Token
 GET {{baseUrl}}?r=api/auth/check-api-key&token={{apiKey}}
 
+### SEARCH ISBN
+GET {{baseUrl}}?r=api/isbn-service/search&isbn=9782070344130
+X-Api-Key: {{apiKey}}
 
 ### Create
 POST {{baseUrl}}?r=api/user-book/create
