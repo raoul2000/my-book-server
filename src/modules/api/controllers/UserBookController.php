@@ -3,15 +3,12 @@
 namespace app\modules\api\controllers;
 
 use Yii;
-
 use yii\rest\Controller;
 use yii\web\ServerErrorHttpException;
 use yii\web\NotFoundHttpException;
 use app\models\Book;
-use app\models\User;
 use app\models\UserBook;
 use yii\data\ActiveDataProvider;
-use yii\helpers\ArrayHelper;
 
 class UserBookController extends Controller
 {
@@ -33,19 +30,10 @@ class UserBookController extends Controller
      */
     public function actionIndex()
     {
-        $bookIdsResult = UserBook::find()
-            ->select(['book_id'])
-            ->where(['user_id' => Yii::$app->user->getId()])
-            ->asArray()
-            ->all();
-
-        $bookIds = ArrayHelper::getColumn($bookIdsResult, 'book_id');
-
-        $query = Book::find()
-            ->where(['in', 'id', $bookIds]);
-
         return new ActiveDataProvider([
-            'query' =>  $query
+            'query' =>  UserBook::find()
+                ->with('book')
+                ->where(['user_id' => Yii::$app->user->getId()])
         ]);
     }
 
@@ -56,21 +44,30 @@ class UserBookController extends Controller
     {
         $book = new Book();
 
-        $book->load(Yii::$app->getRequest()->getBodyParams(), '');
-        if ($book->save()) {
+        $params = Yii::$app->getRequest()->getBodyParams();
+        $book->load($params['book'],'');
+        if ($book->load($params['book'],'') && $book->save()) {
+            $book->refresh();           // update timestamp attributes
+
             $userBook = new UserBook();
+            $userBook->load($params['userBook'],'');
             $userBook->setAttributes([
                 'user_id' => Yii::$app->user->getId(),
                 'book_id' => $book->id
             ]);
 
             if ($userBook->save()) {
+                $userBook->refresh();   // update timestamp attributes
+
                 $response = Yii::$app->getResponse();
                 $response->setStatusCode(201);
-                return $book;
+
+                return [
+                    'book'     => $book,
+                    'userBook' => $userBook
+                ];
             } else {
-                // rollback : delete book
-                $book->delete();
+                $book->delete();    // rollback : delete book
                 throw new ServerErrorHttpException('Failed to create user book');
             }
         } else {
@@ -85,11 +82,12 @@ class UserBookController extends Controller
     public function actionView($id)
     {
         $userBook = UserBook::find()
+            ->with('book')
             ->where(['user_id' => Yii::$app->user->getId()])
             ->andWhere(['book_id' => $id])
             ->one();
 
-        if(!$userBook) {
+        if (!$userBook) {
             throw new NotFoundHttpException("Object not found");
         }
 
@@ -104,7 +102,7 @@ class UserBookController extends Controller
             ->with('book')
             ->one();
 
-        if(!$userBook) {
+        if (!$userBook) {
             throw new NotFoundHttpException("Object not found");
         }
 
@@ -114,14 +112,26 @@ class UserBookController extends Controller
         $book = $userBook->book;
 
         $params = Yii::$app->getRequest()->getBodyParams();
-        $book->load($params , '');
-        if ($book->update()) {
-            $response = Yii::$app->getResponse();
-            $response->setStatusCode(201);
-            return $book;
-        } else {
-            throw new ServerErrorHttpException('Failed to update book.');
-        }        
+        if (isset($params['book'])) {
+            $book->load($params['book'], '');
+            if ($book->validate()) {
+                $book->update();
+            } else {
+                throw new ServerErrorHttpException('Failed to update book.');
+            }
+        }
+
+        if (isset($params['userBook'])) {
+            $userBook->load($params['userBook'], '');
+            if ($userBook->validate()) {
+                $userBook->update();
+            } else {
+                throw new ServerErrorHttpException('Failed to update user-book.');
+            }
+        }
+        $response = Yii::$app->getResponse();
+        $response->setStatusCode(201);
+
     }
 
     /**
@@ -134,14 +144,13 @@ class UserBookController extends Controller
             ->where(['user_id' => Yii::$app->user->getId()])
             ->andWhere(['book_id' => $id])
             ->with('book')
-            ->one(); 
-            
-        if($userBook) {
+            ->one();
+
+        if ($userBook) {
             $userBook->delete();
             $userBook->book->delete();
         } else {
             throw new NotFoundHttpException("Object not found");
         }
     }
-
 }
