@@ -125,6 +125,7 @@ body.naked .wrap > .container {
 .book-ping .book-review .btn-submit-review {
     width: 100%;
 }
+.book-ping-submitted .intro,
 .book-ping .intro {
     font-size: 1.3em;
     color: #337ab7;
@@ -142,4 +143,15 @@ body.naked .wrap > .container {
 }
 .book-ping .field-bookreview-rate {
     text-align: center;
+}
+
+.book-ping-submitted {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    height: 80vh;
+}
+.book-ping-submitted h1 {
+    text-align: center;;
 }
