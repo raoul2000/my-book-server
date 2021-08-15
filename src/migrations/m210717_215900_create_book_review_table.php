@@ -15,7 +15,7 @@ class m210717_215900_create_book_review_table extends Migration
     {
         $this->createTable(self::TABLE_NAME, [
             'id' => $this->primaryKey(),
-            'book_id' => $this->string(32)->notNull(),
+            'book_id' => $this->string(40)->notNull(),
             'email' => $this->string(),
             'rate' => $this->tinyInteger(),
             'location_name' => $this->string(),

@@ -15,7 +15,7 @@ class m210717_220000_create_book_ping_table extends Migration
     {
         $this->createTable(self::TABLE_NAME, [
             'id' => $this->primaryKey(),
-            'book_id' => $this->string(32)->notNull(),
+            'book_id' => $this->string(40)->notNull(),
             'user_ip' => $this->string(50),
             'created_at' => $this->dateTime()
         ]);
