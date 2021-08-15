@@ -28,11 +28,14 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      * List of names for each status.
      * @var array
      */
-    public $statusList = [
-        self::STATUS_ACTIVE   => 'Active',
-        self::STATUS_INACTIVE => 'Inactive',
-        self::STATUS_DELETED  => 'Deleted'
-    ];
+    public static function getStatusList()
+    {
+        return         [
+            self::STATUS_ACTIVE   => 'Active',
+            self::STATUS_INACTIVE => 'Inactive',
+            self::STATUS_DELETED  => 'Deleted'
+        ];
+    }
 
     public $new_password;
     /**

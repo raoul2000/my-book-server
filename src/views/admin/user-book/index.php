@@ -1,8 +1,10 @@
 <?php
 
+use app\models\UserBook;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
+$readStatusList = UserBook::getReadStatusList();
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\SearchUserBook */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -29,7 +31,16 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'user_id',
             'book_id',
-            'created_at',
+            [
+                'attribute' => 'read_status',
+                'label'     => 'Read Status',
+                'filter'    => $readStatusList,
+                'value'     => function ($model) use ($readStatusList) {
+                    return $model->read_status != null
+                        ? Html::encode($readStatusList[$model->read_status])
+                        : null;
+                }
+            ],
             'updated_at',
 
             ['class' => 'yii\grid\ActionColumn'],

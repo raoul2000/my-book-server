@@ -12,6 +12,7 @@ use yii\db\Expression;
  * @property int $id
  * @property int $user_id
  * @property string $book_id
+ * @property int $read_status
  * @property string|null $created_at
  * @property string|null $updated_at
  *
@@ -20,6 +21,22 @@ use yii\db\Expression;
  */
 class UserBook extends \yii\db\ActiveRecord
 {
+    const READ_STATUS_TO_READ   = 1;
+    const READ_STATUS_READ      = 2;
+    const READ_STATUS_READING   = 3;
+
+    /**
+     * List of names for each status.
+     * @var array
+     */
+    public static function getReadStatusList()
+    {
+        return [
+            self::READ_STATUS_TO_READ   => 'To Read',
+            self::READ_STATUS_READ      => 'Read',
+            self::READ_STATUS_READING   => 'Reading'
+        ];
+    }
     /**
      * {@inheritdoc}
      */
@@ -38,7 +55,7 @@ class UserBook extends \yii\db\ActiveRecord
             'value' => new Expression('NOW()'),
         ]];
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -46,7 +63,7 @@ class UserBook extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'book_id'], 'required'],
-            [['user_id'], 'integer'],
+            [['user_id', 'read_status'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['book_id'], 'string', 'max' => 40],
             [['book_id'], 'exist', 'skipOnError' => true, 'targetClass' => Book::className(), 'targetAttribute' => ['book_id' => 'id']],
@@ -63,6 +80,7 @@ class UserBook extends \yii\db\ActiveRecord
             'id' => 'ID',
             'user_id' => 'User ID',
             'book_id' => 'Book ID',
+            'read_status' => 'Read Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
