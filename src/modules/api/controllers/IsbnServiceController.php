@@ -36,7 +36,7 @@ class IsbnServiceController extends Controller
             $book->author = $response->data['items'][0]['volumeInfo']['authors'][0];
 
             if (array_key_exists('subtitle', $response->data['items'][0]['volumeInfo'])) {
-                $book->subtitle = $response->data['items'][0]['volumeInfo']['title']['subtitle'];
+                $book->subtitle = $response->data['items'][0]['volumeInfo']['subtitle'];
             }
             return $book;
         } else {
