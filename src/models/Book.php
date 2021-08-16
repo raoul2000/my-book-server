@@ -12,6 +12,7 @@ use \thamtech\uuid\helpers\UuidHelper;
  *
  * @property string $id
  * @property string $title
+ * @property string $subtitle
  * @property string|null $author
  * @property string|null $isbn
  */
@@ -45,7 +46,7 @@ class Book extends \yii\db\ActiveRecord
             [['title'], 'required'],
             [['isbn'], 'string', 'max' => 15],
             [['created_at', 'updated_at'], 'safe'],
-            [['title', 'author'], 'string', 'max' => 255],
+            [['title', 'subtitle', 'author'], 'string', 'max' => 255],
         ];
     }
 
@@ -56,6 +57,7 @@ class Book extends \yii\db\ActiveRecord
     {
         return [
             'title' => 'Title',
+            'subtitle' => 'Sub Title',
             'author' => 'Author',
             'isbn' => 'ISBN',
             'created_at' => 'Created At',
@@ -70,7 +72,7 @@ class Book extends \yii\db\ActiveRecord
         if (!parent::beforeSave($insert)) {
             return false;
         }
-        if($insert) {
+        if ($insert) {
             $this->id = UuidHelper::uuid();
         }
         return true;
@@ -111,7 +113,7 @@ class Book extends \yii\db\ActiveRecord
             ->via('userBooks');
     }
 
-    
+
     public function getPingsCount()
     {
         //TODO: requires extra query - could be optimized (or not used)

@@ -34,8 +34,11 @@ class IsbnServiceController extends Controller
             $book = new Book();
             $book->title = $response->data['items'][0]['volumeInfo']['title'];
             $book->author = $response->data['items'][0]['volumeInfo']['authors'][0];
+
+            if (array_key_exists('subtitle', $response->data['items'][0]['volumeInfo'])) {
+                $book->subtitle = $response->data['items'][0]['volumeInfo']['title']['subtitle'];
+            }
             return $book;
-            //return $response->data;
         } else {
             $response = Yii::$app->getResponse();
             $response->setStatusCode(500);
