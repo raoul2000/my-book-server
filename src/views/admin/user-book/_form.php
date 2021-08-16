@@ -3,6 +3,7 @@
 use app\models\UserBook;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii2mod\rating\StarRating;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\UserBook */
@@ -19,6 +20,17 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'read_status')
         ->dropDownList(UserBook::getReadStatusList(), ['prompt' => \Yii::t('app', 'select status ...')]) ?>
+
+    <?= $form->field($model, 'rate', ['template' => '{input}'])->widget(StarRating::class, [
+        'options' => [
+            'label' => 'Rate',
+            'title' => 'rate',
+            'class' => '',
+        ],
+        'clientOptions' => [
+            'number' => 5
+        ],
+    ]); ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

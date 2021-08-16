@@ -19,6 +19,7 @@ class m210717_215801_create_user_book_table extends Migration
             'user_id' => $this->integer()->notNull(),
             'book_id' => $this->string(40)->notNull(),
             'read_status' => $this->smallInteger(),
+            'rate' => $this->smallInteger(),
             'created_at' => $this->dateTime(),
             'updated_at' => $this->dateTime()
         ]);

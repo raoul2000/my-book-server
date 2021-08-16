@@ -17,7 +17,7 @@ class SearchUserBook extends UserBook
     public function rules()
     {
         return [
-            [['id', 'user_id', 'read_status'], 'integer'],
+            [['id', 'user_id', 'read_status','rate'], 'integer'],
             [['book_id', 'created_at', 'updated_at'], 'safe'],
         ];
     }
@@ -61,6 +61,7 @@ class SearchUserBook extends UserBook
             'id' => $this->id,
             'user_id' => $this->user_id,
             'read_status' => $this->read_status,
+            'rate' => $this->rate,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);

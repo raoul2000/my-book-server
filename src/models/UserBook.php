@@ -13,6 +13,7 @@ use yii\db\Expression;
  * @property int $user_id
  * @property string $book_id
  * @property int $read_status
+ * @property int $rate
  * @property string|null $created_at
  * @property string|null $updated_at
  *
@@ -63,7 +64,7 @@ class UserBook extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'book_id'], 'required'],
-            [['user_id', 'read_status'], 'integer'],
+            [['user_id', 'read_status', 'rate'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['book_id'], 'string', 'max' => 40],
             [['book_id'], 'exist', 'skipOnError' => true, 'targetClass' => Book::className(), 'targetAttribute' => ['book_id' => 'id']],
@@ -81,6 +82,7 @@ class UserBook extends \yii\db\ActiveRecord
             'user_id' => 'User ID',
             'book_id' => 'Book ID',
             'read_status' => 'Read Status',
+            'rate' => 'Rate',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
