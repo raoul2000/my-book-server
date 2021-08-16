@@ -41,6 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         : null;
                 }
             ],
+            'rate',
             'updated_at',
 
             ['class' => 'yii\grid\ActionColumn'],

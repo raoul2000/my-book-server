@@ -43,6 +43,21 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                 }
             ],
+            [
+                'label' => 'Rate',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    if (isset($model->rate)) {
+                        return  \yii2mod\rating\StarRating::widget([
+                            'name' => 'book_rate',
+                            'value' => $model->rate,
+                            'clientOptions' => [
+                                'readOnly' => true
+                            ],
+                        ]);
+                    }
+                }
+            ],
             'created_at',
             'updated_at',
         ],
