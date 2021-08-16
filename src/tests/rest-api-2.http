@@ -23,12 +23,18 @@ Content-Type:application/json
 X-Api-Key: {{apiKey}}
 
 {
-    "title": "___Babylon99",
-    "author": "Inconnu"
+    "book": {
+        "title": "___Babylon99",
+        "author": "Inconnu",
+        "isbn" : "1224"
+    },
+    "userBook" : {
+        "read_status": 2
+    }
 }
 
 ### Read All
-GET {{baseUrl}}?r=api/user-book
+GET {{baseUrl}}?r=api/user-book&expand=book
 X-Api-Key: {{apiKey}}
 Cookie: XDEBUG_SESSION=XDEBUG_ECLIPSE
 
@@ -38,7 +44,7 @@ X-Api-Key: {{apiKey}}
 Cookie: XDEBUG_SESSION=XDEBUG_ECLIPSE
 
 ### Update One
-PUT {{baseUrl}}?r=api/user-book/update&id=7
+PUT {{baseUrl}}?r=api/user-book/update&id=e767cf3d-2119-4ea3-8b76-7a31f7823698
 Content-Type:application/json
 X-Api-Key: {{apiKey}}
 Cookie: XDEBUG_SESSION=XDEBUG_ECLIPSE
