@@ -17,7 +17,7 @@ class SearchUserBook extends UserBook
     public function rules()
     {
         return [
-            [['id', 'user_id'], 'integer'],
+            [['id', 'user_id', 'read_status'], 'integer'],
             [['book_id', 'created_at', 'updated_at'], 'safe'],
         ];
     }
@@ -60,6 +60,7 @@ class SearchUserBook extends UserBook
         $query->andFilterWhere([
             'id' => $this->id,
             'user_id' => $this->user_id,
+            'read_status' => $this->read_status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);

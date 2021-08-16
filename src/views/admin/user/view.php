@@ -1,5 +1,6 @@
 <?php
 
+use app\models\User;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -37,7 +38,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'username',
             'email:email',
-            'status',
+            [
+                'label' => 'Status',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    if ($model->status) {
+                        return User::getStatusList()[$model->status] . " (".$model->status.")";
+                    }
+                }
+            ],            
             'password_hash',
             'created_at',
             'updated_at'

@@ -8,6 +8,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
+$statusList = User::getStatusList();
 $this->title = 'Users';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -36,10 +37,10 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'status',
                 'label'     => 'Status',
-                'filter'    => $searchModel->statusList,
-                'value'     => function ($model, $key, $index, $column) use ($searchModel) {
+                'filter'    => $statusList,
+                'value'     => function ($model) use ($statusList) {
                     return $model->status != null
-                        ? Html::encode($searchModel->statusList[$model->status])
+                        ? Html::encode($statusList[$model->status])
                         : null;
                 }
             ],

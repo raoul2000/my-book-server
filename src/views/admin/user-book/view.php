@@ -1,5 +1,6 @@
 <?php
 
+use app\models\UserBook;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -14,8 +15,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="user-book-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <hr/>
-    
+    <hr />
+
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
@@ -33,6 +34,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'user_id',
             'book_id',
+            [
+                'label' => 'Read Status',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    if ($model->read_status) {
+                        return UserBook::getReadStatusList()[$model->read_status];
+                    }
+                }
+            ],
             'created_at',
             'updated_at',
         ],
