@@ -1,4 +1,4 @@
-@apiKey = uBm5GB7CHhBr18TKO6ORC_Ws-fFlABc4
+@apiKey = dgdXFq4uANKi3hJC9t2nDi-dp9H8k9lk
 
 ### login
 
@@ -15,6 +15,10 @@ GET {{baseUrl}}?r=api/auth/check-api-key&token={{apiKey}}
 
 ### SEARCH ISBN
 GET {{baseUrl}}?r=api/isbn-service/search&isbn=9782070344130
+X-Api-Key: {{apiKey}}
+
+### SEARCH BOOK DESCRIPTION  (ISBN)
+GET {{baseUrl}}?r=api/isbn-service/description&isbn=9782070344130
 X-Api-Key: {{apiKey}}
 
 ### Create
