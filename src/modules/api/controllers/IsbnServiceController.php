@@ -2,8 +2,8 @@
 
 namespace app\modules\api\controllers;
 
-use app\models\Book;
 use Yii;
+use app\models\Book;
 use yii\rest\Controller;
 use yii\httpclient\Client;
 
@@ -15,6 +15,7 @@ class IsbnServiceController extends Controller
     {
         return [
             'search' => ['GET', 'HEAD', 'OPTIONS'],
+            'abstract' => ['GET', 'HEAD', 'OPTIONS'],
         ];
     }
 
@@ -23,12 +24,7 @@ class IsbnServiceController extends Controller
      */
     public function actionSearch($isbn)
     {
-        $client = new Client();
-        $response = $client->createRequest()
-            ->setMethod('GET')
-            ->setUrl('https://www.googleapis.com/books/v1/volumes')
-            ->setData(['q' => 'isbn:' . $isbn])
-            ->send();
+        $response = $this->sendRequestGoogleBookApi($isbn);
         if ($response->isOk) {
             // TODO: validate response data
             $book = new Book();
@@ -44,5 +40,34 @@ class IsbnServiceController extends Controller
             $response->setStatusCode(500);
             return ['error' => true, 'info' => $response];
         }
+    }
+
+    public function actionDescription($isbn)
+    {
+        $response = $this->sendRequestGoogleBookApi($isbn);
+        if ($response->isOk) {
+            // TODO: validate response data
+
+            $description = '';
+            if (array_key_exists('description', $response->data['items'][0]['volumeInfo'])) {
+                $description = $response->data['items'][0]['volumeInfo']['description'];
+            }
+            return [
+                'description' => $description
+            ];
+        } else {
+            $response = Yii::$app->getResponse();
+            $response->setStatusCode(500);
+            return ['error' => true, 'info' => $response];
+        }
+    }
+    private function sendRequestGoogleBookApi($isbn) 
+    {
+        $client = new Client();
+        return $client->createRequest()
+            ->setMethod('GET')
+            ->setUrl('https://www.googleapis.com/books/v1/volumes')
+            ->setData(['q' => 'isbn:' . $isbn])
+            ->send();
     }
 }
