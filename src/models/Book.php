@@ -46,6 +46,7 @@ class Book extends \yii\db\ActiveRecord
             [['title'], 'required'],
             [['isbn'], 'string', 'max' => 15],
             [['created_at', 'updated_at'], 'safe'],
+            [['title', 'subtitle', 'author'], 'trim'],
             [['title', 'subtitle', 'author'], 'string', 'max' => 255],
         ];
     }
