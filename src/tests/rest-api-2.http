@@ -1,5 +1,5 @@
 @apiKey = dgdXFq4uANKi3hJC9t2nDi-dp9H8k9lk
-
+@bookId = fd3b79a1-a39b-4275-9fc1-0918671ade37
 ### login
 
 POST {{baseUrl}}?r=api/auth/login
@@ -10,8 +10,14 @@ Content-Type: application/json
     "password": "bob"
 }
 
+
 ### Check Token
 GET {{baseUrl}}?r=api/auth/check-api-key&token={{apiKey}}
+
+
+### Email Ticket
+GET {{baseUrl}}?r=api/ticket/send-email&id={{bookId}}
+X-Api-Key: {{apiKey}}
 
 ### SEARCH ISBN
 GET {{baseUrl}}?r=api/isbn-service/search&isbn=9782070344130
