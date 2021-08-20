@@ -50,10 +50,11 @@ AppAsset::register($this);
                             ['label' => 'Email',         'url' => ['/admin/email']],
                             ['label' => 'ISBN Service',  'url' => ['/admin/isbn-service']],
                             '<li class="divider"></li>',
-                            ['label' => 'Books',         'url' => ['/admin/book']],
-                            ['label' => 'Users/Books',         'url' => ['/admin/user-book']],
-                            ['label' => 'Book Reviews',  'url' => ['/admin/book-review']],
-                            ['label' => 'Book Pings',    'url' => ['/admin/book-ping']]
+                            ['label' => 'Book',         'url' => ['/admin/book']],
+                            ['label' => 'User/Book',    'url' => ['/admin/user-book']],
+                            ['label' => 'Book Ticket',  'url' => ['/admin/book-ticket']],
+                            ['label' => 'Book Review',  'url' => ['/admin/book-review']],
+                            ['label' => 'Book Ping',    'url' => ['/admin/book-ping']]
                         ]
                     ]) : '',
 

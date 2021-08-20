@@ -15,6 +15,8 @@ use \thamtech\uuid\helpers\UuidHelper;
  * @property string $subtitle
  * @property string|null $author
  * @property string|null $isbn
+ * @property string|null $created_at
+ * @property string|null $updated_at
  */
 class Book extends \yii\db\ActiveRecord
 {
