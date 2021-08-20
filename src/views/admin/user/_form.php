@@ -12,8 +12,8 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'username')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
+    <?= $form->field($model, 'email')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
     <?php if($forCreate): ?>
         <?= $form->field($model, 'password')->passwordInput() ?>
         <?= $form->field($model, 'password_confirm')->passwordInput() ?>

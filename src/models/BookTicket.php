@@ -47,7 +47,9 @@ class BookTicket extends \yii\db\ActiveRecord
         return [
             [['user_id', 'book_id'], 'required'],
             [['user_id'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['id'], 'safe', 'when' => function($model) {
+                return Yii::$app->user->can('administrate');
+            }],
             [['book_id'], 'string', 'max' => 40],
             [['book_id'], 'exist', 'skipOnError' => true, 'targetClass' => Book::className(), 'targetAttribute' => ['book_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
@@ -67,7 +69,30 @@ class BookTicket extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
         ];
     }
-
+    /**
+     * {@inheritdoc}
+     */    
+    public function beforeSave($insert)
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+        if ($insert && !isset($this->id)) {
+            // TODO: handle edge case
+            $maxTries = 5;
+            for ($i = 0; $i < $maxTries; $i++) {
+                $id = $this->generateId();
+                if (BookTicket::findOne($id) === null) {
+                    $this->id = $id;
+                    break;
+                }
+            }
+            if (!isset($this->id)) {
+                throw new \Exception("failed to generate Id");
+            }
+        }
+        return true;
+    }
     /**
      * Gets query for [[Book]].
      *
@@ -87,4 +112,44 @@ class BookTicket extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
+
+    public function generateId()
+    {
+        srand((float) microtime() * 1000000);
+        $char = [
+            'A', 'B', 'C', 'D', 'E',
+            'F', 'G', 'H', 'J', 'K',
+            'L', 'M', 'N', 'P', 'Q',
+            'R', 'S', 'T', 'U', 'V',
+            'X', 'Y', 'Z',
+            '2', '3', '4', '5', '6',
+            '7', '8', '9'
+        ];
+        $maxVal = count($char) - 1;
+        $idLength = 6;
+        $id = '';
+        for ($i = 1; $i <= $idLength; $i++) {
+            $id .= $char[rand(0, $maxVal)];
+            if (strlen($id) === intdiv($idLength, 2)) {
+                $id .= '-';
+            }
+        }
+        return $id;
+    }
+    public function extraFields()
+    {
+        return ['book'];
+    }    
+    /**
+     * Hides sensitive fields so they are not exposed to REST API
+     */
+    public function fields()
+    {
+        $fields = parent::fields();
+
+        // remove fields that contain sensitive information
+        unset($fields['user_id']);
+
+        return $fields;
+    }    
 }

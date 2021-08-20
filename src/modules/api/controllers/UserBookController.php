@@ -45,7 +45,6 @@ class UserBookController extends Controller
         $book = new Book();
 
         $params = Yii::$app->getRequest()->getBodyParams();
-        $book->load($params['book'],'');
         if ($book->load($params['book'],'') && $book->save()) {
             $book->refresh();           // update timestamp attributes
 
@@ -96,6 +95,7 @@ class UserBookController extends Controller
 
     public function actionUpdate($id)
     {
+        // TODO: refactor - externalize UserBook::find ...
         $userBook = UserBook::find()
             ->where(['user_id' => Yii::$app->user->getId()])
             ->andWhere(['book_id' => $id])

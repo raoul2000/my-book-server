@@ -1,6 +1,5 @@
-## `book` primary key
-- col `id` should be created as being the primaryKey
 
+# TODO
 ## Refactor book ping/review
 - delete table `book_ping`
 - rename `book_review` to `book_ping`
@@ -22,3 +21,7 @@ Rule:
 - a book traveling CANNOT be in read status "READING"
 - a book travaling CANNOT change its reading status
 - a book traveling CANNOT be modified : title, subtitle, author, isbn, etc ....
+
+# DONE
+## `book` primary key
+- col `id` should be created as being the primaryKey
