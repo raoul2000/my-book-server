@@ -20,7 +20,7 @@ class TicketController extends Controller
     protected function verbs()
     {
         return [
-            'index'     => ['GET', 'HEAD', 'OPTIONS'],
+            'index'      => ['GET', 'HEAD', 'OPTIONS'],
             'create'     => ['POST', 'HEAD', 'OPTIONS'],
             'send-email' => ['GET', 'HEAD', 'OPTIONS'],
         ];
@@ -28,39 +28,21 @@ class TicketController extends Controller
 
     public function actionIndex($id)
     {
-        return new ActiveDataProvider([
-            'query' =>  BookTicket::find()
-                ->where([
-                    'user_id' => Yii::$app->user->getId(),
-                    'book_id' => $id
-                ])
-        ]);
+        $ticket = $this->findBookTicketModel($id);
+        if($ticket) {
+            return $ticket;
+        }
+        throw new NotFoundHttpException('ticket not found');
     }
+
 
     public function actionCreate($id)
     {
-        // TODO: add condition book must not be already traveling
-        // the book MUST belong to the current user
-        $userBookExists = UserBook::find()
-            ->where([
-                'user_id' => Yii::$app->user->getId(),
-                'book_id' => $id
-            ])
-            ->exists();
-
-        if (!$userBookExists) {
+        if (!$this->userBookExists($id)) {
             throw new NotFoundHttpException('book not found');
         }
 
-        // a ticket MUST NOT already exist for this book
-        $ticketExists = BookTicket::find()
-            ->where([
-                'user_id' => Yii::$app->user->getId(),
-                'book_id' => $id
-            ])
-            ->exists();
-
-        if($ticketExists) {
+        if ($this->findBookTicketModel($id)) {
             throw new ServerErrorHttpException('ticket already created');
         }
 
@@ -70,7 +52,7 @@ class TicketController extends Controller
 
         $ticket->book_id = $id;
         $ticket->user_id = Yii::$app->user->getId();
-        if( $ticket->save()) {
+        if ($ticket->save()) {
             $ticket->refresh();
             return $ticket;
         } else {
@@ -88,6 +70,7 @@ class TicketController extends Controller
      */
     public function actionSendEmail($id)
     {
+        // FIXME: better find book ticket with book relation
         // TODO: add condition book must not be already traveling
         $userBook = UserBook::find()
             ->where([
@@ -132,5 +115,26 @@ class TicketController extends Controller
             'ticketUrl' => $ticketUrl,
             'emailSent' => $emailSent
         ];
+    }
+
+    private function findBookTicketModel($bookId)
+    {
+        return BookTicket::find()
+            ->where([
+                'user_id' => Yii::$app->user->getId(),
+                'book_id' => $bookId
+            ])
+            ->one();
+    }
+
+    private function userBookExists($bookId)
+    {
+        // TODO: add condition book must not be already traveling
+        return UserBook::find()
+            ->where([
+                'user_id' => Yii::$app->user->getId(),
+                'book_id' => $bookId
+            ])
+            ->exists();
     }
 }
