@@ -5,6 +5,8 @@ namespace app\models;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
+use Da\QrCode\QrCode;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "book_ticket".
@@ -47,7 +49,7 @@ class BookTicket extends \yii\db\ActiveRecord
         return [
             [['user_id', 'book_id'], 'required'],
             [['user_id'], 'integer'],
-            [['id'], 'safe', 'when' => function($model) {
+            [['id'], 'safe', 'when' => function ($model) {
                 return Yii::$app->user->can('administrate');
             }],
             [['book_id'], 'string', 'max' => 40],
@@ -69,9 +71,15 @@ class BookTicket extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
         ];
     }
+    public function afterDelete()
+    {
+        if (file_exists($this->getQrCodeFilePath())) {
+            unlink($this->getQrCodeFilePath());
+        }
+    }
     /**
      * {@inheritdoc}
-     */    
+     */
     public function beforeSave($insert)
     {
         if (!parent::beforeSave($insert)) {
@@ -92,6 +100,35 @@ class BookTicket extends \yii\db\ActiveRecord
             }
         }
         return true;
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        if ($insert) {
+            $this->createQrCode();
+        }
+    }
+    /**
+     * @return string - the absolute file path of the QRCode
+     */
+    public function getQrCodeFilePath()
+    {
+        return Yii::getAlias('@app/web/files/qr-codes/' . $this->id . '.png');
+    }
+    /**
+     * @return string - URL of the QRCode
+     */
+    public function getQrCodeUrl()
+    {
+        return Url::to('@web/files/qr-codes/' . $this->id . '.png', true);
+    }
+    private function createQrCode()
+    {
+        // TODO: replace QRCode Id with ping url
+        $qrCode = (new QrCode($this->id))
+            ->setSize(150)
+            ->setMargin(5);
+        $qrCode->writeFile($this->getQrCodeFilePath());
     }
     /**
      * Gets query for [[Book]].
@@ -139,7 +176,7 @@ class BookTicket extends \yii\db\ActiveRecord
     public function extraFields()
     {
         return ['book'];
-    }    
+    }
     /**
      * Hides sensitive fields so they are not exposed to REST API
      */
@@ -149,7 +186,10 @@ class BookTicket extends \yii\db\ActiveRecord
 
         // remove fields that contain sensitive information
         unset($fields['user_id']);
+        $fields['qrcode_url'] = function ($model) {
+            return $model->getQrCodeUrl();
+        };
 
         return $fields;
-    }    
+    }
 }

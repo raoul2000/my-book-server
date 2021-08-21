@@ -36,5 +36,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'updated_at',
         ],
     ]) ?>
+    <?= Html::img($model->getQrCodeUrl()) ?>
 
 </div>
