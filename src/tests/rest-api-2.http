@@ -34,6 +34,10 @@ X-Api-Key: {{apiKey}}
 GET {{baseUrl}}?r=api/ticket&id=NOT_FOUND
 X-Api-Key: {{apiKey}}
 
+### Ticket : Delete
+DELETE  {{baseUrl}}?r=api/ticket/delete&id={{bookId}}
+X-Api-Key: {{apiKey}}
+
 ### Email Ticket
 GET {{baseUrl}}?r=api/ticket/send-email&id={{bookId}}
 X-Api-Key: {{apiKey}}

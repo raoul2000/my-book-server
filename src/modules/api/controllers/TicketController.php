@@ -23,6 +23,7 @@ class TicketController extends Controller
             'index'      => ['GET', 'HEAD', 'OPTIONS'],
             'create'     => ['POST', 'HEAD', 'OPTIONS'],
             'send-email' => ['GET', 'HEAD', 'OPTIONS'],
+            'delete'     => ['DELETE', 'OPTIONS'],
         ];
     }
 
@@ -115,6 +116,23 @@ class TicketController extends Controller
             'ticketUrl' => $ticketUrl,
             'emailSent' => $emailSent
         ];
+    }
+
+    public function actionDelete($id)
+    {
+        // TODO: by business rule a ticket that has benn used (checked-in) 
+        // cannot be delete. The traval has started, the ticket must remains
+        // unmodified
+        if ($this->userBookExists($id)) {
+            $ticket = $this->findBookTicketModel($id);
+            if($ticket) {
+                $ticket->delete();
+            } else {
+                throw new NotFoundHttpException("Ticket not found");    
+            }
+        } else {
+            throw new NotFoundHttpException("Ticket not found");
+        }
     }
 
     private function findBookTicketModel($bookId)
