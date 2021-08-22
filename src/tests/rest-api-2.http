@@ -34,6 +34,10 @@ X-Api-Key: {{apiKey}}
 GET {{baseUrl}}?r=api/ticket&id=NOT_FOUND
 X-Api-Key: {{apiKey}}
 
+### Ticket : Boarding
+POST  {{baseUrl}}?r=api/ticket/boarding&id={{bookId}}
+X-Api-Key: {{apiKey}}
+
 ### Ticket : Delete
 DELETE  {{baseUrl}}?r=api/ticket/delete&id={{bookId}}
 X-Api-Key: {{apiKey}}
@@ -70,7 +74,7 @@ X-Api-Key: {{apiKey}}
 }
 
 ### USER-BOOK - Read All 
-GET {{baseUrl}}?r=api/user-book&expand=book
+GET {{baseUrl}}?r=api/user-book&expand=book&expand=book
 X-Api-Key: {{apiKey}}
 Cookie: XDEBUG_SESSION=XDEBUG_ECLIPSE
 

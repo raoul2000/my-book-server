@@ -22,6 +22,7 @@ class TicketController extends Controller
         return [
             'index'      => ['GET', 'HEAD', 'OPTIONS'],
             'create'     => ['POST', 'HEAD', 'OPTIONS'],
+            'boarding'   => ['POST', 'HEAD', 'OPTIONS'],
             'send-email' => ['GET', 'HEAD', 'OPTIONS'],
             'delete'     => ['DELETE', 'OPTIONS'],
         ];
@@ -36,6 +37,21 @@ class TicketController extends Controller
         throw new NotFoundHttpException('ticket not found');
     }
 
+
+    public function actionBoarding($id)
+    {
+        if (!$this->userBookExists($id)) {
+            throw new NotFoundHttpException('book not found');
+        }
+
+        $ticket = $this->findBookTicketModel($id);
+        if (!$ticket) {
+            throw new NotFoundHttpException('ticket not found');
+        }
+
+        // TODO: implement me !
+        return $ticket;
+    }
 
     public function actionCreate($id)
     {
