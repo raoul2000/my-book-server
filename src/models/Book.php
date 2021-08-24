@@ -15,6 +15,7 @@ use \thamtech\uuid\helpers\UuidHelper;
  * @property string $subtitle
  * @property string|null $author
  * @property string|null $isbn
+ * @property int|null $is_traveling
  * @property string|null $created_at
  * @property string|null $updated_at
  */
@@ -47,6 +48,7 @@ class Book extends \yii\db\ActiveRecord
         return [
             [['title'], 'required'],
             [['isbn'], 'string', 'max' => 15],
+            [['is_traveling'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['title', 'subtitle', 'author'], 'trim'],
             [['title', 'subtitle', 'author'], 'string', 'max' => 255],
@@ -63,6 +65,7 @@ class Book extends \yii\db\ActiveRecord
             'subtitle' => 'Sub Title',
             'author' => 'Author',
             'isbn' => 'ISBN',
+            'is_traveling' => 'Is Traveling',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];

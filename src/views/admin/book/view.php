@@ -38,6 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'subtitle',
             'author',
             'isbn',
+            'is_traveling:boolean',
             'created_at',
             'updated_at'
         ],
