@@ -9,6 +9,7 @@ use yii\web\NotFoundHttpException;
 use yii\web\ServerErrorHttpException;
 use yii\data\ActiveDataProvider;
 use app\models\User;
+use app\models\Book;
 use yii\helpers\Url;
 use app\models\UserBook;
 
@@ -31,7 +32,7 @@ class TicketController extends Controller
     public function actionIndex($id)
     {
         $ticket = $this->findBookTicketModel($id);
-        if($ticket) {
+        if ($ticket) {
             return $ticket;
         }
         throw new NotFoundHttpException('ticket not found');
@@ -49,8 +50,19 @@ class TicketController extends Controller
             throw new NotFoundHttpException('ticket not found');
         }
 
-        // TODO: implement me !
-        return $ticket;
+        $book = Book::findOne($ticket->book_id);
+        if ($book) {
+            if($book->is_traveling) {
+                throw new ServerErrorHttpException('book already traveling');
+            }
+            $book->updateAttributes(['is_traveling' => true]);
+            return [
+                'book' => $book,
+                'ticket' => $ticket
+            ];
+        } else {
+            throw new NotFoundHttpException('book not found');
+        }
     }
 
     public function actionCreate($id)
@@ -141,10 +153,10 @@ class TicketController extends Controller
         // unmodified
         if ($this->userBookExists($id)) {
             $ticket = $this->findBookTicketModel($id);
-            if($ticket) {
+            if ($ticket) {
                 $ticket->delete();
             } else {
-                throw new NotFoundHttpException("Ticket not found");    
+                throw new NotFoundHttpException("Ticket not found");
             }
         } else {
             throw new NotFoundHttpException("Ticket not found");
