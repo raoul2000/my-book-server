@@ -5,6 +5,7 @@ namespace app\models;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
+use app\migrations\TableName;
 
 /**
  * This is the model class for table "{{%book_ping}}".
@@ -22,7 +23,7 @@ class BookPing extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%book_ping}}';
+        return TableName::BOOK_PING;
     }
 
     /**

@@ -5,6 +5,7 @@ namespace app\models;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
+use app\migrations\TableName;
 
 /**
  * This is the model class for table "{{%user}}".
@@ -43,7 +44,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public static function tableName()
     {
-        return '{{%user}}';
+        return TableName::USER;
     }
 
     /**

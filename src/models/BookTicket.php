@@ -7,6 +7,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
 use Da\QrCode\QrCode;
 use yii\helpers\Url;
+use app\migrations\TableName;
 
 /**
  * This is the model class for table "book_ticket".
@@ -27,7 +28,7 @@ class BookTicket extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'book_ticket';
+        return TableName::BOOK_TICKET;
     }
 
     /**
