@@ -1,5 +1,5 @@
 @apiKey = omuGXEhLr38vSWVJZRUT-0jCttJjwgqL
-@bookId = 943ba4b8-2d6d-4238-9f47-a2ef243ffffb
+@bookId = 66b72c99-da90-4d71-b16c-4cbdf8a09b5b
 
 
 ### login ---------------------------------------------------
@@ -15,6 +15,10 @@ Content-Type: application/json
 
 ### Check Token
 GET {{baseUrl}}?r=api/auth/check-api-key&token={{apiKey}}
+
+### TRACKER : read --------------------------------------------
+GET {{baseUrl}}?r=api/tracker&id={{bookId}}
+
 
 ### TICKET : create --------------------------------------------
 POST {{baseUrl}}?r=api/ticket/create&id={{bookId}}
