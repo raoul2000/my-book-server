@@ -11,7 +11,7 @@ use yii2mod\rating\StarRating;
 ?>
 <div class="book-ping">
     <div class="intro">
-        Laissez une trace de votre passage dans la vie de ce livre ...
+        Laissez une trace de votre passage dans le voyage de ce livre ...
     </div>
     <h2>
         <?= Html::encode($book->title) ?><br />
@@ -53,7 +53,7 @@ use yii2mod\rating\StarRating;
             ... et aidez-le à poursuivre sa route vers son prochain lecteur.
         </div>
         <div class="form-group">
-            <?= Html::submitButton('C\'est parti !', ['class' => 'btn btn-primary btn-submit-review']) ?>
+            <?= Html::submitButton('Enregistrer', ['class' => 'btn btn-primary btn-submit-review']) ?>
         </div>
         <?php ActiveForm::end(); ?>
 

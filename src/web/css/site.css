@@ -152,6 +152,13 @@ body.naked .wrap > .container {
     align-content: center;
     height: 80vh;
 }
-.book-ping-submitted h1 {
-    text-align: center;;
+
+.tracker-form {
+    max-width: 500px;
+    padding-left: 1em;
+    border-left: 4px solid #d9d3d3;
+    margin-top:5em;
+}
+.book-num {
+    width:7em;
 }

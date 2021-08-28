@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\BookPing;
 use app\models\BookTicket;
+use app\models\forms\TrackerForm;
 
 class BookPingController extends \yii\web\Controller
 {
@@ -44,6 +45,18 @@ class BookPingController extends \yii\web\Controller
         return $this->render('ping-alive', [
             'book' => $ticket->book,
             'bookReview' => $ping
+        ]);
+    }
+
+    public function actionForm()
+    {
+        $model = new  TrackerForm();
+        if($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $this->redirect(['/book-ping', 'id' => $model->booking_number]);
+        }
+
+        return $this->render('tracker-form', [
+            'model' => $model,
         ]);
     }
 
