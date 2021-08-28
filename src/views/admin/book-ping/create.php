@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $model app\models\BookPing */
 
 $this->title = 'Create Book Ping';
-$this->params['breadcrumbs'][] = ['label' => 'Book Pings', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Book Ping', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="book-ping-create">

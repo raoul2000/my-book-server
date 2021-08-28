@@ -3,22 +3,25 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Book;
 use app\models\BookPing;
-use app\models\BookReview;
+use app\models\BookTicket;
 
 class BookPingController extends \yii\web\Controller
 {
     public $layout = 'naked';
     /**
-     * Creates a ping for a book
+     * Creates a ping for a book given its travel ticket Id
      * 
-     * @param stinrg $id the book id
+     * @param stinrg $id the ticket id
      */
     public function actionIndex($id)
     {
-        $book = Book::findOne($id);
-        if ($book === null) {
+        $ticket = BookTicket::find()
+            ->where(['id' => $id])
+            ->with('book')
+            ->one();
+
+        if ($ticket === null) {
             return $this->render('ping-dead');
         }
 
@@ -26,51 +29,57 @@ class BookPingController extends \yii\web\Controller
             return $this->render('review-submited');
         }
 
-        $bookReview = new BookReview();
+        $ping = $this->savePingMaybe($ticket);
+
         // submiting a book review
-        if ($bookReview->load(Yii::$app->request->post())) {
-            $bookReview->book_id = $book->id;
-            $bookReview->user_ip = Yii::$app->request->getUserIP();
-            if ($this->deserveToBeSaved($bookReview)) {
-                $bookReview->save();
+        if ($ping->load(Yii::$app->request->post())) {
+
+            if ($this->deserveToBeSaved($ping)) {
+                $ping->updateAttributes(['text', 'rate', 'location_name', 'email']);
                 $this->setBookReviewSubmited(true);
             }
             return $this->render('review-submited');
-        } else {
-            if ($this->canSavePing()) {
-                $ping = new BookPing();
-                $ping->book_id = $book->id;
-                $ping->user_ip = Yii::$app->request->getUserIP();
-                $ping->save();
-                $this->setPingSaved(true);
-            }
-
-            return $this->render('ping-alive', [
-                'book' => $book,
-                'bookReview' => $bookReview
-            ]);
         }
+
+        return $this->render('ping-alive', [
+            'book' => $ticket->book,
+            'bookReview' => $ping
+        ]);
     }
 
+    private function savePingMaybe($ticket)
+    {
+        if ($this->isPingSaved() === false) {
+            $ping = new BookPing();
+            $ping->book_id = $ticket->book->id;
+            $ping->user_ip = Yii::$app->request->getUserIP();
+            $ping->save();
+            $ping->refresh();
+            $this->setPingId($ping->id);
+        } else {
+            $ping = BookPing::findOne($this->getPingId());
+        }
+        return $ping;
+    }
     private function isBookReviewSubmited()
     {
         return Yii::$app->session['bookReviewSubmited'] === true;
     }
-    private function setBookReviewSubmited($val)
+    private function setBookReviewSubmited($submited)
     {
-        Yii::$app->session['bookReviewSubmited'] = $val;
+        Yii::$app->session['bookReviewSubmited'] = $submited;
     }
     private function isPingSaved()
     {
-        return Yii::$app->session['saveBookPing'] === true;
+        return isset(Yii::$app->session['pingId']);
     }
-    private function setPingSaved($saved)
+    private function setPingId($id)
     {
-        Yii::$app->session['saveBookPing'] = $saved;
+        Yii::$app->session['pingId'] = $id;
     }
-    private function canSavePing()
+    private function getPingId()
     {
-        return Yii::$app->params['saveBookPing'] && $this->isPingSaved() === false;
+        return Yii::$app->session['pingId'];
     }
     private function deserveToBeSaved($bookReview)
     {

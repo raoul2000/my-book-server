@@ -6,7 +6,7 @@ use yii\widgets\ActiveForm;
 use yii2mod\rating\StarRating;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\BookReview */
+/* @var $model app\models\BookPing */
 /* @var $form ActiveForm */
 ?>
 <div class="book-ping">
@@ -18,7 +18,7 @@ use yii2mod\rating\StarRating;
         <small><?= Html::encode($book->author) ?></small>
     </h2>
 
-    <div class="book-review">
+    <div class="book-ping">
         <?php $form = ActiveForm::begin(); ?>
 
         <?= $form->field($bookReview, 'rate', ['template' => '{input}'])->widget(StarRating::class, [

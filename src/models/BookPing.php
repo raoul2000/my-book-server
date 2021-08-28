@@ -12,7 +12,7 @@ use app\migrations\TableName;
  *
  * @property int $id
  * @property string $book_id
- * @property string|null $created_at
+ * @property string $text
  *
  * @property Book $book
  */
@@ -25,7 +25,7 @@ class BookPing extends \yii\db\ActiveRecord
     {
         return TableName::BOOK_PING;
     }
-
+    
     /**
      * {@inheritdoc}
      */
@@ -33,22 +33,24 @@ class BookPing extends \yii\db\ActiveRecord
     {
         return [[
             'class' => TimestampBehavior::className(),
-            'updatedAtAttribute' => false,
             'value' => new Expression('NOW()'),
         ]];
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['book_id'], 'required'],
-            [['created_at'], 'safe'],
+            [['book_id' ], 'required'],
             [['book_id'], 'string', 'max' => 40],
-            [['user_ip'], 'string', 'max' => 50],
             [['book_id'], 'exist', 'skipOnError' => true, 'targetClass' => Book::className(), 'targetAttribute' => ['book_id' => 'id']],
+            [['user_ip'], 'string', 'max' => 50],
+            [['text'], 'string'],
+            [['rate'], 'integer'],            
+            [['created_at', 'updated_at'], 'safe'],
+            [['location_name', 'email'], 'string', 'max' => 150],
         ];
     }
 
@@ -60,7 +62,12 @@ class BookPing extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'book_id' => 'Book ID',
+            'email' => "Email",
+            'rate' => 'Rate',
+            'text' => 'Text',
+            'location_name' => 'Location',
             'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
             'user_ip' => 'User IP'
         ];
     }

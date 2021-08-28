@@ -1,5 +1,5 @@
-@apiKey = fHuDB_ZYQ6JQxhYt2Mh4FSxTPrRu4GPy
-@bookId = 8aeef6af-9856-4553-9247-3806ca19c033
+@apiKey = omuGXEhLr38vSWVJZRUT-0jCttJjwgqL
+@bookId = 943ba4b8-2d6d-4238-9f47-a2ef243ffffb
 
 
 ### login ---------------------------------------------------
@@ -79,7 +79,7 @@ X-Api-Key: {{apiKey}}
 Cookie: XDEBUG_SESSION=XDEBUG_ECLIPSE
 
 ### USER-BOOK - View One
-GET {{baseUrl}}?r=api/user-book/view&id=7&expand=book
+GET {{baseUrl}}?r=api/user-book/view&id={{bookId}}&expand=book
 X-Api-Key: {{apiKey}}
 Cookie: XDEBUG_SESSION=XDEBUG_ECLIPSE
 

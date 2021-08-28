@@ -53,8 +53,7 @@ AppAsset::register($this);
                             ['label' => 'Book',         'url' => ['/admin/book']],
                             ['label' => 'User/Book',    'url' => ['/admin/user-book']],
                             ['label' => 'Book Ticket',  'url' => ['/admin/book-ticket']],
-                            ['label' => 'Book Review',  'url' => ['/admin/book-review']],
-                            ['label' => 'Book Ping',    'url' => ['/admin/book-ping']]
+                            ['label' => 'Book Ping',    'url' => ['/admin/book-ping']],
                         ]
                     ]) : '',
 

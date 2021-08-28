@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\SearchBookPing */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Book Pings';
+$this->title = 'Book Ping';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="book-ping-index">
@@ -15,10 +15,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <hr/>
     
-    <?php if(!$savePingEnabled): ?>
-        <div class="alert alert-danger">La sauvegarde des Pings est actuellement <b>désactivée</b></div>
-    <?php endif; ?>
-
     <p>
         <?= Html::a('Create Book Ping', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
@@ -31,9 +27,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             'book_id',
             'book.title',
+            'text:ntext',
+            'rate',
+            'location_name',
+            'email',
             'user_ip',
-            'created_at',
-
+            'updated_at',
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

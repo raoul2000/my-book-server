@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\BookPing */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Book Pings', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Book Ping', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -33,8 +33,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'book_id',
             'book.title',
+            'text:ntext',
+            'rate',
+            'location_name',
+            'email',    
             'user_ip',
-            'created_at',
+            'created_at',        
+            'updated_at',
         ],
     ]) ?>
 

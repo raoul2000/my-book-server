@@ -101,7 +101,7 @@ class Book extends \yii\db\ActiveRecord
      */
     public function getReviews()
     {
-        return $this->hasMany(BookReview::class, ['book_id' => 'id']);
+        return $this->hasMany(BookPing::class, ['book_id' => 'id']);
     }
 
     /**
