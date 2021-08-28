@@ -1,5 +1,7 @@
 
 # TODO
+- attribute is_traveling should be returned as boolean in REST response
+- 
 ## Refactor book ping/review
 - delete table `book_ping`
 - rename `book_review` to `book_ping`
