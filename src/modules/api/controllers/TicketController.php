@@ -2,16 +2,15 @@
 
 namespace app\modules\api\controllers;
 
-use app\models\BookTicket;
 use Yii;
 use yii\rest\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ServerErrorHttpException;
-use yii\data\ActiveDataProvider;
+use app\models\UserBook;
+use app\models\BookTicket;
 use app\models\User;
 use app\models\Book;
 use yii\helpers\Url;
-use app\models\UserBook;
 
 
 class TicketController extends Controller
