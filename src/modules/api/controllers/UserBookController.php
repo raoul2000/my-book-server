@@ -31,9 +31,11 @@ class UserBookController extends Controller
     public function actionIndex()
     {
         return new ActiveDataProvider([
-            'query' =>  UserBook::find()
+            'query' => UserBook::find()
                 ->with('book')
-                ->where(['user_id' => Yii::$app->user->getId()])
+                ->where([
+                    'user_id' => Yii::$app->user->getId()
+                ])
         ]);
     }
 
@@ -45,11 +47,11 @@ class UserBookController extends Controller
         $book = new Book();
 
         $params = Yii::$app->getRequest()->getBodyParams();
-        if ($book->load($params['book'],'') && $book->save()) {
+        if ($book->load($params['book'], '') && $book->save()) {
             $book->refresh();           // update timestamp attributes
 
             $userBook = new UserBook();
-            $userBook->load($params['userBook'],'');
+            $userBook->load($params['userBook'], '');
             $userBook->setAttributes([
                 'user_id' => Yii::$app->user->getId(),
                 'book_id' => $book->id
@@ -131,7 +133,6 @@ class UserBookController extends Controller
         }
         $response = Yii::$app->getResponse();
         $response->setStatusCode(201);
-
     }
 
     /**
