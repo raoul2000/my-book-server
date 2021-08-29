@@ -11,7 +11,7 @@ use yii2mod\rating\StarRating;
 ?>
 <div class="book-ping">
     <div class="intro">
-        Laissez une trace de votre passage dans le voyage de ce livre ...
+        Laissez une trace dans le voyage de ce livre ...
     </div>
     <h2>
         <?= Html::encode($book->title) ?><br />
@@ -31,7 +31,7 @@ use yii2mod\rating\StarRating;
                 'number' => 5
             ],
         ]); ?>
-        <?= $form->field($bookReview, 'text')->textarea(['rows' => 3, 'placeholder' => 'votre avis ? ... '])->label('')  ?>
+        <?= $form->field($bookReview, 'text')->textarea(['rows' => 3, 'placeholder' => 'votre avis sur ce livre...'])->label('')  ?>
 
         <div class="grid">
             <div class="row">
@@ -45,7 +45,7 @@ use yii2mod\rating\StarRating;
                     <?= $form->field($bookReview, 'email')
                         ->textInput(['placeholder' => 'votre adresse email ?', 'autocomplete' => 'off'])
                         ->label('')
-                        ->hint('si vous voulez avoir des nouvelles un jour, peut-être, laissez votre adresse email ici') ?>
+                        ->hint('Votre adresse email ne sera utilisée que pour vous envoyer des nouvelles de ce livre dans la suite de son voyage') ?>
                 </div>
             </div>
         </div>

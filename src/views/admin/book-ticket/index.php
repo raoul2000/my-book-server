@@ -11,7 +11,6 @@ $this->title = 'Book Tickets';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="book-ticket-index">
-    <?= Yii::getAlias('@foo') ?>
     <h1><?= Html::encode($this->title) ?></h1>
     <hr/>
     <p>
