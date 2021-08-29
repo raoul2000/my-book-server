@@ -8,16 +8,29 @@ use app\models\BookPing;
 use yii\rest\Controller;
 use yii\httpclient\Client;
 use yii\web\NotFoundHttpException;
+use app\modules\api\controllers\ControllerBehaviorTrait;
 
 class TrackerController extends Controller
 {
+    use ControllerBehaviorTrait {
+        behaviors as defaultBehaviors;
+    }
+    
     protected function verbs()
     {
         return [
             'index' => ['GET', 'HEAD', 'OPTIONS'],
         ];
     }
-
+    /**
+     * remove authentication filter
+     */
+    public function behaviors()
+    {
+        $behaviors = $this->defaultBehaviors();
+        unset($behaviors['authenticator']);
+        return $behaviors;
+    }
     /**
      * Returns the list of books belonging to the current user
      * 
