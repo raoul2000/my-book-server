@@ -39,6 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'author',
             'isbn',
             'is_traveling:boolean',
+            'ping_count',
             'created_at',
             'updated_at'
         ],

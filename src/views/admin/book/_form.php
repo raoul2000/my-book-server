@@ -19,8 +19,10 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'author')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'isbn')->textInput(['maxlength' => true]) ?>
-
+    
     <?= $form->field($model, 'is_traveling')->checkbox() ?>
+
+    <?= $form->field($model, 'ping_count')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

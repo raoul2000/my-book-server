@@ -17,6 +17,7 @@ use app\migrations\TableName;
  * @property string|null $author
  * @property string|null $isbn
  * @property boolean $is_traveling
+ * @property integer $ping_count
  * @property string|null $created_at
  * @property string|null $updated_at
  */
@@ -50,6 +51,7 @@ class Book extends \yii\db\ActiveRecord
             [['title'], 'required'],
             [['isbn'], 'string', 'max' => 15],
             [['is_traveling'], 'boolean'],
+            [['ping_count'], 'integer', 'min' => 0],
             [['created_at', 'updated_at'], 'safe'],
             [['title', 'subtitle', 'author'], 'trim'],
             [['title', 'subtitle', 'author'], 'string', 'max' => 255],
@@ -67,6 +69,7 @@ class Book extends \yii\db\ActiveRecord
             'author' => 'Author',
             'isbn' => 'ISBN',
             'is_traveling' => 'Is Traveling',
+            'ping_count' => 'Ping Count',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];

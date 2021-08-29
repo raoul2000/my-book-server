@@ -18,6 +18,7 @@ class m210717_215800_create_book_table extends Migration
             'author'        => $this->string(255),
             'isbn'          => $this->string(15),
             'is_traveling'  => $this->boolean()->defaultValue(0),
+            'ping_count'    => $this->integer()->defaultValue(0),
             'created_at'    => $this->dateTime(),
             'updated_at'    => $this->dateTime()
         ]);

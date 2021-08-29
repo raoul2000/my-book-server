@@ -68,6 +68,7 @@ class BookPingController extends \yii\web\Controller
             $ping->user_ip = Yii::$app->request->getUserIP();
             $ping->save();
             $ping->refresh();
+            $ticket->book->updateCounters(['ping_count' => 1]);
             $this->setPingId($ping->id);
         } else {
             $ping = BookPing::findOne($this->getPingId());

@@ -17,7 +17,7 @@ class SearchBook extends Book
     public function rules()
     {
         return [
-            [['id', 'title', 'subtitle', 'author', 'isbn', 'is_traveling', 'created_at', 'updated_at'], 'safe'],
+            [['id', 'title', 'subtitle', 'author', 'isbn', 'is_traveling', 'ping_count', 'created_at', 'updated_at'], 'safe'],
             [['is_traveling'], 'integer'],
         ];
     }
@@ -59,8 +59,9 @@ class SearchBook extends Book
         // grid filtering conditions
         $query->andFilterWhere([
             'is_traveling' => $this->is_traveling,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'ping_count'   => $this->ping_count,
+            'created_at'   => $this->created_at,
+            'updated_at'   => $this->updated_at,
         ]);
         $query->andFilterWhere(['like', 'id', $this->id])
             ->andFilterWhere(['like', 'title', $this->title])
