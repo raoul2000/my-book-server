@@ -1,13 +1,8 @@
 
 # TODO
 - attribute is_traveling should be returned as boolean in REST response
-- 
-## Refactor book ping/review
-- delete table `book_ping`
-- rename `book_review` to `book_ping`
-- add col `updated_at` to `book_pîng`
-- when client pings a book, create a new entry in `book_ping` with only col `user_ip` set. Then return ID of this new entry
-- when user submit the ping form, update the entry if needed (using the returned ID)
+- In book-ping/form, booking number parsing should be case insensitive and ignore missing '-' character
+
 
 
 ## Book Travel Management
@@ -27,3 +22,10 @@ Rule:
 # DONE
 ## `book` primary key
 - col `id` should be created as being the primaryKey
+
+## Refactor book ping/review
+- delete table `book_ping`
+- rename `book_review` to `book_ping`
+- add col `updated_at` to `book_pîng`
+- when client pings a book, create a new entry in `book_ping` with only col `user_ip` set. Then return ID of this new entry
+- when user submit the ping form, update the entry if needed (using the returned ID)

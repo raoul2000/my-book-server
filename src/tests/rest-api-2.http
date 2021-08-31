@@ -1,4 +1,4 @@
-@apiKey = omuGXEhLr38vSWVJZRUT-0jCttJjwgqL
+@apiKey = D7-SX56D3F3SfQ6sZoU81Z4t3bmZNZ4k
 @bookId = 66b72c99-da90-4d71-b16c-4cbdf8a09b5b
 
 
@@ -78,7 +78,7 @@ X-Api-Key: {{apiKey}}
 }
 
 ### USER-BOOK - Read All 
-GET {{baseUrl}}?r=api/user-book&expand=book&expand=book
+GET {{baseUrl}}?r=api/user-book&expand=book
 X-Api-Key: {{apiKey}}
 Cookie: XDEBUG_SESSION=XDEBUG_ECLIPSE
 
