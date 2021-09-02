@@ -17,8 +17,12 @@ class BookPingController extends \yii\web\Controller
      */
     public function actionIndex($id)
     {
+        $ticketId = $this->normalizeTicketId($id);
+        if(!isset($ticketId)) {
+            return $this->render('ping-dead');
+        }
         $ticket = BookTicket::find()
-            ->where(['id' => $id])
+            ->where(['id' => $ticketId])
             ->with('book')
             ->one();
 
@@ -51,13 +55,25 @@ class BookPingController extends \yii\web\Controller
     public function actionForm()
     {
         $model = new  TrackerForm();
-        if($model->load(Yii::$app->request->post()) && $model->validate()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $this->redirect(['/book-ping', 'id' => $model->booking_number]);
         }
 
         return $this->render('tracker-form', [
             'model' => $model,
         ]);
+    }
+
+    private function normalizeTicketId($ticketId)
+    {
+        $normalizedTicketId = null;
+        $re = '/^([[:alnum:]][[:alnum:]][[:alnum:]])[-_\.]?([[:alnum:]][[:alnum:]][[:alnum:]])$/';
+
+        preg_match_all($re, $ticketId, $matches, PREG_SET_ORDER, 0);
+        if (count($matches) === 1) {
+            $normalizedTicketId = strtoupper($matches[0][1]) . '-' . strtoupper($matches[0][2]);
+        }
+        return $normalizedTicketId;
     }
 
     private function savePingMaybe($ticket)
