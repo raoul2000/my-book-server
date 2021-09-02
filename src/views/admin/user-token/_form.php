@@ -16,9 +16,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'type')->textInput() ?>
 
-    <?= $form->field($model, 'token')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'token')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
 
-    <?= $form->field($model, 'data')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'data')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
 
     <?= $form->field($model, 'created_at')->textInput() ?>
 

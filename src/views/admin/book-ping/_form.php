@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
     <div class="grid">
         <div class="row">
             <div class="col-sm-6">
-                <?= $form->field($model, 'book_id')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'book_id')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
 
                 <?= $form->field($model, 'text')->textarea(['rows' => 3]) ?>
                 <?= $form->field($model, 'rate') ?>
@@ -24,7 +24,6 @@ use yii\widgets\ActiveForm;
                 <?= $form->field($model, 'location_name') ?>
                 <?= $form->field($model, 'user_ip') ?>
                 <?= $form->field($model, 'email') ?>
-
             </div>
         </div>
 
