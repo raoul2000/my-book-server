@@ -145,6 +145,7 @@ body.naked .wrap > .container {
     text-align: center;
 }
 
+.book-ping-dead,
 .book-ping-submitted {
     display: flex;
     flex-direction: column;

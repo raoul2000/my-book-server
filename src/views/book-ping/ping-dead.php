@@ -2,6 +2,12 @@
 /* @var $this yii\web\View */
 use yii\helpers\Html;
 ?>
-<div class="book-ping">
-    <h2>Si un jour ce livre a été répertorié ici, il ne l'est plus...</h2>
+<div class="book-ping-dead">
+    <h1>Oups ! </h1>
+    <div class="intro">
+        Ce numéro de réservation n'est pas répertorié.. ou il ne l'est plus.<br/>
+        Il est possible aussi que vos doigts aient glissés, heurtant au passage une autre touche
+        que celle que vous visiez.<br/>
+    </div>
 </div>
+
