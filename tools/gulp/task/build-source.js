@@ -90,6 +90,7 @@ function copySource() {
             "!src/runtime/*/**",
             "!src/vendor/**/**",
             "!src/web/assets/*/**",
+            "!src/web/files/qr-codes/*",
             "!src/web/index-test.php",
         ],
         { cwd: workingDir }
