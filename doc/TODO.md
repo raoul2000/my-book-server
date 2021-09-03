@@ -20,6 +20,10 @@ Rule:
 - a book traveling CANNOT be modified : title, subtitle, author, isbn, etc ....
 
 # DONE
+- **fix**: build and zip does not preserve empty folder `web/files/qr-codes`
+- **fix**: remove *foo* alias
+
+
 ## `book` primary key
 - col `id` should be created as being the primaryKey
 
