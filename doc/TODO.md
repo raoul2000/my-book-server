@@ -2,7 +2,7 @@
 # TODO
 - attribute is_traveling should be returned as boolean in REST response
 - In book-ping/form, booking number parsing should be case insensitive and ignore missing '-' character
-
+- **fix**: user should be able to ping more than one book. Today, the session does not inclide ticketId so when the isSaved variable session is TRUE, ping is not possible anymore for this ticketId *but also for any other ticketId*
 
 
 ## Book Travel Management
