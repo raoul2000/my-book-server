@@ -12,13 +12,17 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'title')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
     
-    <?= $form->field($model, 'subtitle')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'subtitle')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
 
-    <?= $form->field($model, 'author')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'author')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
 
-    <?= $form->field($model, 'isbn')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'isbn')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
+    
+    <?= $form->field($model, 'is_traveling')->checkbox() ?>
+
+    <?= $form->field($model, 'ping_count')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

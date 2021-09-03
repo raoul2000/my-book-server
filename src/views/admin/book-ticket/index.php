@@ -4,19 +4,17 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\SearchBookReview */
+/* @var $searchModel app\models\SearchBookTicket */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Book Reviews';
+$this->title = 'Book Tickets';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="book-review-index">
-
+<div class="book-ticket-index">
     <h1><?= Html::encode($this->title) ?></h1>
     <hr/>
-    
     <p>
-        <?= Html::a('Create Book Review', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Book Ticket', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -25,14 +23,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
+            'id',
+            'user_id',
             'book_id',
-            'book.title',
-            'text:ntext',
-            'rate',
-            'location_name',
-            'email',
-            'user_ip',
             'created_at',
+            'updated_at',
+
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

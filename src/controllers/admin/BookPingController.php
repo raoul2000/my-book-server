@@ -29,7 +29,7 @@ class BookPingController extends Controller
                         'roles' => ['admin'],
                     ]
                 ],
-            ],               
+            ],              
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -51,7 +51,6 @@ class BookPingController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'savePingEnabled' => Yii::$app->params['saveBookPing']
         ]);
     }
 

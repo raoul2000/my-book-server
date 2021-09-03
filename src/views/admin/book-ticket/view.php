@@ -4,18 +4,17 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\BookReview */
+/* @var $model app\models\BookTicket */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Book Reviews', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Book Tickets', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="book-review-view">
+<div class="book-ticket-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <hr/>
-    
+
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
@@ -31,15 +30,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
+            'user_id',
             'book_id',
-            'book.title',
-            'text:ntext',
-            'rate',
-            'location_name',
-            'email',    
-            'user_ip',
-            'created_at',        
+            'created_at',
+            'updated_at',
         ],
     ]) ?>
+    <?= Html::img($model->getQrCodeUrl()) ?>
 
 </div>

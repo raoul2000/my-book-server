@@ -6,6 +6,7 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
 use \thamtech\uuid\helpers\UuidHelper;
+use app\migrations\TableName;
 
 /**
  * This is the model class for table "books".
@@ -15,6 +16,10 @@ use \thamtech\uuid\helpers\UuidHelper;
  * @property string $subtitle
  * @property string|null $author
  * @property string|null $isbn
+ * @property boolean $is_traveling
+ * @property integer $ping_count
+ * @property string|null $created_at
+ * @property string|null $updated_at
  */
 class Book extends \yii\db\ActiveRecord
 {
@@ -23,7 +28,7 @@ class Book extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'book';
+        return TableName::BOOK;
     }
 
     /**
@@ -45,6 +50,8 @@ class Book extends \yii\db\ActiveRecord
         return [
             [['title'], 'required'],
             [['isbn'], 'string', 'max' => 15],
+            [['is_traveling'], 'boolean'],
+            [['ping_count'], 'integer', 'min' => 0],
             [['created_at', 'updated_at'], 'safe'],
             [['title', 'subtitle', 'author'], 'trim'],
             [['title', 'subtitle', 'author'], 'string', 'max' => 255],
@@ -61,6 +68,8 @@ class Book extends \yii\db\ActiveRecord
             'subtitle' => 'Sub Title',
             'author' => 'Author',
             'isbn' => 'ISBN',
+            'is_traveling' => 'Is Traveling',
+            'ping_count' => 'Ping Count',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
@@ -95,7 +104,7 @@ class Book extends \yii\db\ActiveRecord
      */
     public function getReviews()
     {
-        return $this->hasMany(BookReview::class, ['book_id' => 'id']);
+        return $this->hasMany(BookPing::class, ['book_id' => 'id']);
     }
 
     /**
@@ -112,43 +121,5 @@ class Book extends \yii\db\ActiveRecord
     {
         return $this->hasMany(User::className(), ['id' => 'book_id'])
             ->via('userBooks');
-    }
-
-
-    public function getPingsCount()
-    {
-        //TODO: requires extra query - could be optimized (or not used)
-        if ($this->isNewRecord) {
-            return null; // this avoid calling a query searching for null primary keys
-        }
-
-        return empty($this->pingsAggregation) ? 0 : $this->pingsAggregation[0]['counted'];
-    }
-
-    /**
-     * Declares new relation based on 'orders', which provides aggregation.
-     */
-    public function getPingsAggregation()
-    {
-        return $this->getPings()
-            ->select(['book_id', 'counted' => 'count(*)'])
-            ->groupBy('book_id')
-            ->asArray(true);
-    }
-
-    public function getReviewsCount()
-    {
-        if ($this->isNewRecord) {
-            return null; // this avoid calling a query searching for null primary keys
-        }
-
-        return empty($this->reviewsAggregation) ? 0 : $this->reviewsAggregation[0]['counted'];
-    }
-    public function getReviewsAggregation()
-    {
-        return $this->getReviews()
-            ->select(['book_id', 'counted' => 'count(*)'])
-            ->groupBy('book_id')
-            ->asArray(true);
     }
 }

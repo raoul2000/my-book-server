@@ -3,17 +3,16 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\BookReview */
+/* @var $model app\models\BookTicket */
 
-$this->title = 'Create Book Review';
-$this->params['breadcrumbs'][] = ['label' => 'Book Reviews', 'url' => ['index']];
+$this->title = 'Create Book Ticket';
+$this->params['breadcrumbs'][] = ['label' => 'Book Tickets', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="book-review-create">
+<div class="book-ticket-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <hr/>
-    
+
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>

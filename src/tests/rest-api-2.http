@@ -1,6 +1,8 @@
-@apiKey = dgdXFq4uANKi3hJC9t2nDi-dp9H8k9lk
+@apiKey = D7-SX56D3F3SfQ6sZoU81Z4t3bmZNZ4k
+@bookId = 66b72c99-da90-4d71-b16c-4cbdf8a09b5b
 
-### login
+
+### login ---------------------------------------------------
 
 POST {{baseUrl}}?r=api/auth/login
 Content-Type: application/json
@@ -10,10 +12,48 @@ Content-Type: application/json
     "password": "bob"
 }
 
+
 ### Check Token
 GET {{baseUrl}}?r=api/auth/check-api-key&token={{apiKey}}
 
-### SEARCH ISBN
+### TRACKER : read --------------------------------------------
+GET {{baseUrl}}?r=api/tracker&id={{bookId}}
+
+
+### TICKET : create --------------------------------------------
+POST {{baseUrl}}?r=api/ticket/create&id={{bookId}}
+X-Api-Key: {{apiKey}}
+Content-Type: application/json
+
+{
+    "departureDate": "bob"
+}
+
+### Ticket : view
+GET {{baseUrl}}?r=api/ticket&id={{bookId}}&expand=book
+X-Api-Key: {{apiKey}}
+
+
+### Ticket : view not found
+GET {{baseUrl}}?r=api/ticket&id=NOT_FOUND
+X-Api-Key: {{apiKey}}
+
+### Ticket : Boarding
+POST  {{baseUrl}}?r=api/ticket/boarding&id={{bookId}}
+X-Api-Key: {{apiKey}}
+
+### Ticket : Delete
+DELETE  {{baseUrl}}?r=api/ticket/delete&id={{bookId}}
+X-Api-Key: {{apiKey}}
+
+### Email Ticket
+GET {{baseUrl}}?r=api/ticket/send-email&id={{bookId}}
+X-Api-Key: {{apiKey}}
+
+
+
+
+### SEARCH ISBN ---------------------------------------------------
 GET {{baseUrl}}?r=api/isbn-service/search&isbn=9782070344130
 X-Api-Key: {{apiKey}}
 
@@ -21,7 +61,7 @@ X-Api-Key: {{apiKey}}
 GET {{baseUrl}}?r=api/isbn-service/description&isbn=9782070344130
 X-Api-Key: {{apiKey}}
 
-### Create
+### USER-BOOK - Create ---------------------------------------------
 POST {{baseUrl}}?r=api/user-book/create
 Content-Type:application/json
 X-Api-Key: {{apiKey}}
@@ -37,17 +77,17 @@ X-Api-Key: {{apiKey}}
     }
 }
 
-### Read All
+### USER-BOOK - Read All 
 GET {{baseUrl}}?r=api/user-book&expand=book
 X-Api-Key: {{apiKey}}
 Cookie: XDEBUG_SESSION=XDEBUG_ECLIPSE
 
-### View One
-GET {{baseUrl}}?r=api/user-book/view&id=7&expand=book
+### USER-BOOK - View One
+GET {{baseUrl}}?r=api/user-book/view&id={{bookId}}&expand=book
 X-Api-Key: {{apiKey}}
 Cookie: XDEBUG_SESSION=XDEBUG_ECLIPSE
 
-### Update One
+### USER-BOOK - Update One
 PUT {{baseUrl}}?r=api/user-book/update&id=e767cf3d-2119-4ea3-8b76-7a31f7823698
 Content-Type:application/json
 X-Api-Key: {{apiKey}}
@@ -58,7 +98,7 @@ Cookie: XDEBUG_SESSION=XDEBUG_ECLIPSE
     "author": "Bobby"
 }
 
-### delete One
+### USER-BOOK - delete One
 DELETE {{baseUrl}}?r=api/user-book/delete&id=7
 X-Api-Key: {{apiKey}}
 Cookie: XDEBUG_SESSION=XDEBUG_ECLIPSE

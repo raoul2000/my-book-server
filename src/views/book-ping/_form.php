@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\BookReview */
+/* @var $model app\models\BookPing */
 /* @var $form ActiveForm */
 ?>
 <div class="book-ping-_form">

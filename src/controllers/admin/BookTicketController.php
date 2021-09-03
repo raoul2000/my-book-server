@@ -3,17 +3,17 @@
 namespace app\controllers\admin;
 
 use Yii;
-use app\models\BookReview;
-use app\models\SearchBookReview;
+use app\models\BookTicket;
+use app\models\SearchBookTicket;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 
 /**
- * BookReviewController implements the CRUD actions for BookReview model.
+ * BookTicketController implements the CRUD actions for BookTicket model.
  */
-class BookReviewController extends Controller
+class BookTicketController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -21,31 +21,31 @@ class BookReviewController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['admin'],
-                    ]
-                ],
-            ],              
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
                 ],
             ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['admin'],
+                    ],
+                ],
+            ],              
         ];
     }
 
     /**
-     * Lists all BookReview models.
+     * Lists all BookTicket models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new SearchBookReview();
+        $searchModel = new SearchBookTicket();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -55,8 +55,8 @@ class BookReviewController extends Controller
     }
 
     /**
-     * Displays a single BookReview model.
-     * @param integer $id
+     * Displays a single BookTicket model.
+     * @param string $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -68,13 +68,13 @@ class BookReviewController extends Controller
     }
 
     /**
-     * Creates a new BookReview model.
+     * Creates a new BookTicket model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new BookReview();
+        $model = new BookTicket();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -86,9 +86,9 @@ class BookReviewController extends Controller
     }
 
     /**
-     * Updates an existing BookReview model.
+     * Updates an existing BookTicket model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
+     * @param string $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -106,9 +106,9 @@ class BookReviewController extends Controller
     }
 
     /**
-     * Deletes an existing BookReview model.
+     * Deletes an existing BookTicket model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
+     * @param string $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -120,15 +120,15 @@ class BookReviewController extends Controller
     }
 
     /**
-     * Finds the BookReview model based on its primary key value.
+     * Finds the BookTicket model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return BookReview the loaded model
+     * @param string $id
+     * @return BookTicket the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = BookReview::findOne($id)) !== null) {
+        if (($model = BookTicket::findOne($id)) !== null) {
             return $model;
         }
 

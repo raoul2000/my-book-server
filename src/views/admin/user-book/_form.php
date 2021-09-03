@@ -16,7 +16,7 @@ use yii2mod\rating\StarRating;
 
     <?= $form->field($model, 'user_id')->textInput() ?>
 
-    <?= $form->field($model, 'book_id')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'book_id')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
 
     <?= $form->field($model, 'read_status')
         ->dropDownList(UserBook::getReadStatusList(), ['prompt' => \Yii::t('app', 'select status ...')]) ?>

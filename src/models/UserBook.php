@@ -5,6 +5,7 @@ namespace app\models;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
+use app\migrations\TableName;
 
 /**
  * This is the model class for table "user_book".
@@ -43,7 +44,7 @@ class UserBook extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'user_book';
+        return TableName::USER_BOOK;
     }
 
     /**

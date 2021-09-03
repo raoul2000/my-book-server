@@ -27,17 +27,21 @@ $config = [
         ],
         'authManager' => [
             'class' => 'yii\rbac\PhpManager',
-        ],           
+        ],
         'db' => $db,
     ],
     'params' => $params,
-    /*
+
     'controllerMap' => [
-        'fixture' => [ // Fixture generation command line.
-            'class' => 'yii\faker\FixtureController',
+        'migrate' => [
+            'class' => 'yii\console\controllers\MigrateController',
+            'migrationPath' => null,
+            'migrationNamespaces' => [
+                'app\migrations',
+            ],
         ],
     ],
-    */
+
 ];
 
 return $config;
