@@ -84,13 +84,12 @@ function copySource() {
             "src/**", 
             "!src/README.md", 
             "!src/LICENSE.md", 
-            "!src/requirement.php", 
             "!src/*.yml", 
             "!src/composer.*", 
             "!src/runtime/*/**",
             "!src/vendor/**/**",
             "!src/web/assets/*/**",
-            "!src/web/files/qr-codes/*",
+            "!src/web/files/qr-codes/*.*",
             "!src/web/index-test.php",
         ],
         { cwd: workingDir }
@@ -124,7 +123,7 @@ function copyConfig() {
             rename((filePath) => {
                 if (filePath.basename.endsWith(".prod")) {
                     console.log(
-                        `   renaming PROD file : ${filePath.basename}${filePath.extname}`
+                        `renaming PROD file : ${filePath.basename}${filePath.extname}`
                     );
                     filePath.basename = filePath.basename.replace(/\.prod$/, "");
                 }
