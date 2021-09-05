@@ -63,10 +63,7 @@ class UserBookController extends Controller
                 $response = Yii::$app->getResponse();
                 $response->setStatusCode(201);
 
-                return [
-                    'book'     => $book,
-                    'userBook' => $userBook
-                ];
+                return $userBook;
             } else {
                 $book->delete();    // rollback : delete book
                 throw new ServerErrorHttpException('Failed to create user book');
@@ -133,6 +130,7 @@ class UserBookController extends Controller
         }
         $response = Yii::$app->getResponse();
         $response->setStatusCode(201);
+        return $userBook;
     }
 
     /**
