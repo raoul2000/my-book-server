@@ -17,12 +17,14 @@ use app\migrations\TableName;
  * @property string $book_id
  * @property integer|null $created_at
  * @property integer|null $updated_at
- *
+ * @property DateTime|null $departure_at
+ * @property string|null $from
  * @property Book $book
  * @property User $user
  */
 class BookTicket extends \yii\db\ActiveRecord
 {
+    public $departure_at_local;
     /**
      * {@inheritdoc}
      */
@@ -52,6 +54,11 @@ class BookTicket extends \yii\db\ActiveRecord
             [['id'], 'safe', 'when' => function ($model) {
                 return Yii::$app->user->can('administrate');
             }],
+            [['from'], 'safe'],
+            [
+                ['departure_at_local'], 'datetime', 'format' => Yii::$app->formatter->datetimeFormat,   // 'php:Y-m-d H:i:s'
+                'message' => 'Format de date invalide : YYYY-MM-JJ hh:mm:ss'
+            ],  
             [['book_id'], 'string', 'max' => 40],
             [['book_id'], 'exist', 'skipOnError' => true, 'targetClass' => Book::className(), 'targetAttribute' => ['book_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
@@ -69,6 +76,8 @@ class BookTicket extends \yii\db\ActiveRecord
             'book_id' => 'Book ID',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+            'departure_at' => 'Departure At',
+            'from' => 'From',
         ];
     }
     public function afterDelete()
@@ -99,9 +108,33 @@ class BookTicket extends \yii\db\ActiveRecord
                 throw new \Exception("failed to generate Id");
             }
         }
+
+        // convert departure_at local datetime to UTC before saving to DB
+        if (empty($this->departure_at_local)) {
+            $this->departure_at = null;
+        } else {
+            $value = new \DateTime($this->departure_at_local, new \DateTimeZone(Yii::$app->formatter->timeZone));
+            $value->setTimezone(new \DateTimeZone('UTC'));
+
+            // format used here must be in-sync with Yii::$app->formatter->datetimeFormat
+            $this->departure_at = $value->format('Y-m-d H:i:s');
+        }
         return true;
     }
+    public function afterFind()
+    {
+        parent::afterFind();
 
+        if (empty($this->departure_at)) {
+            $this->departure_at_local = null;
+        } else {
+            // convert UTC datetime from DB into locale date time (used for forms)
+            $value = new \DateTime($this->departure_at, new \DateTimeZone('UTC'));
+            $value->setTimezone(new \DateTimeZone(Yii::$app->formatter->timeZone));
+            // format used here must be in-sync with Yii::$app->formatter->datetimeFormat
+            $this->departure_at_local = $value->format('Y-m-d H:i:s'); 
+        }
+    }
     public function afterSave($insert, $changedAttributes)
     {
         if ($insert) {
