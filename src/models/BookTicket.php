@@ -15,8 +15,8 @@ use app\migrations\TableName;
  * @property string $id
  * @property int $user_id
  * @property string $book_id
- * @property string|null $created_at
- * @property string|null $updated_at
+ * @property integer|null $created_at
+ * @property integer|null $updated_at
  *
  * @property Book $book
  * @property User $user
@@ -37,8 +37,7 @@ class BookTicket extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [[
-            'class' => TimestampBehavior::className(),
-            'value' => new Expression('NOW()'),
+            'class' => TimestampBehavior::class
         ]];
     }
 

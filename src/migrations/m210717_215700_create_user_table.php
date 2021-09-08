@@ -17,8 +17,8 @@ class m210717_215700_create_user_table extends Migration
             'email'         => $this->string()->notNull()->unique(),
             'password_hash' => $this->string()->notNull(),
             'status'        => $this->smallInteger()->notNull(),
-            'created_at'    => $this->dateTime(),
-            'updated_at'    => $this->dateTime()
+            'created_at'    => $this->integer(11),
+            'updated_at'    => $this->integer(11)
         ]);
 
         $this->createIndex('{{%idx_user_username}}', TableName::USER, 'username', true);

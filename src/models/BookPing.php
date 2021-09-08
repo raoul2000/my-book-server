@@ -13,7 +13,9 @@ use app\migrations\TableName;
  * @property int $id
  * @property string $book_id
  * @property string $text
- *
+ * @property integer|null $created_at
+ * @property integer|null $updated_at
+ * 
  * @property Book $book
  */
 class BookPing extends \yii\db\ActiveRecord
@@ -32,8 +34,7 @@ class BookPing extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [[
-            'class' => TimestampBehavior::className(),
-            'value' => new Expression('NOW()'),
+            'class' => TimestampBehavior::class
         ]];
     }
 
@@ -49,7 +50,6 @@ class BookPing extends \yii\db\ActiveRecord
             [['user_ip'], 'string', 'max' => 50],
             [['text'], 'string'],
             [['rate'], 'integer'],            
-            [['created_at', 'updated_at'], 'safe'],
             [['location_name', 'email'], 'string', 'max' => 150],
         ];
     }

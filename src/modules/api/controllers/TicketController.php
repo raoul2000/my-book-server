@@ -81,7 +81,6 @@ class TicketController extends Controller
         $ticket->book_id = $id;
         $ticket->user_id = Yii::$app->user->getId();
         if ($ticket->save()) {
-            $ticket->refresh();
             return $ticket;
         } else {
             $response = Yii::$app->getResponse();

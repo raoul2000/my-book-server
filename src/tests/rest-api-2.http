@@ -1,4 +1,4 @@
-@apiKey = EI98Mf1Wew1JxxCLnDfw3hyPXABzuQWg
+@apiKey = zYmSnC9TPvddwKWz69JxIptcMaUjn0AB
 @bookId = a910a8c5-1d46-47ee-bcaa-767b8d26c869
 
 
@@ -72,7 +72,7 @@ X-Api-Key: {{apiKey}}
 
 {
     "book": {
-        "title": "___Babylon99",
+        "title": "test",
         "author": "Inconnu",
         "isbn" : "1224"
     },
