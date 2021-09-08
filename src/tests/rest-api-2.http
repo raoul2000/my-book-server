@@ -1,5 +1,5 @@
-@apiKey = D7-SX56D3F3SfQ6sZoU81Z4t3bmZNZ4k
-@bookId = 66b72c99-da90-4d71-b16c-4cbdf8a09b5b
+@apiKey = EI98Mf1Wew1JxxCLnDfw3hyPXABzuQWg
+@bookId = a910a8c5-1d46-47ee-bcaa-767b8d26c869
 
 
 ### login ---------------------------------------------------
@@ -57,12 +57,16 @@ X-Api-Key: {{apiKey}}
 GET {{baseUrl}}?r=api/isbn-service/search&isbn=9782070344130
 X-Api-Key: {{apiKey}}
 
+### SEARCH ISBN : NOT FOUND ---------------------------------------------------
+GET {{baseUrl}}?r=api/isbn-service/search&isbn=11
+X-Api-Key: {{apiKey}}
+
 ### SEARCH BOOK DESCRIPTION  (ISBN)
 GET {{baseUrl}}?r=api/isbn-service/description&isbn=9782070344130
 X-Api-Key: {{apiKey}}
 
 ### USER-BOOK - Create ---------------------------------------------
-POST {{baseUrl}}?r=api/user-book/create
+POST {{baseUrl}}?r=api/user-book/create&expand=book
 Content-Type:application/json
 X-Api-Key: {{apiKey}}
 
@@ -88,7 +92,7 @@ X-Api-Key: {{apiKey}}
 Cookie: XDEBUG_SESSION=XDEBUG_ECLIPSE
 
 ### USER-BOOK - Update One
-PUT {{baseUrl}}?r=api/user-book/update&id=e767cf3d-2119-4ea3-8b76-7a31f7823698
+PUT {{baseUrl}}?r=api/user-book/update&id={{bookId}}&expand=book
 Content-Type:application/json
 X-Api-Key: {{apiKey}}
 Cookie: XDEBUG_SESSION=XDEBUG_ECLIPSE

@@ -24,17 +24,23 @@ class IsbnServiceController extends Controller
      */
     public function actionSearch($isbn)
     {
-        $response = $this->sendRequestGoogleBookApi($isbn);
-        if ($response->isOk) {
-            // TODO: validate response data
-            $book = new Book();
-            $book->title = $response->data['items'][0]['volumeInfo']['title'];
-            $book->author = $response->data['items'][0]['volumeInfo']['authors'][0];
+        $googleResponse = $this->sendRequestGoogleBookApi($isbn);
+        if ($googleResponse->isOk) {
+            $result = $googleResponse->data;
+            $response = [ ];
+            if (array_key_exists('totalItems', $result) && $result['totalItems'] > 0) {
+                // TODO: validate response data
+                $response['title'] = $result['items'][0]['volumeInfo']['title'];
+                $response['author'] = $result['items'][0]['volumeInfo']['authors'][0];
 
-            if (array_key_exists('subtitle', $response->data['items'][0]['volumeInfo'])) {
-                $book->subtitle = $response->data['items'][0]['volumeInfo']['subtitle'];
+                if (array_key_exists('subtitle', $result['items'][0]['volumeInfo'])) {
+                    $response['subtitle'] = $result['items'][0]['volumeInfo']['subtitle'];
+                }
+                return $response;
+            } else {
+                Yii::$app->getResponse()->setStatusCode(404);
+                return [];
             }
-            return $book;
         } else {
             $response = Yii::$app->getResponse();
             $response->setStatusCode(500);
@@ -44,24 +50,31 @@ class IsbnServiceController extends Controller
 
     public function actionDescription($isbn)
     {
-        $response = $this->sendRequestGoogleBookApi($isbn);
-        if ($response->isOk) {
+        $googleResponse = $this->sendRequestGoogleBookApi($isbn);
+        if ($googleResponse->isOk) {
+            $result = $googleResponse->data;
             // TODO: validate response data
 
-            $description = '';
-            if (array_key_exists('description', $response->data['items'][0]['volumeInfo'])) {
-                $description = $response->data['items'][0]['volumeInfo']['description'];
+            if (array_key_exists('totalItems', $result) && $result['totalItems'] > 0) {
+                $description = '';
+                if (array_key_exists('description', $result['items'][0]['volumeInfo'])) {
+                    $description = $result['items'][0]['volumeInfo']['description'];
+                }
+                return [
+                    'description' => $description
+                ];
+            } else {
+                Yii::$app->getResponse()->setStatusCode(404);
+                return [];
             }
-            return [
-                'description' => $description
-            ];
         } else {
             $response = Yii::$app->getResponse();
             $response->setStatusCode(500);
             return ['error' => true, 'info' => $response];
         }
     }
-    private function sendRequestGoogleBookApi($isbn) 
+
+    private function sendRequestGoogleBookApi($isbn)
     {
         $client = new Client();
         return $client->createRequest()

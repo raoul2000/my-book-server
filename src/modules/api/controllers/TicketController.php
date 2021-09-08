@@ -54,7 +54,7 @@ class TicketController extends Controller
             if($book->is_traveling) {
                 throw new ServerErrorHttpException('book already traveling');
             }
-            $book->updateAttributes(['is_traveling' => true]);
+            $book->updateAttributes(['is_traveling' => 1]);
             return [
                 'book' => $book,
                 'ticket' => $ticket
