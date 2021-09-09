@@ -1,5 +1,5 @@
 @apiKey = zYmSnC9TPvddwKWz69JxIptcMaUjn0AB
-@bookId = 3c8a0413-d1c0-4d80-a9ec-b2298473680a
+@bookId = 5723b75a-222e-4d8d-b927-a9e270e813b4
 
 
 ### login ---------------------------------------------------
@@ -24,9 +24,11 @@ GET {{baseUrl}}?r=api/tracker&id={{bookId}}
 POST {{baseUrl}}?r=api/ticket/create&id={{bookId}}
 X-Api-Key: {{apiKey}}
 Content-Type: application/json
+Cookie: XDEBUG_SESSION=XDEBUG_ECLIPSE
 
 {
-    "departureDate": "bob"
+    "departureDateTime": "2021-09-09T12:43:13.220Z",
+    "from": "Some place"
 }
 
 ### Ticket : view

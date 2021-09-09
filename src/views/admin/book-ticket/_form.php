@@ -20,7 +20,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'from')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
 
-    <?= $form->field($model, 'departure_at_local')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
+    <?= $form->field($model, 'departure_at')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

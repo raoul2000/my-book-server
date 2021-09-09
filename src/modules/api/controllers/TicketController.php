@@ -75,11 +75,17 @@ class TicketController extends Controller
         }
 
         $ticket = new BookTicket();
-        //$params = Yii::$app->getRequest()->getBodyParams();
-        //$ticket->load($params,'');
 
+        $params = Yii::$app->getRequest()->getBodyParams();
         $ticket->book_id = $id;
         $ticket->user_id = Yii::$app->user->getId();
+        $ticket->from = $params['from'];
+
+        if(!empty($params['departure_at'])) {
+            $utcDate = new \DateTime($params['departure_at']);
+            $ticket->departure_at = $utcDate->format('Y-m-d H:i:00'); // reset seconds
+        }
+
         if ($ticket->save()) {
             return $ticket;
         } else {

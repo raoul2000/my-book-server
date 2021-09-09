@@ -24,7 +24,6 @@ use app\migrations\TableName;
  */
 class BookTicket extends \yii\db\ActiveRecord
 {
-    public $departure_at_local;
     /**
      * {@inheritdoc}
      */
@@ -56,7 +55,7 @@ class BookTicket extends \yii\db\ActiveRecord
             }],
             [['from'], 'safe'],
             [
-                ['departure_at_local'], 'datetime', 'format' => Yii::$app->formatter->datetimeFormat,   // 'php:Y-m-d H:i:s'
+                ['departure_at'], 'datetime', 'format' => Yii::$app->formatter->datetimeFormat,   // 'php:Y-m-d H:i:s'
                 'message' => 'Format de date invalide : YYYY-MM-JJ hh:mm:ss'
             ],  
             [['book_id'], 'string', 'max' => 40],
@@ -86,6 +85,26 @@ class BookTicket extends \yii\db\ActiveRecord
             unlink($this->getQrCodeFilePath());
         }
     }
+    public function localeDateToUTC() 
+    {
+        if (!empty($this->departure_at)) {
+            $value = new \DateTime($this->departure_at, new \DateTimeZone(Yii::$app->formatter->timeZone));
+            $value->setTimezone(new \DateTimeZone('UTC'));
+
+            // format used here must be in-sync with Yii::$app->formatter->datetimeFormat
+            $this->departure_at = $value->format('Y-m-d H:i:00');
+        }
+    }
+    public function utcDateToLocale()
+    {
+        if (!empty($this->departure_at)) {
+            // convert UTC datetime from DB into locale date time (used for forms)
+            $value = new \DateTime($this->departure_at, new \DateTimeZone('UTC'));
+            $value->setTimezone(new \DateTimeZone(Yii::$app->formatter->timeZone));
+            // format used here must be in-sync with Yii::$app->formatter->datetimeFormat
+            $this->departure_at = $value->format('Y-m-d H:i:00'); 
+        }
+    }
     /**
      * {@inheritdoc}
      */
@@ -108,33 +127,9 @@ class BookTicket extends \yii\db\ActiveRecord
                 throw new \Exception("failed to generate Id");
             }
         }
-
-        // convert departure_at local datetime to UTC before saving to DB
-        if (empty($this->departure_at_local)) {
-            $this->departure_at = null;
-        } else {
-            $value = new \DateTime($this->departure_at_local, new \DateTimeZone(Yii::$app->formatter->timeZone));
-            $value->setTimezone(new \DateTimeZone('UTC'));
-
-            // format used here must be in-sync with Yii::$app->formatter->datetimeFormat
-            $this->departure_at = $value->format('Y-m-d H:i:s');
-        }
         return true;
     }
-    public function afterFind()
-    {
-        parent::afterFind();
 
-        if (empty($this->departure_at)) {
-            $this->departure_at_local = null;
-        } else {
-            // convert UTC datetime from DB into locale date time (used for forms)
-            $value = new \DateTime($this->departure_at, new \DateTimeZone('UTC'));
-            $value->setTimezone(new \DateTimeZone(Yii::$app->formatter->timeZone));
-            // format used here must be in-sync with Yii::$app->formatter->datetimeFormat
-            $this->departure_at_local = $value->format('Y-m-d H:i:s'); 
-        }
-    }
     public function afterSave($insert, $changedAttributes)
     {
         if ($insert) {
@@ -219,10 +214,14 @@ class BookTicket extends \yii\db\ActiveRecord
 
         // remove fields that contain sensitive information
         unset($fields['user_id']);
+
         $fields['qrcode_url'] = function ($model) {
             return $model->getQrCodeUrl();
         };
-
+        $fields['departure_at'] = function ($model) {
+            $date = new \DateTime($model->departure_at, new \DateTimeZone('UTC'));
+            return $date->format(\DateTimeInterface::ISO8601);
+        };
         return $fields;
     }
 }
