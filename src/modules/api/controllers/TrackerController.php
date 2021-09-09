@@ -48,7 +48,6 @@ class TrackerController extends Controller
 
         $track = BookPing::find()
             ->where(['book_id' => $id])
-            ->asArray()
             ->all();
 
         return [
