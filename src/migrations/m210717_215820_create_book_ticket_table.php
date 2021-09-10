@@ -15,8 +15,10 @@ class m210717_215820_create_book_ticket_table extends Migration
             'id'            => $this->string(40),
             'user_id'       => $this->integer()->notNull(),
             'book_id'       => $this->string(40)->notNull(),
-            'created_at'    => $this->dateTime(),
-            'updated_at'    => $this->dateTime()
+            'departure_at'  => $this->dateTime(),
+            'from'          => $this->string(255),
+            'created_at'    => $this->integer(11),
+            'updated_at'    => $this->integer(11)
         ]);
 
         $this->addPrimaryKey('id', TableName::BOOK_TICKET,'id');

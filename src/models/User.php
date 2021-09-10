@@ -15,6 +15,8 @@ use app\migrations\TableName;
  * @property string $email
  * @property string $password_hash
  * @property int $status
+ * @property integer|null $created_at
+ * @property integer|null $updated_at
  */
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
@@ -53,8 +55,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function behaviors()
     {
         return [[
-            'class' => TimestampBehavior::className(),
-            'value' => new Expression('NOW()'),
+            'class' => TimestampBehavior::class
         ]];
     }
 
@@ -65,7 +66,6 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return [
             [['username', 'email'], 'required'],
-            [['created_at', 'updated_at'], 'safe'],
             [['new_password'], 'required', 'on' => [self::SCENARIO_REGISTER, self::SCENARIO_UPDATE_PASSWORD]],
             [['username', 'email', 'new_password'], 'string', 'max' => 255],
             [['username', 'email'], 'unique'],

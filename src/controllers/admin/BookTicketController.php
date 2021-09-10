@@ -5,6 +5,7 @@ namespace app\controllers\admin;
 use Yii;
 use app\models\BookTicket;
 use app\models\SearchBookTicket;
+use app\components\helpers\DateHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -76,7 +77,9 @@ class BookTicketController extends Controller
     {
         $model = new BookTicket();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $model->departure_at = DateHelper::localeDateTimeToUTC($model->departure_at);
+            $model->save(false);
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -96,10 +99,13 @@ class BookTicketController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $model->departure_at = DateHelper::localeDateTimeToUTC($model->departure_at);
+            $model->save(false);
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
+        $model->departure_at = DateHelper::utcDateTimeToLocale($model->departure_at);
         return $this->render('update', [
             'model' => $model,
         ]);

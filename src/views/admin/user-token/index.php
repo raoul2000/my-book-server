@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'token',
             'data',
-            'created_at',
+            'created_at:datetime',
             'expire_at',
 
             ['class' => 'yii\grid\ActionColumn'],

@@ -32,7 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'location_name',
             'email',
             'user_ip',
-            'updated_at',
+            'updated_at:datetime',
+            
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

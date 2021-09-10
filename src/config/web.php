@@ -53,6 +53,11 @@ $config = [
             ],
         ],
         'db' => $db,
+        'formatter' => [
+            'class' => 'yii\i18n\Formatter',
+            'timeZone' => "Europe/Berlin",   // TODO: should be a user account attribute
+            'datetimeFormat' => 'php:Y-m-d H:i:00'
+        ]
     ],
     'params' => $params,
     'modules' => [

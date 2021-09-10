@@ -19,8 +19,8 @@ class m210717_215900_create_book_ping_table extends Migration
             'location_name'     => $this->string(),
             'user_ip'           => $this->string(50),
             'text'              => $this->text(),
-            'created_at'        => $this->dateTime(),
-            'updated_at'        => $this->dateTime()
+            'created_at'        => $this->integer(11),
+            'updated_at'        => $this->integer(11)
         ]);
 
         $this->createIndex('{{%idx-book_ping-book_id}}', TableName::BOOK_PING, 'book_id');

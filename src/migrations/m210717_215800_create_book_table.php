@@ -19,8 +19,8 @@ class m210717_215800_create_book_table extends Migration
             'isbn'          => $this->string(15),
             'is_traveling'  => $this->boolean()->defaultValue(0),
             'ping_count'    => $this->integer()->defaultValue(0),
-            'created_at'    => $this->dateTime(),
-            'updated_at'    => $this->dateTime()
+            'created_at'    => $this->integer(11),
+            'updated_at'    => $this->integer(11)
         ]);
 
         $this->addPrimaryKey('id', TableName::BOOK,'id');

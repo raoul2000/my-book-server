@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'type',
             'token',
             'data',
-            'created_at',
+            'created_at:datetime',
             'expire_at',
         ],
     ]) ?>

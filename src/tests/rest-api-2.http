@@ -1,5 +1,5 @@
-@apiKey = EI98Mf1Wew1JxxCLnDfw3hyPXABzuQWg
-@bookId = a910a8c5-1d46-47ee-bcaa-767b8d26c869
+@apiKey = zYmSnC9TPvddwKWz69JxIptcMaUjn0AB
+@bookId = 5723b75a-222e-4d8d-b927-a9e270e813b4
 
 
 ### login ---------------------------------------------------
@@ -24,9 +24,11 @@ GET {{baseUrl}}?r=api/tracker&id={{bookId}}
 POST {{baseUrl}}?r=api/ticket/create&id={{bookId}}
 X-Api-Key: {{apiKey}}
 Content-Type: application/json
+Cookie: XDEBUG_SESSION=XDEBUG_ECLIPSE
 
 {
-    "departureDate": "bob"
+    "departureDateTime": "2021-09-09T12:43:13.220Z",
+    "from": "Some place"
 }
 
 ### Ticket : view
@@ -72,7 +74,7 @@ X-Api-Key: {{apiKey}}
 
 {
     "book": {
-        "title": "___Babylon99",
+        "title": "test",
         "author": "Inconnu",
         "isbn" : "1224"
     },

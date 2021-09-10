@@ -18,8 +18,8 @@ use app\migrations\TableName;
  * @property string|null $isbn
  * @property boolean $is_traveling
  * @property integer $ping_count
- * @property string|null $created_at
- * @property string|null $updated_at
+ * @property integer|null $created_at
+ * @property integer|null $updated_at
  */
 class Book extends \yii\db\ActiveRecord
 {
@@ -37,8 +37,7 @@ class Book extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [[
-            'class' => TimestampBehavior::className(),
-            'value' => new Expression('NOW()'),
+            'class' => TimestampBehavior::class
         ]];
     }
 
@@ -52,7 +51,6 @@ class Book extends \yii\db\ActiveRecord
             [['isbn'], 'string', 'max' => 15],
             [['is_traveling'], 'boolean'],
             [['ping_count'], 'integer', 'min' => 0],
-            [['created_at', 'updated_at'], 'safe'],
             [['title', 'subtitle', 'author'], 'trim'],
             [['title', 'subtitle', 'author'], 'string', 'max' => 255],
         ];

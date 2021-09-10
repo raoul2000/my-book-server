@@ -15,9 +15,10 @@ use app\migrations\TableName;
  * @property string $id
  * @property int $user_id
  * @property string $book_id
- * @property string|null $created_at
- * @property string|null $updated_at
- *
+ * @property integer|null $created_at
+ * @property integer|null $updated_at
+ * @property DateTime|null $departure_at
+ * @property string|null $from
  * @property Book $book
  * @property User $user
  */
@@ -37,8 +38,7 @@ class BookTicket extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [[
-            'class' => TimestampBehavior::className(),
-            'value' => new Expression('NOW()'),
+            'class' => TimestampBehavior::class
         ]];
     }
 
@@ -53,6 +53,11 @@ class BookTicket extends \yii\db\ActiveRecord
             [['id'], 'safe', 'when' => function ($model) {
                 return Yii::$app->user->can('administrate');
             }],
+            [['from'], 'safe'],
+            [
+                ['departure_at'], 'datetime', 'format' => Yii::$app->formatter->datetimeFormat,   // 'php:Y-m-d H:i:s'
+                'message' => 'Format de date invalide : YYYY-MM-JJ hh:mm:ss'
+            ],  
             [['book_id'], 'string', 'max' => 40],
             [['book_id'], 'exist', 'skipOnError' => true, 'targetClass' => Book::className(), 'targetAttribute' => ['book_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
@@ -70,12 +75,34 @@ class BookTicket extends \yii\db\ActiveRecord
             'book_id' => 'Book ID',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+            'departure_at' => 'Departure At',
+            'from' => 'From',
         ];
     }
     public function afterDelete()
     {
         if (file_exists($this->getQrCodeFilePath())) {
             unlink($this->getQrCodeFilePath());
+        }
+    }
+    public function localeDateToUTC() 
+    {
+        if (!empty($this->departure_at)) {
+            $value = new \DateTime($this->departure_at, new \DateTimeZone(Yii::$app->formatter->timeZone));
+            $value->setTimezone(new \DateTimeZone('UTC'));
+
+            // format used here must be in-sync with Yii::$app->formatter->datetimeFormat
+            $this->departure_at = $value->format('Y-m-d H:i:00');
+        }
+    }
+    public function utcDateToLocale()
+    {
+        if (!empty($this->departure_at)) {
+            // convert UTC datetime from DB into locale date time (used for forms)
+            $value = new \DateTime($this->departure_at, new \DateTimeZone('UTC'));
+            $value->setTimezone(new \DateTimeZone(Yii::$app->formatter->timeZone));
+            // format used here must be in-sync with Yii::$app->formatter->datetimeFormat
+            $this->departure_at = $value->format('Y-m-d H:i:00'); 
         }
     }
     /**
@@ -187,10 +214,14 @@ class BookTicket extends \yii\db\ActiveRecord
 
         // remove fields that contain sensitive information
         unset($fields['user_id']);
+
         $fields['qrcode_url'] = function ($model) {
             return $model->getQrCodeUrl();
         };
-
+        $fields['departure_at'] = function ($model) {
+            $date = new \DateTime($model->departure_at, new \DateTimeZone('UTC'));
+            return $date->format(\DateTimeInterface::ISO8601);
+        };
         return $fields;
     }
 }
