@@ -3,7 +3,7 @@
 
 use yii\helpers\Html;
 ?>
-<div class="book-ping-submitted">
+<div class="tracker-form">
     <h1>Merci</h1>
     <div class="intro">
         Pour que ce livre puisse continuer son voyage,

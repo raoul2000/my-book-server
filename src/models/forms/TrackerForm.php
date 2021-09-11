@@ -19,6 +19,7 @@ class TrackerForm extends Model
     {
         return [
             [['booking_number'], 'required' ,'message' => ''],
+            ['booking_number', 'validateBookingNumber'],
         ];
     }
 
@@ -31,4 +32,27 @@ class TrackerForm extends Model
             'booking_number' => 'Booking number',
         ];
     }
+
+    public function validateBookingNumber($attribute, $params, $validator)
+    {
+        if (self::normalizeTicketId($this->$attribute) === null) {
+            $this->addError($attribute, 'format invalide');
+        }
+    }
+    /**
+     * Converts ticket id into format 'XXX-XXX' where X is a number or an upper-case letter.
+     * If the ticket ID could not be normalized, returns NULL
+     */
+    public static function normalizeTicketId($ticketId)
+    {
+        $normalizedTicketId = null;
+        $re = '/^([[:alnum:]][[:alnum:]][[:alnum:]])[-_\.]?([[:alnum:]][[:alnum:]][[:alnum:]])$/';
+
+        preg_match_all($re, $ticketId, $matches, PREG_SET_ORDER, 0);
+        if (count($matches) === 1) {
+            $normalizedTicketId = strtoupper($matches[0][1]) . '-' . strtoupper($matches[0][2]);
+        }
+        return $normalizedTicketId;
+    }   
+
 }

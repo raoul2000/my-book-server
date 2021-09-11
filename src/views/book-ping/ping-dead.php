@@ -1,11 +1,14 @@
 <?php
 /* @var $this yii\web\View */
+
 use yii\helpers\Html;
 ?>
-<div class="book-ping-dead">
+<div class="tracker-form">
     <h1>Oups ! </h1>
     <div class="intro">
-        <?= $message ?><br/>
+        <?= $message ?><br />
+        <p>
+            <?= Html::a('réessayer', ['/book-ping']) ?>
+        </p>
     </div>
 </div>
-

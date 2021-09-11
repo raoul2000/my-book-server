@@ -4,7 +4,6 @@ namespace app\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
-use yii\db\Expression;
 use app\migrations\TableName;
 
 /**
@@ -46,7 +45,7 @@ class BookPing extends \yii\db\ActiveRecord
         return [
             [['book_id' ], 'required'],
             [['book_id'], 'string', 'max' => 40],
-            [['book_id'], 'exist', 'skipOnError' => true, 'targetClass' => Book::className(), 'targetAttribute' => ['book_id' => 'id']],
+            [['book_id'], 'exist', 'skipOnError' => true, 'targetClass' => Book::class, 'targetAttribute' => ['book_id' => 'id']],
             [['user_ip'], 'string', 'max' => 50],
             [['text'], 'string'],
             [['rate'], 'integer'],            
@@ -79,6 +78,6 @@ class BookPing extends \yii\db\ActiveRecord
      */
     public function getBook()
     {
-        return $this->hasOne(Book::className(), ['id' => 'book_id']);
-    }
+        return $this->hasOne(Book::class, ['id' => 'book_id']);
+    } 
 }

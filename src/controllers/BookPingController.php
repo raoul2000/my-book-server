@@ -22,9 +22,9 @@ class BookPingController extends \yii\web\Controller
             $result = $this->bookingNumberForm();
         } else {
             $normalizedTicketId = $this->normalizeTicketId($id);
-            if (!isset($normalizedTicketId)) {
+            if (!isset($normalizedTicketId)) {  // normalization failed
                 $result = $this->render('ping-dead', [
-                    'message' => "Ce numéro de réservation n'a pas le bon format."
+                    'message' => "<p>Ce numéro de réservation n'a pas le bon format.</p>"
                 ]);
             } else {
                 $result = $this->pingForm($normalizedTicketId);
@@ -33,6 +33,9 @@ class BookPingController extends \yii\web\Controller
         return $result;
     }
 
+    /**
+     * Displays the ping review form for the given traval ticket id.
+     */
     private function pingForm($ticketId)
     {
         $ticket = BookTicket::find()
@@ -42,24 +45,20 @@ class BookPingController extends \yii\web\Controller
 
         if ($ticket === null) {
             return $this->render('ping-dead', [
-                'message' => "Ce numéro de réservation n'est pas répertorié.. ou il ne l'est plus.<br/>
+                'message' => "Ce numéro de réservation n'est pas répertorié.. ou il ne l'est plus.
+                <p class=\"text-muted\">
                 Est-il possible aussi que vos doigts aient glissés, heurtant au passage une autre touche
-                que celle que vous visiez ?"
+                que celle que vous visiez ?</p>"
             ]);
         }
 
-        if ($this->isBookReviewSubmited($ticketId)) {
-            return $this->render('review-submited');
-        }
-
-        $ping = $this->savePingMaybe($ticket);
+        $ping = $this->maybeSavePing($ticket);
 
         // submiting a book review
         if ($ping->load(Yii::$app->request->post())) {
 
             if ($this->deserveToBeSaved($ping)) {
                 $ping->updateAttributes(['text', 'rate', 'location_name', 'email']);
-                $this->setBookReviewSubmited($ticketId);
             }
             return $this->render('review-submited');
         }
@@ -69,6 +68,9 @@ class BookPingController extends \yii\web\Controller
             'bookReview' => $ping
         ]);
     }
+    /**
+     * Displays the Book ticket ID (so called 'booking number') form
+     */
     private function bookingNumberForm()
     {
         $model = new  TrackerForm();
@@ -97,9 +99,13 @@ class BookPingController extends \yii\web\Controller
         return $normalizedTicketId;
     }
 
-    private function savePingMaybe($ticket)
+    /**
+     * Get existing ping or create a new one for the given ticket.
+     */
+    private function maybeSavePing($ticket)
     {
-        if ($this->isTicketAlreadyPing($ticket->id) === false) {
+        $pingId = $this->getTicketPingId($ticket->id);
+        if(!isset($pingId)) {
             $ping = new BookPing();
             $ping->book_id = $ticket->book->id;
             $ping->user_ip = Yii::$app->request->getUserIP();
@@ -107,47 +113,37 @@ class BookPingController extends \yii\web\Controller
             $ticket->book->updateCounters(['ping_count' => 1]);
             $this->saveTicketPing($ticket->id, $ping->id);
         } else {
-            $ping = BookPing::findOne($this->getTicketPingId($ticket->id));
+            $ping = BookPing::findOne($pingId);
         }
         return $ping;
     }
 
-    private function isBookReviewSubmited($ticketId)
-    {
-        return in_array($ticketId, Yii::$app->session->get('bookReviewSubmited', []));
-    }
-    private function setBookReviewSubmited($ticketId)
-    {
-        $values = Yii::$app->session->get('bookReviewSubmited', []);
-        $values[] = $ticketId;
-        Yii::$app->session->set('bookReviewSubmited', $values);
-    }
     /**
-     * @return bool TRUE if a ping has been done in the current session for 
-     * this ticket, FALSE otherwise
+     * Store in the current session the pair ticketId, pingId
      */
-    private function isTicketAlreadyPing($ticketId)
-    {
-        return array_key_exists(
-            $ticketId,
-            Yii::$app->session->get('ping', [])
-        );
-    }
     private function saveTicketPing($ticketId, $pingId)
     {
         $map = Yii::$app->session->get('ping', []);
         $map[$ticketId] = $pingId;
         Yii::$app->session->set('ping', $map);
     }
+    /**
+     * @return the Ping ID for the given ticket ID previously stored in the current session or
+     * NULL if no ticketID, pingID was saved
+     */
     private function getTicketPingId($ticketId)
     {
         $map = Yii::$app->session->get('ping', []);
         return $map[$ticketId];
     }
+    /**
+     * @return TRUE if the given book review needs to be saved, FALSE otherwise
+     */
     private function deserveToBeSaved($bookReview)
     {
         return !empty($bookReview->text)
             || !empty($bookReview->rate)
+            || !empty($bookReview->email)
             || !empty($bookReview->location_name);
     }
 }
