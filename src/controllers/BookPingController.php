@@ -134,7 +134,7 @@ class BookPingController extends \yii\web\Controller
     private function getTicketPingId($ticketId)
     {
         $map = Yii::$app->session->get('ping', []);
-        return $map[$ticketId];
+        return array_key_exists($ticketId, $map) ? $map[$ticketId] : null;
     }
     /**
      * @return TRUE if the given book review needs to be saved, FALSE otherwise
