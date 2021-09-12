@@ -15,16 +15,19 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <hr/>
     
-    <?php if (Yii::$app->session->hasFlash('contactFormSubmitted')): ?>
-
+    <?php if (Yii::$app->session->hasFlash('emailSendSuccess')): ?>
         <div class="alert alert-success">
             Test Email has been sent.
         </div>
-
+    <?php elseif (Yii::$app->session->hasFlash('emailSendError')): ?>
+        <div class="alert alert-danger">
+            Email could not be sent
+        </div>
     <?php else: ?>
 
         <p>
-            Send an email using configured email settings
+            Send a test email using configured email settings. Sender is <strong>
+                <?= Html::encode($model->getSenderName())  .' - ' . $model->getSenderEmail() ?></strong>
         </p>
 
         <div class="row">

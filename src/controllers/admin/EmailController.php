@@ -32,12 +32,16 @@ class EmailController extends \yii\web\Controller
             ],                   
         ];
     }
+    
     public function actionIndex()
     {
         $model = new EmailForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if($model->sendEmail()) {
+                Yii::$app->session->setFlash('emailSendSuccess');
+            } else {
+                Yii::$app->session->setFlash('contactFormSubmitted');
+            }
             return $this->refresh();
         }
         return $this->render('index', [

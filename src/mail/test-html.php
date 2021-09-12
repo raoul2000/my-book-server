@@ -1,1 +1,4 @@
-<h1><?= $body ?></h1>
+<p>This mail is sent for test purpose</p>
+<p>
+    <?= $body ?>
+</p>
