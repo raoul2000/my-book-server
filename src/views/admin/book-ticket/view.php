@@ -32,8 +32,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'user_id',
             'book_id',
-            'created_at',
-            'updated_at',
+            'from',
+            'departure_at:datetime',
+            'created_at:datetime',
+            'updated_at:datetime',
         ],
     ]) ?>
     <?= Html::img($model->getQrCodeUrl()) ?>

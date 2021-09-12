@@ -14,9 +14,9 @@ use yii2mod\rating\StarRating;
         <?php $form = ActiveForm::begin(); ?>
         <div class="row">
             <div class="col-sm-12">
-                <h3>Livre voyageur</h3>
+                <h3>Livre Voyageur</h3>
                 <p>Vous êtes ici parce qu'un livre voyageur est passé entre vos mains.</p>
-                <p>Entrez le numéro de réservation que vous trouverez en évidence dans le livre et validez.
+                <p>Entrez le <em>numéro de réservation</em> que vous trouverez en évidence dans le livre et validez.
                     Cela permettra à la personne qui était au départ du voyage d'avoir des nouvelles de son livre.
                 </p>
             </div>

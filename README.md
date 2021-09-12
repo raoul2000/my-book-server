@@ -4,7 +4,7 @@
 
 ### Requirements
 
-- PHP 7.2.5 (or more) installed and accessible in the PATH
+- PHP >= 7.2.5  installed and accessible in the PATH
 - Mysql
 
 ### Installation
@@ -34,8 +34,7 @@ php ../tools/composer install
 cd ./server
 
 php yii serve 
-# To set server port:
-# php yii serve --port=8888
+# To set server port: php yii serve --port=8888
 ```
 - to stop the server : Ctrl+C
 

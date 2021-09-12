@@ -17,8 +17,8 @@ class m210717_215701_create_user_token_table extends Migration
             'type'          => $this->smallInteger()->notNull(),
             'token'         => $this->string()->notNull(),
             'data'          => $this->string(),
-            'created_at'    => $this->dateTime(),
-            'expire_at'     => $this->dateTime()
+            'created_at'    => $this->integer(11),
+            'expire_at'     => $this->integer(11)
         ]);
 
         $this->addForeignKey('{{%fk_user_token-user_id}}', TableName::USER_TOKEN, 'user_id', TableName::USER, 'id');

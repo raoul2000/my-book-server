@@ -15,8 +15,8 @@ use app\migrations\TableName;
  * @property string $book_id
  * @property int $read_status
  * @property int $rate
- * @property string|null $created_at
- * @property string|null $updated_at
+ * @property integer|null $created_at
+ * @property integer|null $updated_at
  *
  * @property Book $book
  * @property User $user
@@ -53,8 +53,7 @@ class UserBook extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [[
-            'class' => TimestampBehavior::className(),
-            'value' => new Expression('NOW()'),
+            'class' => TimestampBehavior::class
         ]];
     }
 
@@ -66,7 +65,6 @@ class UserBook extends \yii\db\ActiveRecord
         return [
             [['user_id', 'book_id'], 'required'],
             [['user_id', 'read_status', 'rate'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
             [['book_id'], 'string', 'max' => 40],
             [['book_id'], 'exist', 'skipOnError' => true, 'targetClass' => Book::className(), 'targetAttribute' => ['book_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],

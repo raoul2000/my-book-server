@@ -17,8 +17,8 @@ class m210717_215801_create_user_book_table extends Migration
             'book_id'       => $this->string(40)->notNull(),
             'read_status'   => $this->smallInteger(),
             'rate'          => $this->smallInteger(),
-            'created_at'    => $this->dateTime(),
-            'updated_at'    => $this->dateTime()
+            'created_at'    => $this->integer(11),
+            'updated_at'    => $this->integer(11)
         ]);
 
         $this->addForeignKey('{{%fk_user_book-user_id}}', TableName::USER_BOOK, 'user_id', TableName::USER, 'id');

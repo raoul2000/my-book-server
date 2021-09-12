@@ -48,8 +48,6 @@ class UserBookController extends Controller
 
         $params = Yii::$app->getRequest()->getBodyParams();
         if ($book->load($params['book'], '') && $book->save()) {
-            $book->refresh();           // update timestamp attributes
-
             $userBook = new UserBook();
             $userBook->load($params['userBook'], '');
             $userBook->setAttributes([
@@ -58,8 +56,6 @@ class UserBookController extends Controller
             ]);
 
             if ($userBook->save()) {
-                $userBook->refresh();   // update timestamp attributes
-
                 $response = Yii::$app->getResponse();
                 $response->setStatusCode(201);
 

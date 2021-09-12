@@ -15,7 +15,7 @@ use app\migrations\TableName;
  * @property int $type
  * @property string $token
  * @property string|null $data
- * @property string|null $created_at
+ * @property integer|null $created_at
  * @property string|null $expire_at
  *
  * @property User $user
@@ -67,9 +67,8 @@ class UserToken extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [[
-            'class' => TimestampBehavior::className(),
-            'updatedAtAttribute' => false,
-            'value' => new Expression('NOW()'),
+            'class' => TimestampBehavior::class,
+            'updatedAtAttribute' => false
         ]];
     }
 
@@ -81,7 +80,6 @@ class UserToken extends \yii\db\ActiveRecord
         return [
             [['user_id', 'type', 'token'], 'required'],
             [['user_id', 'type'], 'integer'],
-            [['created_at', 'expire_at'], 'safe'],
             [['token', 'data'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
