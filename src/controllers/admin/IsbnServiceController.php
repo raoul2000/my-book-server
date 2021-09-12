@@ -53,6 +53,12 @@ class IsbnServiceController extends \yii\web\Controller
                 $bookInfo = ['error' => true, 'info' => $response];
             }        
         }
+
+        if(!isset($model->isbn_number)) {
+            // set a default valid ISBN number for test purposes
+            $model->isbn_number = "9782253120407";
+        }
+        
         return $this->render('index', [
             'model' => $model,
             'bookInfo' => $bookInfo
