@@ -142,8 +142,12 @@ class UserBookController extends Controller
             ->one();
 
         if ($userBook) {
-            $userBook->delete();
-            $userBook->book->delete();
+            if( $userBook->book->is_traveling === 1) {
+                throw new ServerErrorHttpException("Can't delete a traveling book.");
+            } else {
+                $userBook->delete();
+                $userBook->book->delete();
+            }
         } else {
             throw new NotFoundHttpException("Object not found");
         }
