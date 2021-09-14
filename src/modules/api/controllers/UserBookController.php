@@ -105,12 +105,17 @@ class UserBookController extends Controller
         // TODO: allow user to update userBook model
 
         $book = $userBook->book;
-
         $params = Yii::$app->getRequest()->getBodyParams();
+        $updateFn = [];
         if (isset($params['book'])) {
+            if($book->is_traveling === 1) {
+                throw new ServerErrorHttpException("can't update a traveling book");
+            }
             $book->load($params['book'], '');
             if ($book->validate()) {
-                $book->update();
+                $updateFn[] = function () use ($book) {
+                    $book->update();
+                };
             } else {
                 throw new ServerErrorHttpException('Failed to update book.');
             }
@@ -119,11 +124,18 @@ class UserBookController extends Controller
         if (isset($params['userBook'])) {
             $userBook->load($params['userBook'], '');
             if ($userBook->validate()) {
-                $userBook->update();
+                $updateFn[] = function () use ($userBook) {
+                    $userBook->update();
+                };
             } else {
                 throw new ServerErrorHttpException('Failed to update user-book.');
             }
         }
+        // apply updates
+        foreach($updateFn as $update) {
+            $update();
+        }
+        // success response
         $response = Yii::$app->getResponse();
         $response->setStatusCode(201);
         return $userBook;
