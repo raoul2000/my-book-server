@@ -2,7 +2,6 @@
 
 namespace app\models;
 
-use Yii;
 use app\migrations\TableName;
 /**
  * This is the model class for table "{{%session}}".

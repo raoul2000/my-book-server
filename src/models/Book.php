@@ -85,6 +85,15 @@ class Book extends \yii\db\ActiveRecord
         }
         return true;
     }
+    public function beforeDelete()
+    {
+        if (!parent::beforeDelete()) {
+            return false;
+        }
+
+        
+        return true;
+    }
     /**
      * Gets query for [[BookPings]].
      *
