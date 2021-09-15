@@ -31,6 +31,9 @@ class UserBookController extends Controller
     public function actionIndex()
     {
         return new ActiveDataProvider([
+            'pagination' => [
+                'pageSize' => 200, //TODO: remove pagination
+            ],
             'query' => UserBook::find()
                 ->with('book')
                 ->where([
