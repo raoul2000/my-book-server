@@ -133,6 +133,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         UserToken::deleteAll(['user_id' => $this->id]);
         BookTicket::deleteAll(['user_id' => $this->id]);
         UserBook::deleteAll(['user_id' => $this->id]);
+        // TODO: delete all books (via userBook) NOT referenced by other userBook
 
         return true;
     }
