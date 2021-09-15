@@ -121,7 +121,21 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         }
         return true;
     }
+    /**
+     * @inheritdoc
+     */
+    public function beforeDelete()
+    {
+        if (!parent::beforeDelete()) {
+            return false;
+        }
 
+        UserToken::deleteAll(['user_id' => $this->id]);
+        BookTicket::deleteAll(['user_id' => $this->id]);
+        UserBook::deleteAll(['user_id' => $this->id]);
+
+        return true;
+    }
     /**
      * {@inheritdoc}
      */
