@@ -17,8 +17,8 @@ class UserBookController extends Controller
     protected function verbs()
     {
         return [
-            'index' => ['GET', 'HEAD', 'OPTIONS'],
-            'view' => ['GET', 'HEAD', 'OPTIONS'],
+            'index'  => ['GET', 'HEAD', 'OPTIONS'],
+            'view'   => ['GET', 'HEAD', 'OPTIONS'],
             'create' => ['POST', 'OPTIONS'],
             'update' => ['PUT', 'PATCH', 'OPTIONS'],
             'delete' => ['DELETE', 'OPTIONS'],
@@ -31,14 +31,13 @@ class UserBookController extends Controller
     public function actionIndex()
     {
         return new ActiveDataProvider([
-            'pagination' => [
-                'pageSize' => 200, //TODO: remove pagination
-            ],
-            'query' => UserBook::find()
+            'pagination' => false,
+            'query'      => UserBook::find()
                 ->with('book')
                 ->where([
                     'user_id' => Yii::$app->user->getId()
                 ])
+                ->orderBy('updated_at DESC')
         ]);
     }
 
@@ -48,8 +47,8 @@ class UserBookController extends Controller
     public function actionCreate()
     {
         $book = new Book();
-
         $params = Yii::$app->getRequest()->getBodyParams();
+
         if ($book->load($params['book'], '') && $book->save()) {
             $userBook = new UserBook();
             $userBook->load($params['userBook'], '');
@@ -78,34 +77,14 @@ class UserBookController extends Controller
      */
     public function actionView($id)
     {
-        $userBook = UserBook::find()
-            ->with('book')
-            ->where(['user_id' => Yii::$app->user->getId()])
-            ->andWhere(['book_id' => $id])
-            ->one();
-
-        if (!$userBook) {
-            throw new NotFoundHttpException("Object not found");
-        }
-
-        return $userBook;
+        return $this->findUserbookModel($id);;
     }
 
     public function actionUpdate($id)
     {
-        // TODO: refactor - externalize UserBook::find ...
-        $userBook = UserBook::find()
-            ->where(['user_id' => Yii::$app->user->getId()])
-            ->andWhere(['book_id' => $id])
-            ->with('book')
-            ->one();
-
-        if (!$userBook) {
-            throw new NotFoundHttpException("Object not found");
-        }
+        $userBook = $this->findUserbookModel($id);
 
         // FIXME: book id (and all other primary keys) should be protected from user updates
-        // TODO: allow user to update userBook model
 
         $book = $userBook->book;
 
@@ -114,6 +93,7 @@ class UserBookController extends Controller
             $book->load($params['book'], '');
             if ($book->validate()) {
                 $book->update();
+                $userBook->touch('updated_at');
             } else {
                 throw new ServerErrorHttpException('Failed to update book.');
             }
@@ -138,17 +118,27 @@ class UserBookController extends Controller
      */
     public function actionDelete($id)
     {
+        $userBook = $this->findUserbookModel($id);
+        $userBook->delete();
+        $userBook->book->delete();
+    }
+
+    /**
+     * Find UserBook by Id and for the current user
+     */
+    private function findUserbookModel($id)
+    {
         $userBook = UserBook::find()
-            ->where(['user_id' => Yii::$app->user->getId()])
-            ->andWhere(['book_id' => $id])
+            ->where([
+                'user_id' => Yii::$app->user->getId(),
+                'book_id' => $id
+            ])
             ->with('book')
             ->one();
 
-        if ($userBook) {
-            $userBook->delete();
-            $userBook->book->delete();
-        } else {
+        if ($userBook === null) {
             throw new NotFoundHttpException("Object not found");
         }
+        return $userBook;
     }
 }
