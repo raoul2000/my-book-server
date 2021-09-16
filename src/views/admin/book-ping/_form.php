@@ -15,7 +15,7 @@ use yii\widgets\ActiveForm;
         <div class="row">
             <div class="col-sm-6">
                 <?= $form->field($model, 'book_id')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
-
+                <?= $form->field($model, 'is_boarding')->checkbox() ?>
                 <?= $form->field($model, 'text')->textarea(['rows' => 3]) ?>
                 <?= $form->field($model, 'rate') ?>
 

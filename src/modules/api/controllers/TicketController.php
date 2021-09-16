@@ -10,6 +10,7 @@ use app\models\UserBook;
 use app\models\BookTicket;
 use app\models\User;
 use app\models\Book;
+use app\models\BookPing;
 use yii\helpers\Url;
 
 
@@ -51,14 +52,36 @@ class TicketController extends Controller
 
         $ticket = $this->findBookTicketModel($id);
 
-        $book = Book::findOne($ticket->book_id);
-        if ($book) {
-            if ($book->is_traveling) {
+        $userBook = UserBook::find()
+            ->where([
+                'user_id' => Yii::$app->user->getId(),
+                'book_id' => $id
+            ])
+            ->with('book')
+            ->one();
+
+
+        if ($userBook) {
+            if ($userBook->book->is_traveling) {
                 throw new ServerErrorHttpException('book already traveling');
             }
-            $book->updateAttributes(['is_traveling' => 1]);
+            $userBook->book->updateAttributes(['is_traveling' => 1]);
+
+            // Create the 'boarding' track : the first track for this travel that just begins
+            $ping = new BookPing(); // TO TEST
+            $ping->book_id = $ticket->book->id;
+            $ping->user_ip = Yii::$app->request->getUserIP();
+            $ping->setAttributes([
+                'book_id'       => $ticket->book->id,
+                'is_boarding'   => 1,
+                'user_ip'       => Yii::$app->request->getUserIP(),
+                'location_name' => $ticket->from,
+                'rate'          => $userBook->rate
+            ]);
+            $ping->save();
+            
             return [
-                'book' => $book,
+                'book'   => $userBook->book,
                 'ticket' => $ticket
             ];
         } else {
