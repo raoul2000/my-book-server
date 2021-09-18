@@ -29,9 +29,7 @@ $this->title = 'ISBN Service';
 
     <?php ActiveForm::end(); ?>
     <?php if($bookInfo): ?>
-        <pre>
-            <?= VarDumper::dumpAsString($bookInfo) ?>
-        </pre>
+        <pre><?= VarDumper::dumpAsString($bookInfo) ?></pre>
     <?php endif; ?>
 
 </div>

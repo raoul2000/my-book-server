@@ -4,7 +4,6 @@ namespace app\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
-use yii\db\Expression;
 use Da\QrCode\QrCode;
 use yii\helpers\Url;
 use app\migrations\TableName;

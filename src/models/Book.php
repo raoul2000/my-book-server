@@ -86,6 +86,21 @@ class Book extends \yii\db\ActiveRecord
         return true;
     }
     /**
+     * @inheritdoc
+     */
+    public function beforeDelete()
+    {
+        if (!parent::beforeDelete()) {
+            return false;
+        }
+
+        BookTicket::deleteAll(['book_id' => $this->id]);
+        BookPing::deleteAll(['book_id' => $this->id]);
+        UserBook::deleteAll(['book_id' => $this->id]);
+
+        return true;
+    }
+    /**
      * Gets query for [[BookPings]].
      *
      * @return \yii\db\ActiveQuery

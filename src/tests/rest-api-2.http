@@ -100,12 +100,18 @@ X-Api-Key: {{apiKey}}
 Cookie: XDEBUG_SESSION=XDEBUG_ECLIPSE
 
 {
-    "title": "**Babylon 99",
-    "author": "Bobby"
+    "book": {
+        "title": "new title2",
+        "subtitle": "new subtitle2",
+        "isbn": "22222"
+    },
+    "userBook": {
+        "rate": 4
+    }
 }
 
 ### USER-BOOK - delete One
-DELETE {{baseUrl}}?r=api/user-book/delete&id=7
+DELETE {{baseUrl}}?r=api/user-book/delete&id={{bookId}}
 X-Api-Key: {{apiKey}}
 Cookie: XDEBUG_SESSION=XDEBUG_ECLIPSE
 

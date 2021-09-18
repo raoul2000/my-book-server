@@ -87,13 +87,17 @@ class UserBookController extends Controller
         // FIXME: book id (and all other primary keys) should be protected from user updates
 
         $book = $userBook->book;
-
         $params = Yii::$app->getRequest()->getBodyParams();
+        $updateFn = [];
         if (isset($params['book'])) {
+            if($book->is_traveling === 1) {
+                throw new ServerErrorHttpException("can't update a traveling book");
+            }
             $book->load($params['book'], '');
             if ($book->validate()) {
-                $book->update();
-                $userBook->touch('updated_at');
+                $updateFn[] = function () use ($book) {
+                    $book->update();
+                };
             } else {
                 throw new ServerErrorHttpException('Failed to update book.');
             }
@@ -102,11 +106,18 @@ class UserBookController extends Controller
         if (isset($params['userBook'])) {
             $userBook->load($params['userBook'], '');
             if ($userBook->validate()) {
-                $userBook->update();
+                $updateFn[] = function () use ($userBook) {
+                    $userBook->update();
+                };
             } else {
                 throw new ServerErrorHttpException('Failed to update user-book.');
             }
         }
+        // apply updates
+        foreach($updateFn as $update) {
+            $update();
+        }
+        // success response
         $response = Yii::$app->getResponse();
         $response->setStatusCode(201);
         return $userBook;
@@ -119,8 +130,16 @@ class UserBookController extends Controller
     public function actionDelete($id)
     {
         $userBook = $this->findUserbookModel($id);
-        $userBook->delete();
-        $userBook->book->delete();
+        if ($userBook) {
+            if( $userBook->book->is_traveling === 1) {
+                throw new ServerErrorHttpException("Can't delete a traveling book.");
+            } else {
+                $userBook->delete();
+                $userBook->book->delete();
+            }
+        } else {
+            throw new NotFoundHttpException("Object not found");
+        }        
     }
 
     /**
@@ -136,9 +155,6 @@ class UserBookController extends Controller
             ->with('book')
             ->one();
 
-        if ($userBook === null) {
-            throw new NotFoundHttpException("Object not found");
-        }
         return $userBook;
     }
 }
