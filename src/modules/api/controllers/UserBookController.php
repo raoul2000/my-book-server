@@ -90,7 +90,7 @@ class UserBookController extends Controller
         $params = Yii::$app->getRequest()->getBodyParams();
         $updateFn = [];
         if (isset($params['book'])) {
-            if($book->is_traveling === 1) {
+            if ($book->is_traveling === 1) {
                 throw new ServerErrorHttpException("can't update a traveling book");
             }
             $book->load($params['book'], '');
@@ -114,7 +114,7 @@ class UserBookController extends Controller
             }
         }
         // apply updates
-        foreach($updateFn as $update) {
+        foreach ($updateFn as $update) {
             $update();
         }
         // success response
@@ -130,20 +130,17 @@ class UserBookController extends Controller
     public function actionDelete($id)
     {
         $userBook = $this->findUserbookModel($id);
-        if ($userBook) {
-            if( $userBook->book->is_traveling === 1) {
-                throw new ServerErrorHttpException("Can't delete a traveling book.");
-            } else {
-                $userBook->delete();
-                $userBook->book->delete();
-            }
+        // RULE: userbook refering to a traveling book cannot be deleted
+        if ($userBook->book->is_traveling === 1) {
+            throw new ServerErrorHttpException("Can't delete a traveling book.");
         } else {
-            throw new NotFoundHttpException("Object not found");
-        }        
+            $userBook->delete();
+            $userBook->book->delete();
+        }
     }
 
     /**
-     * Find UserBook by Id and for the current user
+     * Find UserBook by Id and for the current user or throws if not found
      */
     private function findUserbookModel($id)
     {
@@ -155,6 +152,9 @@ class UserBookController extends Controller
             ->with('book')
             ->one();
 
+        if (!$userBook) {
+            throw new NotFoundHttpException("Object not found");
+        }
         return $userBook;
     }
 }

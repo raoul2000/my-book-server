@@ -15,7 +15,7 @@ class TrackerController extends Controller
     use ControllerBehaviorTrait {
         behaviors as defaultBehaviors;
     }
-    
+
     protected function verbs()
     {
         return [
@@ -32,27 +32,16 @@ class TrackerController extends Controller
         return $behaviors;
     }
     /**
-     * Returns the list of books belonging to the current user
+     * Returns the track list for a given book
      * 
      * @param string $id - the id of the book to track
      */
     public function actionIndex($id)
     {
-        $book = Book::find()
-            ->where(['id' => $id])
-            ->one();
-
-        if (!$book) {
-            throw new NotFoundHttpException('book not found');
-        }
-
-        $track = BookPing::find()
-            ->where(['book_id' => $id])
-            ->all();
-
         return [
-            'book' => $book,
-            'track' => $track
+            'track' => BookPing::find()
+                ->where(['book_id' => $id])
+                ->all()
         ];
     }
 }
