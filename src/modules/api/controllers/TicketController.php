@@ -27,17 +27,22 @@ class TicketController extends Controller
             'delete'     => ['DELETE', 'OPTIONS'],
         ];
     }
-
+    /**
+     * Returns a travel ticket for a given book and for the current user
+     * or throws
+     * @param $id the book Id
+     */
     public function actionIndex($id)
     {
-        $ticket = $this->findBookTicketModel($id);
-        if ($ticket) {
-            return $ticket;
-        }
-        throw new NotFoundHttpException('ticket not found');
+        return $this->findBookTicketModel($id);
     }
 
-
+    /**
+     * Perform boarding operation for a ticket on a given book and
+     * for the current user.
+     * 
+     * @param $id the book Id
+     */
     public function actionBoarding($id)
     {
         if (!$this->userBookExists($id)) {
@@ -45,13 +50,10 @@ class TicketController extends Controller
         }
 
         $ticket = $this->findBookTicketModel($id);
-        if (!$ticket) {
-            throw new NotFoundHttpException('ticket not found');
-        }
 
         $book = Book::findOne($ticket->book_id);
         if ($book) {
-            if($book->is_traveling) {
+            if ($book->is_traveling) {
                 throw new ServerErrorHttpException('book already traveling');
             }
             $book->updateAttributes(['is_traveling' => 1]);
@@ -64,13 +66,17 @@ class TicketController extends Controller
         }
     }
 
+    /**
+     * Creates a travel ticket for a given book a,d for the current user
+     * @param $id the book Id
+     */
     public function actionCreate($id)
     {
         if (!$this->userBookExists($id)) {
             throw new NotFoundHttpException('book not found');
         }
 
-        if ($this->findBookTicketModel($id)) {
+        if ($this->bookTicketExists($id)) {
             throw new ServerErrorHttpException('ticket already created');
         }
 
@@ -81,7 +87,7 @@ class TicketController extends Controller
         $ticket->user_id = Yii::$app->user->getId();
         $ticket->from = $params['from'];
 
-        if(!empty($params['departure_at'])) {
+        if (!empty($params['departure_at'])) {
             $utcDate = new \DateTime($params['departure_at']);
             $ticket->departure_at = $utcDate->format('Y-m-d H:i:00'); // reset seconds
         }
@@ -143,40 +149,71 @@ class TicketController extends Controller
             // TODO: log error
         }
 
-
         return [
             'ticketUrl' => $ticketUrl,
             'emailSent' => $emailSent
         ];
     }
-
+    /**
+     * Deletes a ticket for a given book or throw
+     * @param $id the book Id
+     */
     public function actionDelete($id)
     {
-        // TODO: by business rule a ticket that has benn used (checked-in) 
-        // cannot be delete. The traval has started, the ticket must remains
-        // unmodified
-        if ($this->userBookExists($id)) {
-            $ticket = $this->findBookTicketModel($id);
-            if ($ticket) {
-                $ticket->delete();
-            } else {
-                throw new NotFoundHttpException("Ticket not found");
+        $ticket = $this->findBookTicketModel($id);
+        $book = Book::findOne($ticket->book_id);
+        if ($book) {
+            // RULE: it is not possible to delete a ticket if boarding has been
+            // done
+            if ($book->is_traveling) {
+                throw new ServerErrorHttpException('book already traveling');
             }
         } else {
-            throw new NotFoundHttpException("Ticket not found");
+            throw new NotFoundHttpException('book not found');
         }
+        $ticket->delete();
     }
-
+    /**
+     * Returns a ticket for a given book and for the current user 
+     * or throws if not found
+     * 
+     * @param $bookId the book Id
+     */
     private function findBookTicketModel($bookId)
+    {
+        $ticket = BookTicket::find()
+            ->where([
+                'user_id' => Yii::$app->user->getId(),
+                'book_id' => $bookId
+            ])
+            ->one();
+
+        if (!$ticket) {
+            throw new NotFoundHttpException('ticket not found');
+        }
+        return $ticket;
+    }
+    /**
+     * Returns TRUE if a ticket for a given book and the current user
+     * exists or throws
+     * 
+     * @param $bookId the book Id
+     */
+    private function bookTicketExists($bookId)
     {
         return BookTicket::find()
             ->where([
                 'user_id' => Yii::$app->user->getId(),
                 'book_id' => $bookId
             ])
-            ->one();
+            ->exists();
     }
-
+    /**
+     * Returns TRUE if a given book and for the current user 
+     * exists or throws
+     * 
+     * @param $bookId the book Id
+     */
     private function userBookExists($bookId)
     {
         // TODO: add condition book must not be already traveling
