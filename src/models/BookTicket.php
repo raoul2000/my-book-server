@@ -84,26 +84,7 @@ class BookTicket extends \yii\db\ActiveRecord
             unlink($this->getQrCodeFilePath());
         }
     }
-    public function localeDateToUTC() 
-    {
-        if (!empty($this->departure_at)) {
-            $value = new \DateTime($this->departure_at, new \DateTimeZone(Yii::$app->formatter->timeZone));
-            $value->setTimezone(new \DateTimeZone('UTC'));
-
-            // format used here must be in-sync with Yii::$app->formatter->datetimeFormat
-            $this->departure_at = $value->format('Y-m-d H:i:00');
-        }
-    }
-    public function utcDateToLocale()
-    {
-        if (!empty($this->departure_at)) {
-            // convert UTC datetime from DB into locale date time (used for forms)
-            $value = new \DateTime($this->departure_at, new \DateTimeZone('UTC'));
-            $value->setTimezone(new \DateTimeZone(Yii::$app->formatter->timeZone));
-            // format used here must be in-sync with Yii::$app->formatter->datetimeFormat
-            $this->departure_at = $value->format('Y-m-d H:i:00'); 
-        }
-    }
+    
     /**
      * {@inheritdoc}
      */
