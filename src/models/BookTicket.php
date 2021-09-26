@@ -58,8 +58,8 @@ class BookTicket extends \yii\db\ActiveRecord
                 'message' => 'Format de date invalide : YYYY-MM-JJ hh:mm:ss'
             ],  
             [['book_id'], 'string', 'max' => 40],
-            [['book_id'], 'exist', 'skipOnError' => true, 'targetClass' => Book::className(), 'targetAttribute' => ['book_id' => 'id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['book_id'], 'exist', 'skipOnError' => true, 'targetClass' => Book::class, 'targetAttribute' => ['book_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -84,26 +84,7 @@ class BookTicket extends \yii\db\ActiveRecord
             unlink($this->getQrCodeFilePath());
         }
     }
-    public function localeDateToUTC() 
-    {
-        if (!empty($this->departure_at)) {
-            $value = new \DateTime($this->departure_at, new \DateTimeZone(Yii::$app->formatter->timeZone));
-            $value->setTimezone(new \DateTimeZone('UTC'));
 
-            // format used here must be in-sync with Yii::$app->formatter->datetimeFormat
-            $this->departure_at = $value->format('Y-m-d H:i:00');
-        }
-    }
-    public function utcDateToLocale()
-    {
-        if (!empty($this->departure_at)) {
-            // convert UTC datetime from DB into locale date time (used for forms)
-            $value = new \DateTime($this->departure_at, new \DateTimeZone('UTC'));
-            $value->setTimezone(new \DateTimeZone(Yii::$app->formatter->timeZone));
-            // format used here must be in-sync with Yii::$app->formatter->datetimeFormat
-            $this->departure_at = $value->format('Y-m-d H:i:00'); 
-        }
-    }
     /**
      * {@inheritdoc}
      */
@@ -164,7 +145,7 @@ class BookTicket extends \yii\db\ActiveRecord
      */
     public function getBook()
     {
-        return $this->hasOne(Book::className(), ['id' => 'book_id']);
+        return $this->hasOne(Book::class, ['id' => 'book_id']);
     }
 
     /**
@@ -174,7 +155,7 @@ class BookTicket extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
     public function generateId()

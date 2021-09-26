@@ -18,7 +18,7 @@ class IsbnServiceController extends \yii\web\Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'rules' => [
                     [
                         'allow' => true,
@@ -27,7 +27,7 @@ class IsbnServiceController extends \yii\web\Controller
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'index' => ['POST', 'GET'],
                 ],

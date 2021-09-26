@@ -127,12 +127,12 @@ class Book extends \yii\db\ActiveRecord
      */
     public function getUserBooks()
     {
-        return $this->hasMany(UserBook::className(), ['book_id' => 'id']);
+        return $this->hasMany(UserBook::class, ['book_id' => 'id']);
     }
 
     public function getUsers()
     {
-        return $this->hasMany(User::className(), ['id' => 'book_id'])
+        return $this->hasMany(User::class, ['id' => 'book_id'])
             ->via('userBooks');
     }
 }

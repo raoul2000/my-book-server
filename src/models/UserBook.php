@@ -65,8 +65,8 @@ class UserBook extends \yii\db\ActiveRecord
             [['user_id', 'book_id'], 'required'],
             [['user_id', 'read_status', 'rate'], 'integer'],
             [['book_id'], 'string', 'max' => 40],
-            [['book_id'], 'exist', 'skipOnError' => true, 'targetClass' => Book::className(), 'targetAttribute' => ['book_id' => 'id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['book_id'], 'exist', 'skipOnError' => true, 'targetClass' => Book::class, 'targetAttribute' => ['book_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -93,7 +93,7 @@ class UserBook extends \yii\db\ActiveRecord
      */
     public function getBook()
     {
-        return $this->hasOne(Book::className(), ['id' => 'book_id']);
+        return $this->hasOne(Book::class, ['id' => 'book_id']);
     }
 
     /**
@@ -103,7 +103,7 @@ class UserBook extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
     /**
      * Required to be able to return the related book from REST API

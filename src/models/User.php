@@ -95,7 +95,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public function getUserBooks()
     {
-        return $this->hasMany(UserBook::className(), ['user_id' => 'id']);
+        return $this->hasMany(UserBook::class, ['user_id' => 'id']);
     }
 
     /**
@@ -105,7 +105,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public function getUserTokens()
     {
-        return $this->hasMany(UserToken::className(), ['user_id' => 'id']);
+        return $this->hasMany(UserToken::class, ['user_id' => 'id']);
     }
 
     /**
