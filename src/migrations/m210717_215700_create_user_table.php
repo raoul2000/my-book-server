@@ -25,7 +25,7 @@ class m210717_215700_create_user_table extends Migration
         $this->createIndex('{{%idx_user_email}}', TableName::USER, 'email', true);
 
         $this->insert(TableName::USER, [
-            'id'            => '0',
+            'id'            => 1,
             'username'      => 'admin',
             'email'         => 'admin@email.com',
             'password_hash' => '$2y$13$P/okCIsogd514o21zpBT8uNALHfYyjgeY4.u4EdeovdIbbayrhSka',
