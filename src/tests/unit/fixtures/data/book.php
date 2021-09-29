@@ -1,15 +1,11 @@
 <?php
 
 use \thamtech\uuid\helpers\UuidHelper;
-use Codeception\Util\Fixtures;
-use tests\unit\fixtures\ClientContactFixture;
 use \Faker\Factory;
-
-// @see https://forum.yiiframework.com/t/how-to-define-dependable-fixtures-without-using-concrete-values-of-foreign-keys/72887/4
 
 $faker = Factory::create();
 $data = [];
-for ($i=0; $i < 50; $i++) { 
+for ($i=0; $i < 500; $i++) { 
     $timestamp = $faker->unixTime();
     $data['book-' . $i] = [
         'id'            => UuidHelper::uuid(),

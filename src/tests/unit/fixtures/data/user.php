@@ -1,5 +1,5 @@
 <?php
-$password_hash = '$2y$13$hPJTrfs4csFBj58qfs6qAunbv/LXgtXG39nbtLf/H5g6m3qB2H1X2';
+$password_hash = '$2y$13$hPJTrfs4csFBj58qfs6qAunbv/LXgtXG39nbtLf/H5g6m3qB2H1X2'; // pwd = "password"
 
 return [
     'admin' => [

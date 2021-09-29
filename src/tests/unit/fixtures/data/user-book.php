@@ -1,6 +1,5 @@
 <?php
 
-use \thamtech\uuid\helpers\UuidHelper;
 use Codeception\Util\Fixtures;
 use tests\unit\fixtures\UserFixture;
 use tests\unit\fixtures\BookFixture;
@@ -12,14 +11,23 @@ $faker = Factory::create();
 $users = Fixtures::get(UserFixture::class);
 $books = Fixtures::get(BookFixture::class);
 
+
+$user_id = $users['bob']['id'];
+
 $timestamp = $faker->unixTime();
-return [
-    'ub-1' => [
-        'user_id' => $users['bob']->id,
-        'book_id' => $books['book-1']->id,
-        'read_status' => 1,
-        'rate' => 3,
+
+$data = [];
+for ($i=0; $i < 500; $i++) { 
+
+    $book_id = $books['book-' . $i]['id'];
+
+    $data['ub-' . $i] = [
+        'user_id'       => $user_id,
+        'book_id'       => $book_id,
+        'read_status'   => 1,
+        'rate'          => 3,
         'created_at'    => $timestamp,
         'updated_at'    => $timestamp        
-    ]
-];
+    ];
+}
+return $data;
