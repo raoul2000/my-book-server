@@ -8,7 +8,10 @@ class UserFixture extends ActiveFixture
 {
     public $modelClass = 'app\models\User';
     public $dataFile = __DIR__ . '/data/user.php';
-
+    public $depends = [
+        UserTokenFixture::class,
+    ];
+    
     public function load(): void
     {
         parent::load();
