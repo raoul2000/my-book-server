@@ -32,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'book_id',
+            'is_boarding:boolean',
             'book.title',
             'text:ntext',
             'rate',

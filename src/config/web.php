@@ -32,17 +32,7 @@ $config = [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        'mailer' => [
-            'class' => 'yii\swiftmailer\Mailer',
-            'useFileTransport' => true,
-            /*'transport' => [
-                'class' => 'Swift_SmtpTransport',
-                'host' => 'smtp.ionos.fr',
-                'port' => '587',
-                'username' => 'username',
-                'password' => '******',
-            ]*/            
-        ],
+        'mailer' => $params['mailer'],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
@@ -62,7 +52,7 @@ $config = [
             'class' => 'yii\web\DbSession',
         ],        
     ],
-    'params' => $params,
+    'params' => $params['app'],
     'modules' => [
         'api' => [
             'class' => 'app\modules\api\Module',

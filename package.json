@@ -8,7 +8,8 @@
   },
   "scripts": {
     "start-server": "php ./src/yii serve",
-    "build": "gulp --gulpfile ./tools/gulp/gulpfile.js"
+    "build": "cross-env NODE_ENV=prod gulp --gulpfile ./tools/gulp/gulpfile.js",
+    "build-dev": "gulp --gulpfile ./tools/gulp/gulpfile.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,7 @@
   },
   "homepage": "https://github.com/raoul2000/my-books-server#readme",
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "gulp": "^4.0.2",
     "gulp-chmod": "^3.0.0",
     "gulp-notify": "^3.2.0",

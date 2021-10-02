@@ -18,7 +18,7 @@ class SearchBookPing extends BookPing
     {
         return [
             [['id'], 'integer'],
-            [['book_id', 'text','created_at', 'updated_at'], 'safe'],
+            [['book_id', 'text','created_at', 'updated_at', 'is_boarding'], 'safe'],
         ];
     }
 
@@ -61,6 +61,7 @@ class SearchBookPing extends BookPing
             'id' => $this->id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'is_boarding' => $this->is_boarding
         ]);
 
         $query->andFilterWhere(['like', 'book_id', $this->book_id])

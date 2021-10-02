@@ -10,6 +10,7 @@ use app\models\UserBook;
 use app\models\BookTicket;
 use app\models\User;
 use app\models\Book;
+use app\models\BookPing;
 use yii\helpers\Url;
 
 
@@ -45,20 +46,41 @@ class TicketController extends Controller
      */
     public function actionBoarding($id)
     {
-        if (!$this->userBookExists($id)) {
-            throw new NotFoundHttpException('book not found');
-        }
-
         $ticket = $this->findBookTicketModel($id);
 
-        $book = Book::findOne($ticket->book_id);
-        if ($book) {
-            if ($book->is_traveling) {
+        $userBook = UserBook::find()
+            ->where([
+                'user_id' => Yii::$app->user->getId(),
+                'book_id' => $id
+            ])
+            ->with('book')
+            ->one();
+
+        if ($userBook) {
+            if ($userBook->book->is_traveling) {
                 throw new ServerErrorHttpException('book already traveling');
             }
-            $book->updateAttributes(['is_traveling' => 1]);
+            $userBook->book->updateAttributes(['is_traveling' => 1]);
+
+            // Create the 'boarding' track : the first track for this travel that just begins
+            $ping = new BookPing();
+            $ping->setAttributes([
+                'book_id'       => $ticket->book->id,
+                'is_boarding'   => 1,
+                'user_ip'       => Yii::$app->request->getUserIP(),
+                'location_name' => $ticket->from,
+                'rate'          => $userBook->rate
+            ]);
+            $ping->save();
+
+            // force 'created_at' update to store 'departure_at' from the Ticket
+            $departureAt = new \DateTime($ticket->departure_at, new \DateTimeZone('UTC'));
+            $ping->updateAttributes([
+                'created_at' => $departureAt->getTimestamp()
+            ]);
+            
             return [
-                'book' => $book,
+                'book'   => $userBook->book,
                 'ticket' => $ticket
             ];
         } else {
@@ -85,7 +107,7 @@ class TicketController extends Controller
         $params = Yii::$app->getRequest()->getBodyParams();
         $ticket->book_id = $id;
         $ticket->user_id = Yii::$app->user->getId();
-        $ticket->from = $params['from'];
+        $ticket->from    = $params['from'];
 
         if (!empty($params['departure_at'])) {
             $utcDate = new \DateTime($params['departure_at']);
@@ -194,8 +216,8 @@ class TicketController extends Controller
         return $ticket;
     }
     /**
-     * Returns TRUE if a ticket for a given book and the current user
-     * exists or throws
+     * Returns TRUE if a ticket for a given book and the current user,
+     * FALSE if not found.
      * 
      * @param $bookId the book Id
      */
@@ -210,7 +232,7 @@ class TicketController extends Controller
     }
     /**
      * Returns TRUE if a given book and for the current user 
-     * exists or throws
+     * FALSE if not found.
      * 
      * @param $bookId the book Id
      */

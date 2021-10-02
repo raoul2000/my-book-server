@@ -14,6 +14,7 @@ class m210717_215900_create_book_ping_table extends Migration
         $this->createTable(TableName::BOOK_PING, [
             'id'                => $this->primaryKey(),
             'book_id'           => $this->string(40)->notNull(),
+            'is_boarding'       => $this->boolean()->defaultValue(0),
             'email'             => $this->string(),
             'rate'              => $this->tinyInteger(),
             'location_name'     => $this->string(),

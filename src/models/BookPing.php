@@ -11,6 +11,11 @@ use app\migrations\TableName;
  *
  * @property int $id
  * @property string $book_id
+ * @property boolean $is_boarding
+ * @property string $email
+ * @property integer $rate
+ * @property string $location_name
+ * @property string $user_ip
  * @property string $text
  * @property integer|null $created_at
  * @property integer|null $updated_at
@@ -44,6 +49,7 @@ class BookPing extends \yii\db\ActiveRecord
     {
         return [
             [['book_id' ], 'required'],
+            [['is_boarding'], 'boolean'],
             [['book_id'], 'string', 'max' => 40],
             [['book_id'], 'exist', 'skipOnError' => true, 'targetClass' => Book::class, 'targetAttribute' => ['book_id' => 'id']],
             [['user_ip'], 'string', 'max' => 50],
@@ -61,6 +67,7 @@ class BookPing extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'book_id' => 'Book ID',
+            'is_boarding' => 'Boarding',
             'email' => "Email",
             'rate' => 'Rate',
             'text' => 'Text',

@@ -4,10 +4,11 @@ const del = require("del");
 const zip = require("gulp-zip");
 const fs = require("fs");
 const path = require("path");
-const chmod = require('gulp-chmod');
+const chmod = require("gulp-chmod");
+const { buildTarget, TARGET_DEV, TARGET_PROD } = require("./target-env.js");
 
 const workingDir = path.join(__dirname, "..", "..", "..");
-
+console.log("target = " + buildTarget);
 function createBuildTs() {
     const now = new Date();
     return [
@@ -28,10 +29,12 @@ function createBuildTs() {
  */
 function updateIndex() {
     // @ts-ignore
-    var pkg = JSON.parse(fs.readFileSync(path.join(workingDir, "package.json")));
+    var pkg = JSON.parse(
+        fs.readFileSync(path.join(workingDir, "package.json"))
+    );
 
     return new Promise((resolve, reject) => {
-        const filepath = path.join(workingDir,"build/source/web/index.php");
+        const filepath = path.join(workingDir, "build/source/web/index.php");
         const buildTs = createBuildTs();
 
         fs.readFile(filepath, "utf-8", (err, data) => {
@@ -64,8 +67,8 @@ function updateIndex() {
 
 function preserveEmptyfolders() {
     return new Promise((resolve, reject) => {
-        const filepath = path.join(workingDir,"build/source/web/assets/keep");
-        fs.writeFile(filepath, 'keep this folder', (err) => {
+        const filepath = path.join(workingDir, "build/source/web/assets/keep");
+        fs.writeFile(filepath, "keep this folder", (err) => {
             if (err) {
                 reject(err);
             } else {
@@ -75,17 +78,17 @@ function preserveEmptyfolders() {
     });
 }
 function cleanSource() {
-    return del("build/source/**", { force: true, cwd: workingDir});
+    return del("build/source/**", { force: true, cwd: workingDir });
 }
 
 function copySource() {
     return src(
         [
-            "src/**", 
-            "!src/README.md", 
-            "!src/LICENSE.md", 
-            "!src/*.yml", 
-            "!src/composer.*", 
+            "src/**",
+            "!src/README.md",
+            "!src/LICENSE.md",
+            "!src/*.yml",
+            "!src/composer.*",
             "!src/runtime/*/**",
             "!src/vendor/**/**",
             "!src/web/assets/*/**",
@@ -98,7 +101,7 @@ function copySource() {
             cwd: workingDir,
         })
     );
-};
+}
 
 /**
  * Example on how to create an empty folder in build
@@ -110,33 +113,42 @@ function createSourceFolders() {
         .pipe(dest("../../build/src/runtime/logs"));
 }
 
-
-function copyConfig() {
-    return src(
-        [
-            "../../src/config/**",
-            "!../../src/config/db.php", // ignore DB params
-        ],
-        { base: "../../src/" }
-    )
-        .pipe(
-            rename((filePath) => {
-                if (filePath.basename.endsWith(".prod")) {
-                    console.log(
-                        `renaming PROD file : ${filePath.basename}${filePath.extname}`
+function copyConfig(cb) {
+    if (buildTarget === TARGET_DEV) {
+        cb();
+    } else {
+        return src(["../../src/config/*." + buildTarget + ".php"], {
+            base: "../../src/",
+        })
+            .pipe(
+                rename((filePath) => {
+                    const toUpdateFilePath = path.join(
+                        workingDir,
+                        "build",
+                        "source",
+                        filePath.dirname,
+                        `${filePath.basename}${filePath.extname}`
                     );
-                    filePath.basename = filePath.basename.replace(/\.prod$/, "");
-                }
-            })
-        )
-        .pipe(dest("../../build/src"));
+                    console.log(`delete : ${toUpdateFilePath}`);
+                    fs.unlinkSync(toUpdateFilePath);
+
+                    filePath.basename = filePath.basename.replace(/\..*$/, "");
+                    console.log("copy : " + filePath.basename);
+                })
+            )
+            .pipe(
+                dest("build/source", {
+                    cwd: workingDir,
+                })
+            );
+    }
 }
 
 function zipSource() {
-    return src(["build/source/**"], {cwd: workingDir})
+    return src(["build/source/**"], { cwd: workingDir })
         .pipe(chmod(0o755, 0o755))
         .pipe(zip("source.zip"))
-        .pipe(dest("build/zip", {cwd: workingDir}));
+        .pipe(dest("build/zip", { cwd: workingDir }));
 }
 
 exports.copySource = copySource;
@@ -145,4 +157,10 @@ exports.zipSource = zipSource;
 exports.copyConfig = copyConfig;
 exports.updateIndex = updateIndex;
 
-exports.buildSource = series(cleanSource, copySource, preserveEmptyfolders,  updateIndex);
+exports.buildSource = series(
+    cleanSource,
+    copySource,
+    copyConfig,
+    preserveEmptyfolders,
+    updateIndex
+);

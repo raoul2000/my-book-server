@@ -44,7 +44,10 @@ class AuthController extends ActiveController
 
         $user = User::findByUsername($params['username']);
         if (empty($user)) {
-            throw new UnauthorizedHttpException('invalid credentials');
+            $user = User::findByEmail($params['username']);
+            if(empty($user)) {
+                throw new UnauthorizedHttpException('invalid credentials');
+            }
         }
 
         if ($user->status !== User::STATUS_ACTIVE) {

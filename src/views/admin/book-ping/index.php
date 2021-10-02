@@ -26,6 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             'book_id',
+            'is_boarding:boolean',
             'book.title',
             'text:ntext',
             'rate',
