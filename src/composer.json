@@ -21,7 +21,8 @@
         "2amigos/qrcode-library": "~1.1",
         "yii2mod/yii2-star-rating": "*",
         "thamtech/yii2-uuid": "^1.2",
-        "yiisoft/yii2-httpclient": "*"
+        "yiisoft/yii2-httpclient": "*",
+        "league/csv": "^9.7"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
