@@ -10,6 +10,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <hr/>
     <p>
         <?= Html::a('Export Books as CSV', ['/export-books'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Import Books as CSV', ['/import-book'], ['class' => 'btn btn-success']) ?>
     </p>
     <hr/>
     <div class="grid">
