@@ -1,32 +1,45 @@
 <?php
+
 use yii\helpers\Html;
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 
 $this->title = 'Mes Livres';
 ?>
 <div class="site-index">
-    <div class="jumbotron">
-        <h1>Mes Livres</h1>
-        <p class="lead">Gérez votre collection de livres</p>
-    </div>
-    <div class="row">
-        <div class="col-lg-4">
-            <?= Html::img('images/book-list.png', ['class' => 'img-rounded'])?>
-          <h2>Heading</h2>
-          <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
-          <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
-        </div><!-- /.col-lg-4 -->
-        <div class="col-lg-4">
-            <?= Html::img('images/book-detail.png', ['class' => 'img-rounded'])?>
-          <h2>Heading</h2>
-          <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
-          <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
-        </div><!-- /.col-lg-4 -->
-        <div class="col-lg-4">
-          <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-          <h2>Heading</h2>
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
-        </div><!-- /.col-lg-4 -->
-      </div>    
+  <div class="jumbotron">
+    <h1>Mes Livres</h1>
+    <p class="lead">Gérez votre collection de livres</p>
+  </div>
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="home-image" style="background-image: url('<?= Url::to('images/book-list-2.png') ?>');">
+      </div>
+      <h2>Votre Collection</h2>
+      <p>
+        Regroupez tous vos livres à un seul endroit. Retrouvez-les facilement avec
+        le filtre de recherche sur le titre ou le nom d'auteur. Vous pourrez à tout moment rajouter
+        de nouveaux livres à votre collection, ou bien annoter ceux qui s'y trouvent déjà.
+      </p>
+    </div><!-- /.col-lg-4 -->
+    <div class="col-lg-4">
+      <div class="home-image" style="background-image: url('<?= Url::to('images/book-detail-2.png') ?>');">
+      </div>
+      <h2>En Détail</h2>
+      <p>
+        Affichez les détails d'un livre comme par exemple la note que vous lui aviez donné. Si vous avez
+        renseigné le numéro ISBN lors de l'ajout du livre, son résumé est accessible à la demande.
+      </p>
+    </div><!-- /.col-lg-4 -->
+    <div class="col-lg-4">
+      <div class="home-image" style="background-image: url('<?= Url::to('images/book-ticket.png') ?>');">
+      </div>
+      <h2>Livre Voyageur</h2>
+      <p>
+        Pour les livres que vous ne voulez pas relire, le <em>voyage</em> est une bonne solution. Créez un ticket,
+        collez-le au dos de la couverture et votre livre et prêt à embarquer. Vous pourrez suivre sont voyage si
+        son prochain lecteur le signale.
+      </p>
+    </div><!-- /.col-lg-4 -->
+  </div>
 </div>

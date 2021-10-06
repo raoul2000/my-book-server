@@ -30,11 +30,7 @@ if ($totalBookCount === 0) {
     flex-direction: column;
     align-items: center;">
         <div>
-            <?= Html::a("Démarrer l'Application", ['/export-books'], ['class' => 'btn btn-primary btn-lg']) ?>
+            <?= Html::a("ouvrir l'application", ['/export-books'], ['class' => 'btn btn-primary btn-lg']) ?>
         </div>
-        <p class="text-muted" style="text-align: center;">
-            Utilisez l'application web/mobile<br/>pour gérer vos livres
-        </p>
-
     </div>
 </div>
