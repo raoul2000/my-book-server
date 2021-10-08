@@ -2,7 +2,6 @@
 
 namespace app\models\forms;
 
-use Yii;
 use yii\base\Model;
 use app\models\User;
 use app\models\UserToken;
@@ -29,11 +28,19 @@ class PasswordResetForm extends Model
     public function rules()
     {
         return [
-            ['email', 'required'],
-            ['email', 'email'],
+            ['email', 'required',
+                'message' => 'veuillez saisir une valeur'],
+            ['email', 'email',
+            'message' => 'adresse email invalide'],
             ['email', 'validateEmail'],
         ];
     }
+    public function attributeLabels()
+    {
+        return [
+            'email' => 'Adresse email'
+        ];
+    }    
     public function getPasswordResetToken()
     {
         return $this->_password_reset_token;
@@ -49,7 +56,7 @@ class PasswordResetForm extends Model
             ]);
 
             if (!$user) {
-                $this->addError($attribute, 'Invalid email');
+                $this->addError($attribute, "cette adresse email n'est pas enregistrée");
             } else {
                 $this->_user = $user;
             }

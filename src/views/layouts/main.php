@@ -63,7 +63,7 @@ AppAsset::register($this);
                     : ['label' => 'Paramètres',  'url' => ['/user-settings']],
 
                 Yii::$app->user->isGuest
-                    ? (['label' => 'Se Connecter', 'url' => ['/site/login']])
+                    ? (['label' => 'Se connecter', 'url' => ['/site/login']])
                     : ('<li>'
                         . Html::beginForm(['/site/logout'], 'post')
                         . Html::submitButton(

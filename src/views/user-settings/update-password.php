@@ -7,10 +7,11 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use app\models\forms\UpdatePasswordForm;
-
-$this->title = 'Change le mot de passe';
-$this->params['breadcrumbs'][] = ['label' => 'Paramètres', 'url' => ['/user-settings']];
-$this->params['breadcrumbs'][] = $this->title;
+if($model->getScenario() === UpdatePasswordForm::SCENARIO_UPDATE)  {
+    $this->title = 'Change le mot de passe';
+    $this->params['breadcrumbs'][] = ['label' => 'Paramètres', 'url' => ['/user-settings']];
+    $this->params['breadcrumbs'][] = $this->title;
+}
 ?>
 <div class="site-register">
     <?php $form = ActiveForm::begin([
