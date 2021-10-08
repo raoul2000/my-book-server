@@ -25,9 +25,12 @@ class UpdatePasswordForm extends Model
     {
         return [
             // name, email, subject and body are required
-            [['old_password'], 'required', 'on' => [self::SCENARIO_UPDATE]],
-            [['new_password', 'new_password_confirm'], 'required', 'on' =>  [self::SCENARIO_UPDATE, self::SCENARIO_RESET]],
-            ['new_password_confirm', 'compare', 'compareAttribute' => 'new_password', 'on' =>  [self::SCENARIO_UPDATE, self::SCENARIO_RESET]],
+            [['old_password'], 'required', 'on' => [self::SCENARIO_UPDATE],
+                'message' => 'veuillez saisir une valeur'],
+            [['new_password', 'new_password_confirm'], 'required', 'on' =>  [self::SCENARIO_UPDATE, self::SCENARIO_RESET],
+                'message' => 'veuillez saisir une valeur'],
+            ['new_password_confirm', 'compare', 'compareAttribute' => 'new_password', 'on' =>  [self::SCENARIO_UPDATE, self::SCENARIO_RESET],
+                'message' => 'les mots de passe saisis sont différents'],
         ];
     }
 
@@ -38,7 +41,7 @@ class UpdatePasswordForm extends Model
     public function attributeLabels()
     {
         return [
-            'old_password' => 'Mot de passe',
+            'old_password' => 'Mot de passe actuel',
             'new_password' => 'Nouveau mot de passe',
             'new_password_confirm' => 'Confimer le nouveau mot de passe',
         ];

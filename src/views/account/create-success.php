@@ -2,17 +2,21 @@
 /* @var $this yii\web\View */
 
 use yii\helpers\Html;
-
+$alertType = $activationRequired 
+    ? 'alert-info'
+    : 'alert-success';
 ?>
-<div>
-    <p>Your Account has been created</p>
+
+<div class="alert <?= $alertType?>" role="alert">
+    <p><strong>Félicitation !! </strong>Votre compte a été créé.</p>
     <?php if ($activationRequired) : ?>
 
-        <p>An activation email has been sent to <?= Html::encode($email) ?></p>
+        <p>Avant de pouvoir vous connecter vous devrez <strong>activer votre compte</strong>. Pour 
+        cela, un email vous a été envoyé à l'adresse <?= Html::encode($email) ?></p>
 
     <?php else : ?>
 
-        <p>You can now  <?= Html::a('login', ['site/login']) ?></p>
+        <p>Vous pouvez maintenant vous <?= Html::a('connecter', ['site/login']) ?></p>
         
     <?php endif ?>
-</div>
+</div>    

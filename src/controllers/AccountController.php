@@ -42,7 +42,10 @@ class AccountController extends \yii\web\Controller
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-
+        /* return $this->render('create-success', [
+            'activationRequired' => Yii::$app->params['enableAccountActivation'],
+            'email'              => 'bob@email.com'
+        ]); */
         $model = new UserRegistrationForm();
         if ($model->load(Yii::$app->request->post()) && $model->register()) {
 
@@ -64,7 +67,7 @@ class AccountController extends \yii\web\Controller
                     ->setTo($userEmail)
                     ->setFrom(['Raoul@ass-team.fr' => 'raoul'])
                     ->setReplyTo('no-reply@email.com')
-                    ->setSubject('account activation')
+                    ->setSubject('Mes Livres: activer mon compte')
                     ->send();
             }
 
@@ -78,6 +81,7 @@ class AccountController extends \yii\web\Controller
         $model->password_confirm = '';
         return $this->render('create', [
             'model' => $model,
+            'activationRequired' => Yii::$app->params['enableAccountActivation']
         ]);
     }
 }

@@ -1,21 +1,18 @@
 <?php
 use yii\helpers\Html;
 /* @var $this yii\web\View */
-$this->title = 'User Settings';
+$this->title = 'Paramètres';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-settings">
-
-    <h1>User Settings</h1>
-    <hr/>
     <p>
-        <?= Html::a('Export Books as CSV', ['/export-books'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Exporter mes livres', ['/export-books'], ['class' => 'btn btn-success']) ?>
         <?= Html::a('Import Books as CSV', ['/import-book'], ['class' => 'btn btn-success']) ?>
     </p>
     <hr/>
     <div class="grid">
         <div class="row">
-            <div class="col-sm-2"><strong>Username</strong></div>
+            <div class="col-sm-2"><strong>Pseudo</strong></div>
             <div class="col-sm-10"><?= $userModel->username ?></div>
         </div>
         <div class="row">
@@ -23,18 +20,20 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="col-sm-10"><?= $userModel->email ?></div>
         </div>
         <div class="row">
-            <div class="col-sm-2"><strong>Password</strong></div>
-            <div class="col-sm-10"><?= Html::a('update password', ['user-settings/update-password'])?></div>
+            <div class="col-sm-2"><strong>Mot de passe</strong></div>
+            <div class="col-sm-10"><?= Html::a('changer mot de passe', ['user-settings/update-password'])?></div>
         </div>
         <div class="row">
-            <div class="col-sm-2"><strong>API Key</strong></div>
+            <div class="col-sm-2"><strong>Clé API</strong></div>
             <div class="col-sm-10">
                 
                 <?php if(!empty($qrCode)): ?>
                     <?= $apiKey->token ?><br/>
-                    <img src="<?=  $qrCode->writeDataUri()?>" title="api key : QR code" alt="api key qr code"/>
+                    <img src="<?=  $qrCode->writeDataUri()?>" title=" QR code" alt="api key qr code"/>
+                    <div><em>*scannez le QR code depuis l'application<br/>
+                    pour vous connecter en un clin d'oeil</em></div>
                 <?php else: ?>
-                    <em>no set</em>
+                    <em>indisponible</em>
                 <?php endif ?>
             </div>
         </div>

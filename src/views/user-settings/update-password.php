@@ -8,13 +8,11 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use app\models\forms\UpdatePasswordForm;
 
-$this->title = 'Update Password';
-$this->params['breadcrumbs'][] = ['label' => 'User Settings', 'url' => ['/user-settings']];
+$this->title = 'Change le mot de passe';
+$this->params['breadcrumbs'][] = ['label' => 'Paramètres', 'url' => ['/user-settings']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-register">
-    <h1><?= Html::encode($this->title) ?></h1>
-    <hr/>
     <?php $form = ActiveForm::begin([
         'id' => 'update-pwd-form',
         'layout' => 'horizontal'
@@ -29,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <div class="form-group">
             <div class="col-sm-offset-3 col-sm-9">
-                <?= Html::submitButton('Save ', ['class' => 'btn btn-primary', 'name' => 'register-button']) ?>
+                <?= Html::submitButton('Enregistrer', ['class' => 'btn btn-primary', 'name' => 'register-button']) ?>
             </div>
         </div>
 

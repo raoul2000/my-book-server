@@ -171,3 +171,8 @@ body.naked .wrap > .container {
     padding: 3em;
     background-size: cover;
 }
+.site-login,
+.site-register {
+    margin-top: 3em;
+    padding: 2em;
+}

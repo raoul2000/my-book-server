@@ -27,14 +27,31 @@ class UserRegistrationForm extends Model
     public function rules()
     {
         return [
-            [['username', 'password', 'password_confirm', 'email'], 'required'],
-            ['username', 'unique', 'targetClass' => User::class, 'targetAttribute' => 'username'],
-            ['email', 'unique', 'targetClass' => User::class, 'targetAttribute' => 'email'],
-            ['email', 'email'],
-            ['password_confirm', 'compare', 'compareAttribute' => 'password'],
+            [['username', 'password', 'password_confirm', 'email'], 'required', 
+                'message' => 'veuillez saisir une valeur'],
+            ['username', 'unique', 'targetClass' => User::class, 'targetAttribute' => 'username',
+                'message' => 'ce nom est déjà utilisé'],
+            ['email', 'unique', 'targetClass' => User::class, 'targetAttribute' => 'email',
+                'message' => 'cette adresse email est déjà enregistrée'],
+            ['email', 'email',
+                'message' => 'adresse email invalide'],
+            ['password_confirm', 'compare', 'compareAttribute' => 'password',
+                'message' => 'mot de passe différent'],
         ];
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'username' => 'Pseudo',
+            'password' => 'Mot de passe',
+            'password_confirm' => 'Confirmer mot de passe',
+            'email' => 'Adresse email'
+        ];
+    }
     public function getUserId()
     {
         return $this->user_id;

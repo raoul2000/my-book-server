@@ -26,12 +26,20 @@ class LoginForm extends Model
     public function rules()
     {
         return [
-            [['username', 'password'], 'required'],
+            [['username', 'password'], 'required',
+                'message' => 'entrez votre pseudo'],
             ['rememberMe', 'boolean'],
-            ['password', 'validatePassword'],
+            ['password', 'validatePassword',
+                'message' => 'entrez votre mot de passe'],
         ];
     }
-
+    public function attributeLabels()
+    {
+        return [
+            'username' => 'Pseudo',
+            'password' => 'Mot de passe',
+        ];
+    }
     /**
      * Validates the password.
      * This method serves as the inline validation for password.
@@ -45,7 +53,7 @@ class LoginForm extends Model
             $user = $this->getUser();
 
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+                $this->addError($attribute, 'mot de pase ou pseudo incorrect.');
             }
         }
     }

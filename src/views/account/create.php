@@ -7,28 +7,28 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Register';
+$this->title = 'Créer mon compte';
+$emailFieldHintText = isset($activationRequired) && $activationRequired === true
+    ? "le mail sera envoyé à cette adresse pour activer votre compte"
+    : "";
 ?>
 <div class="site-register">
-    <h1><?= Html::encode($this->title) ?></h1>
-    <hr/>
     <?php $form = ActiveForm::begin([
         'id' => 'register-form',
         'layout' => 'horizontal'
     ]); ?>
 
         <?= $form->field($model, 'username')->textInput(['autofocus' => true, 'autocomplete' => 'off']) ?>
-        <?= $form->field($model, 'email')->textInput(['autocomplete' => 'off']) ?>
+        <?= $form->field($model, 'email')->textInput(['autocomplete' => 'off'])->hint($emailFieldHintText) ?>
 
         <?= $form->field($model, 'password')->passwordInput() ?>
         <?= $form->field($model, 'password_confirm')->passwordInput() ?>
 
         <div class="form-group">
             <div class="col-sm-offset-3 col-sm-9">
-                <?= Html::submitButton('Register ', ['class' => 'btn btn-primary', 'name' => 'register-button']) ?>
+                <?= Html::submitButton('Créer mon compte ', ['class' => 'btn btn-primary', 'name' => 'register-button']) ?>
             </div>
         </div>
 
     <?php ActiveForm::end(); ?>
-
 </div>
