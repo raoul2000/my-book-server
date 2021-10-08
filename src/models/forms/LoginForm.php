@@ -17,6 +17,7 @@ class LoginForm extends Model
     public $username;
     public $password;
     public $rememberMe = true;
+    public $verifyCode;
 
     private $_user = false;
 
@@ -31,6 +32,7 @@ class LoginForm extends Model
             ['rememberMe', 'boolean'],
             ['password', 'validatePassword',
                 'message' => 'entrez votre mot de passe'],
+            ['verifyCode', 'captcha'],
         ];
     }
     public function attributeLabels()
@@ -38,6 +40,7 @@ class LoginForm extends Model
         return [
             'username' => 'Pseudo',
             'password' => 'Mot de passe',
+            'verifyCode' => 'Code de Vérification',
         ];
     }
     /**

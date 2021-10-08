@@ -20,6 +20,7 @@ class UserRegistrationForm extends Model
     public $email;
     public $password;
     public $password_confirm;
+    public $verifyCode;
 
     /**
      * @return array the validation rules.
@@ -37,6 +38,7 @@ class UserRegistrationForm extends Model
                 'message' => 'adresse email invalide'],
             ['password_confirm', 'compare', 'compareAttribute' => 'password',
                 'message' => 'mot de passe différent'],
+            ['verifyCode', 'captcha'],
         ];
     }
 
@@ -49,7 +51,8 @@ class UserRegistrationForm extends Model
             'username' => 'Pseudo',
             'password' => 'Mot de passe',
             'password_confirm' => 'Confirmer mot de passe',
-            'email' => 'Adresse email'
+            'email' => 'Adresse email',
+            'verifyCode' => 'Code de Vérification',
         ];
     }
     public function getUserId()

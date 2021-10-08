@@ -6,6 +6,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use yii\captcha\Captcha;
 
 $this->title = 'Créer mon compte';
 $emailFieldHintText = isset($activationRequired) && $activationRequired === true
@@ -23,6 +24,10 @@ $emailFieldHintText = isset($activationRequired) && $activationRequired === true
 
         <?= $form->field($model, 'password')->passwordInput() ?>
         <?= $form->field($model, 'password_confirm')->passwordInput() ?>
+
+        <?= $form->field($model, 'verifyCode')->widget(Captcha::class, [
+            'template' => '<div class="row"><div class="col-lg-3" title="cliquez pour obtenir un nouveau code" style="cursor:pointer;">{image}</div><div class="col-lg-3">{input}</div></div>',
+        ]) ?>
 
         <div class="form-group">
             <div class="col-sm-offset-3 col-sm-9">
