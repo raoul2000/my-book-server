@@ -5,6 +5,7 @@ use yii\helpers\Html;
 $alertType = $activationRequired 
     ? 'alert-info'
     : 'alert-success';
+$this->title = 'Créer mon compte';
 ?>
 
 <div class="alert <?= $alertType?>" role="alert">
