@@ -1,5 +1,6 @@
 <?php
 
+
 use yii\helpers\Html;
 /* @var $this yii\web\View */
 
@@ -30,7 +31,15 @@ if ($totalBookCount === 0) {
     flex-direction: column;
     align-items: center;">
         <div>
-            <?= Html::a("ouvrir l'application", ['/export-books'], ['class' => 'btn btn-primary btn-lg']) ?>
+            <?= Html::a(
+                'ouvrir l\'application <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>', 
+                Yii::$app->params['bookAppUrl'], 
+                [
+                    'class'  => 'btn btn-primary btn-lg', 
+                    'target' => 'blank',
+                    'title'  => 'ouvrir dans un nouvel onglet'
+                ]
+            ) ?>
         </div>
     </div>
 </div>

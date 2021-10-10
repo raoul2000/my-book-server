@@ -28,10 +28,9 @@ class LoginForm extends Model
     {
         return [
             [['username', 'password'], 'required',
-                'message' => 'entrez votre pseudo'],
+                'message' => 'veuillez saisir une valeur'],
             ['rememberMe', 'boolean'],
-            ['password', 'validatePassword',
-                'message' => 'entrez votre mot de passe'],
+            ['password', 'validatePassword'],
             ['verifyCode', 'captcha'],
         ];
     }
