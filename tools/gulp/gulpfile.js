@@ -12,7 +12,8 @@ const {
     zipSource,
     copySource,
     copyConfig,
-    cleanSource
+    cleanSource,
+    createRuntimeFolders
 } = require("./task/build-source");
 const {
     cleanSourceVendor,
@@ -61,6 +62,7 @@ exports.zipVendor = zipVendor;
 exports.copySource = copySource;
 exports.cleanSource = cleanSource;
 exports.buildSource = buildSource;
+exports.createRuntimeFolders = createRuntimeFolders;
 
 // default task : build source and vendor and produce a folder ready to deploy
 exports.default = series(
