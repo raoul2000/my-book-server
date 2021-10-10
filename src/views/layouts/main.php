@@ -59,15 +59,15 @@ AppAsset::register($this);
                     ]) : '',
 
                 Yii::$app->user->isGuest
-                    ? (['label' => 'Register', 'url' => ['/account/create']])
-                    : ['label' => 'Settings',  'url' => ['/user-settings']],
+                    ? (['label' => 'Créer un compte', 'url' => ['/account/create']])
+                    : ['label' => 'Paramètres',  'url' => ['/user-settings']],
 
                 Yii::$app->user->isGuest
-                    ? (['label' => 'Login', 'url' => ['/site/login']])
+                    ? (['label' => 'Se connecter', 'url' => ['/site/login']])
                     : ('<li>'
                         . Html::beginForm(['/site/logout'], 'post')
                         . Html::submitButton(
-                            '<span class="glyphicon glyphicon-off" aria-hidden="true"></span> logout (' . Yii::$app->user->identity->username . ')',
+                            '<span class="glyphicon glyphicon-off" aria-hidden="true"></span> Se déconnecter (' . Yii::$app->user->identity->username . ')',
                             ['class' => 'btn btn-link logout']
                         )
                         . Html::endForm()

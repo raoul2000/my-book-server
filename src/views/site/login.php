@@ -6,13 +6,12 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use yii\captcha\Captcha;
 
-$this->title = 'Login';
+$this->title = 'Se Connecter';
 
 ?>
 <div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
-    <hr/>
     <?php $form = ActiveForm::begin([
         'id' => 'login-form',
         'layout' => 'horizontal'
@@ -22,9 +21,12 @@ $this->title = 'Login';
 
         <?= $form->field($model, 'password')->passwordInput() ?>
 
+        <?= $form->field($model, 'verifyCode')->widget(Captcha::class, [
+            'template' => '<div class="row"><div class="col-lg-3" title="cliquez pour obtenir un nouveau code" style="cursor:pointer;">{image}</div><div class="col-lg-3">{input}</div></div>',
+        ]) ?>
         <div class="form-group">
             <div class="col-sm-offset-3 col-sm-9">
-                <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                <?= Html::submitButton('Se Connecter', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
                 <span style="margin-left:1em">
                     <?= html::a('Mot de passe Oublié ?', ['password-reset/request']) ?>
                 </span>

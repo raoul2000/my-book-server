@@ -10,6 +10,9 @@ use app\models\forms\UpdatePasswordForm;
 use app\models\UserToken;
 use yii\web\NotFoundHttpException;
 use Da\QrCode\QrCode;
+use League\Csv\Writer;
+use app\models\Book;
+use app\models\UserBook;
 
 class UserSettingsController extends \yii\web\Controller
 {

@@ -9,6 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\forms\LoginForm;
 use app\models\forms\ContactForm;
+use app\models\UserBook;
 
 class SiteController extends Controller
 {
@@ -61,7 +62,18 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        if (Yii::$app->user->isGuest) {
+            return $this->render('index');
+        } else {
+            $totalBookCount = UserBook::find()
+                ->where([
+                    'user_id' => Yii::$app->user->getId()
+                ])->count();
+
+            return $this->render('index-logged', [
+                'totalBookCount' => $totalBookCount
+            ]);
+        }
     }
 
     /**

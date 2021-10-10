@@ -10,8 +10,11 @@ use yii\bootstrap\ActiveForm;
 $this->title = 'Reset Password';
 ?>
 <div>
-    <h1><?= Html::encode($this->title) ?></h1>
-    <hr/>
+    <div class="alert alert-info">
+        Entrez l'adresse email liée à votre compte pour recevoir <strong>un mail de réinitialisation</strong>
+        de votre mot de passe.
+    </div>
+
     <?php $form = ActiveForm::begin([
         'id' => 'pwd-reset-form',
         'layout' => 'horizontal'
@@ -21,7 +24,7 @@ $this->title = 'Reset Password';
 
         <div class="form-group">
             <div class="col-sm-offset-3 col-sm-9">
-                <?= Html::submitButton('Reset ', ['class' => 'btn btn-primary', 'name' => 'reset-pwd-button']) ?>
+                <?= Html::submitButton('Confirmer ', ['class' => 'btn btn-primary', 'name' => 'reset-pwd-button']) ?>
             </div>
         </div>
 

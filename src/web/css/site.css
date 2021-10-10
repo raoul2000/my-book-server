@@ -41,11 +41,12 @@ body {
 }
 
 /* add sorting icons to gridview sort links */
-a.asc:after, a.desc:after {
+a.asc:after,
+a.desc:after {
     position: relative;
     top: 1px;
     display: inline-block;
-    font-family: 'Glyphicons Halflings';
+    font-family: "Glyphicons Halflings";
     font-style: normal;
     font-weight: normal;
     line-height: 1;
@@ -100,9 +101,9 @@ a.desc:after {
     border: none;
 }
 
-@media(max-width:767px) {
+@media (max-width: 767px) {
     .nav li > form > button.logout {
-        display:block;
+        display: block;
         text-align: left;
         width: 100%;
         padding: 10px 15px;
@@ -158,8 +159,36 @@ body.naked .wrap > .container {
     max-width: 500px;
     padding-left: 1em;
     border-left: 4px solid #d9d3d3;
-    margin-top:5em;
+    margin-top: 5em;
 }
 .book-num {
-    width:7em;
+    width: 7em;
+}
+
+.home-image {
+    width: 100%;
+    height: 301px;
+    padding: 3em;
+    background-size: cover;
+}
+.site-login,
+.site-register {
+    margin-top: 3em;
+    padding: 2em;
+}
+
+.main-3cols {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 4em;
+}
+
+.main-3cols > .col-item {
+    flex-grow:1;max-width: 360px; 
+}
+.col-item > h2 {
+    margin-top: 1.1em;
+    border-bottom: 1px solid #d9d9d9;
 }

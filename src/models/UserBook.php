@@ -22,9 +22,10 @@ use app\migrations\TableName;
  */
 class UserBook extends \yii\db\ActiveRecord
 {
-    const READ_STATUS_TO_READ   = 1;
-    const READ_STATUS_READ      = 2;
-    const READ_STATUS_READING   = 3;
+    const READ_STATUS_TO_READ      = 1;
+    const READ_STATUS_READ         = 2;
+    const READ_STATUS_READING      = 3;
+    const READ_STATUS_READ_AGAIN   = 4;
 
     /**
      * List of names for each status.
@@ -33,9 +34,10 @@ class UserBook extends \yii\db\ActiveRecord
     public static function getReadStatusList()
     {
         return [
-            self::READ_STATUS_TO_READ   => 'To Read',
-            self::READ_STATUS_READ      => 'Read',
-            self::READ_STATUS_READING   => 'Reading'
+            self::READ_STATUS_TO_READ     => 'To Read',
+            self::READ_STATUS_READ        => 'Read',
+            self::READ_STATUS_READING     => 'Reading',
+            self::READ_STATUS_READ_AGAIN  => 'Read again'
         ];
     }
     /**

@@ -106,11 +106,10 @@ function copySource() {
 /**
  * Example on how to create an empty folder in build
  */
-function createSourceFolders() {
+function createRuntimeFolders() {
     return src("*.*", { read: false })
-        .pipe(dest("../../build/src/runtime"))
-        .pipe(dest("../../build/src/runtime/cache"))
-        .pipe(dest("../../build/src/runtime/logs"));
+        .pipe(dest("../../build/source/runtime"))
+        .pipe(dest("../../build/source/runtime/tmp"));
 }
 
 function copyConfig(cb) {
@@ -156,10 +155,12 @@ exports.cleanSource = cleanSource;
 exports.zipSource = zipSource;
 exports.copyConfig = copyConfig;
 exports.updateIndex = updateIndex;
+exports.createRuntimeFolders = createRuntimeFolders;
 
 exports.buildSource = series(
     cleanSource,
     copySource,
+    createRuntimeFolders,
     copyConfig,
     preserveEmptyfolders,
     updateIndex
