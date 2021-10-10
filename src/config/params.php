@@ -16,7 +16,7 @@ return [
         /**
          * URL of the app "Mes Livres" (mobile and desktop)
          */        
-        'bookAppUrl' => 'https://app-my-books.vercel.app/'
+        'bookAppUrl' => 'http://localhost:3000/'
     ],
 
     'mailer' => [
