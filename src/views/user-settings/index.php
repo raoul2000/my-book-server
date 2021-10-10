@@ -7,7 +7,9 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="user-settings">
     <p>
         <?= Html::a('Exporter mes livres', ['/export-books'], ['class' => 'btn btn-success']) ?>
-        <?= Html::a('Import Books as CSV', ['/import-book'], ['class' => 'btn btn-success']) ?>
+        <?php if( Yii::$app->user->id === 1): ?>
+            <?= Html::a('Import Books as CSV', ['/import-book'], ['class' => 'btn btn-success']) ?>
+        <?php endif; ?>
     </p>
     <hr/>
     <div class="grid">

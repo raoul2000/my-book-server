@@ -5,7 +5,8 @@ namespace app\controllers;
 use Yii;
 use app\models\forms\UploadForm;
 use yii\web\UploadedFile;
-use League\Csv\Exception;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use League\Csv\Reader;
 use app\models\Book;
 use app\models\UserBook;
@@ -13,6 +14,30 @@ use yii\helpers\VarDumper;
 
 class ImportBookController extends \yii\web\Controller
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['admin'],
+                    ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'update' => ['post'],
+                ],
+            ],
+        ];
+    }
+
     public function actionIndex()
     {
         $records_created = [];
@@ -34,21 +59,21 @@ class ImportBookController extends \yii\web\Controller
                 $csv->setHeaderOffset(0);
                 $csvRecords = $csv->getRecords(['title', 'sub_title', 'author', 'isbn', 'rate', 'read_status']);
                 foreach ($csvRecords as $record) {
-                    
+
                     $book = new Book([
                         'title' => $record['title'],
                         'subtitle' => $record['sub_title'],
                         'author' => $record['author'],
                         'isbn' => $record['isbn']
                     ]);
-                    if($book->save()) {
+                    if ($book->save()) {
                         $userBook = new UserBook([
                             'book_id' => $book->id,
                             'user_id' => Yii::$app->user->getId(),
                             'read_status' => $record['read_status'],
                             'rate' => $record['rate']
                         ]);
-                        if($userBook->save()) {
+                        if ($userBook->save()) {
                             $records_created[] = $record;
                         } else {
                             $records_error[] = [
