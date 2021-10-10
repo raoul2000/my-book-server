@@ -13,10 +13,14 @@ return [
          * Otherwise, account is immediatly active and user can login.
          */
         'enableAccountActivation' => false,
+        /**
+         * URL of the app "Mes Livres" (mobile and desktop)
+         */        
+        'bookAppUrl' => 'https://app-my-books.vercel.app/'
     ],
 
     'mailer' => [
-        'class' => 'yii\swiftmailer\Mailer',
+        'class'            => 'yii\swiftmailer\Mailer',
         'useFileTransport' => true          
     ]
 ];
