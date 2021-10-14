@@ -6,6 +6,8 @@ use Yii;
 use yii\base\Model;
 use app\models\User;
 use app\models\UserToken;
+use app\components\PasswordValidator;
+
 /**
  * LoginForm is the model behind the login form.
  *
@@ -36,6 +38,7 @@ class UserRegistrationForm extends Model
                 'message' => 'cette adresse email est déjà enregistrée'],
             ['email', 'email',
                 'message' => 'adresse email invalide'],
+            ['password', PasswordValidator::class],
             ['password_confirm', 'compare', 'compareAttribute' => 'password',
                 'message' => 'mot de passe différent'],
             ['verifyCode', 'captcha'],
@@ -45,7 +48,7 @@ class UserRegistrationForm extends Model
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+ /*    public function attributeLabels()
     {
         return [
             'username' => 'Pseudo',
@@ -54,7 +57,7 @@ class UserRegistrationForm extends Model
             'email' => 'Adresse email',
             'verifyCode' => 'Code de Vérification',
         ];
-    }
+    } */
     public function getUserId()
     {
         return $this->user_id;

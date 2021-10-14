@@ -7,6 +7,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\captcha\Captcha;
+use app\components\PasswordValidator;
 
 $this->title = 'Créer mon compte';
 $emailFieldHintText = isset($activationRequired) && $activationRequired === true
@@ -22,7 +23,7 @@ $emailFieldHintText = isset($activationRequired) && $activationRequired === true
         <?= $form->field($model, 'username')->textInput(['autofocus' => true, 'autocomplete' => 'off']) ?>
         <?= $form->field($model, 'email')->textInput(['autocomplete' => 'off'])->hint($emailFieldHintText) ?>
 
-        <?= $form->field($model, 'password')->passwordInput() ?>
+        <?= $form->field($model, 'password')->passwordInput()->hint('' . PasswordValidator::PWD_MIN_LENGTH . ' caractères minimum, majuscules, minuscules et chiffres') ?>
         <?= $form->field($model, 'password_confirm')->passwordInput() ?>
 
         <?= $form->field($model, 'verifyCode')->widget(Captcha::class, [

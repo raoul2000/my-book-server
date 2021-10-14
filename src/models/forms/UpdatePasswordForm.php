@@ -5,6 +5,7 @@ namespace app\models\forms;
 use Yii;
 use app\models\User;
 use yii\base\Model;
+use app\components\PasswordValidator;
 
 /**
  * Handle both password update and password Reset actions
@@ -29,6 +30,7 @@ class UpdatePasswordForm extends Model
                 'message' => 'veuillez saisir une valeur'],
             [['new_password', 'new_password_confirm'], 'required', 'on' =>  [self::SCENARIO_UPDATE, self::SCENARIO_RESET],
                 'message' => 'veuillez saisir une valeur'],
+            ['new_password', PasswordValidator::class],
             ['new_password_confirm', 'compare', 'compareAttribute' => 'new_password', 'on' =>  [self::SCENARIO_UPDATE, self::SCENARIO_RESET],
                 'message' => 'les mots de passe saisis sont différents'],
         ];
