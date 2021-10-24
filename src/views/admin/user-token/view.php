@@ -1,5 +1,6 @@
 <?php
 
+use app\models\UserToken;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -33,6 +34,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'user_id',
             'type',
+            [
+                'label' => 'Type',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    if ($model->type) {
+                        return UserToken::getTypeList()[$model->type] . " (".$model->type.")";
+                    }
+                }
+            ],              
             'token',
             'data',
             'created_at:datetime',

@@ -47,7 +47,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                 }
             ],            
-            'password_hash',
             'created_at:datetime',
             'updated_at:datetime'
         ],

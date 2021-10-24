@@ -1,5 +1,6 @@
 <?php
 
+use app\models\User;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -18,6 +19,7 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'password')->passwordInput() ?>
         <?= $form->field($model, 'password_confirm')->passwordInput() ?>
     <?php endif; ?>
+    <?= $form->field($model, 'status')->dropDownList(User::getStatusList(), ['prompt' => \Yii::t('app', 'select a status ...')]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

@@ -70,7 +70,7 @@ class LoginForm extends Model
         if ($this->validate()) {
             $user = $this->getUser();
             if( $user && $user->status !== User::STATUS_ACTIVE) {
-                $this->addError('username', 'Account not activated.');
+                $this->addError('username', 'Ce compte n\'est pas activé.');
             } elseif( $user ) {          
                 return Yii::$app->user->login($user, $this->rememberMe ? 3600*24*30 : 0);
             }

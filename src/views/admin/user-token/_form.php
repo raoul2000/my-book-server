@@ -1,5 +1,6 @@
 <?php
 
+use app\models\UserToken;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -14,7 +15,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'user_id')->textInput() ?>
 
-    <?= $form->field($model, 'type')->textInput() ?>
+    <?= $form->field($model, 'type')->dropDownList(UserToken::getTypeList(), ['prompt' => \Yii::t('app', 'select a type ...')]) ?>
 
     <?= $form->field($model, 'token')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
 
