@@ -16,8 +16,6 @@ use app\components\PasswordValidator;
  */
 class UserRegistrationForm extends Model
 {
-
-    const SCENARIO_NORMAL_USER        = 'normal_user';
     private $user_id;
     private $account_activation_token;
     public $username;
@@ -69,6 +67,7 @@ class UserRegistrationForm extends Model
      */
     public function register()
     {
+        $success = false;
         if ($this->validate()) {
 
             $user = new User();
@@ -78,36 +77,51 @@ class UserRegistrationForm extends Model
             $user->username     = $this->username;
             $user->email        = $this->email;
             $user->new_password = $this->password;
-            $user->status       = User::STATUS_ACTIVE;
 
-            $success = false;
+            if(Yii::$app->user->can('administrate')){
+                $user->status   = $this->status;
+            } else {
+                // default status may be overridden by initUserToken method
+                $user->status    = User::STATUS_ACTIVE;
+            }
+
             if($user->save()) {
-
                 $this->user_id = $user->id; // expose to caller
-
-                if (Yii::$app->params['enableAccountActivation']) {
-                    // API Key token is created only on account activation
-                    $user->status = User::STATUS_INACTIVE;
-                    $userToken    = UserToken::generate($user->id, UserToken::TYPE_EMAIL_ACTIVATE);
-                    $this->account_activation_token = $userToken->token;
-                    $success = $user->update(true, ['status']) === 1;
+                if(Yii::$app->user->can('administrate') === false) {
+                    $success = $this->initUserToken($user);
+                    if(!$success) {
+                        $user->delete();
+                    }
                 } else {
-                    // no account activation step : create API Key now
-                    UserToken::generate($this->user_id, UserToken::TYPE_API_KEY);
                     $success = true;
                 }
             } else {
                 $this->addErrors($user->getErrors());
             }
-
-            if(!$success) {
-                $this->account_activation_token = '';
-                $this->password = '';
-                $this->password_confirm = '';
-            }
-            return $success;
-        } else {
-            return false;
         }
+
+        if(!$success) {
+            $this->account_activation_token = '';
+            $this->password = '';
+            $this->password_confirm = '';
+        }
+        return $success;
+    }
+
+    private function initUserToken($user) 
+    {
+        if (Yii::$app->params['enableAccountActivation']) {
+            // account must be activated : create activation token and 
+            // update 'status' attribute
+            $user->status = User::STATUS_INACTIVE;
+            $userToken    = UserToken::generate($user->id, UserToken::TYPE_EMAIL_ACTIVATE);
+            $this->account_activation_token = $userToken->token;
+            $success = $user->update(true, ['status']) === 1;
+        } else {
+            // no account activation step : create API Key now
+            UserToken::generate($this->user_id, UserToken::TYPE_API_KEY);
+            $success = true;
+        }     
+        return $success;   
     }
 }

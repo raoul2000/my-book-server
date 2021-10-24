@@ -48,11 +48,11 @@ class UserToken extends \yii\db\ActiveRecord
     public static function getTypeList()
     {
         return [
-            self::TYPE_EMAIL_ACTIVATE => 'email activate',
-            self::TYPE_EMAIL_CHANGE => 'email change',
-            self::TYPE_PASSWORD_RESET => 'password reset',
-            self::TYPE_EMAIL_LOGIN => 'email login',
-            self::TYPE_API_KEY => 'API Key',
+            self::TYPE_EMAIL_ACTIVATE   => 'email activate',
+            self::TYPE_EMAIL_CHANGE     => 'email change',
+            self::TYPE_PASSWORD_RESET   => 'password reset',
+            self::TYPE_EMAIL_LOGIN      => 'email login',
+            self::TYPE_API_KEY          => 'API Key',
         ];
     }
     /**

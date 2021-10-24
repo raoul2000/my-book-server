@@ -10,11 +10,7 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="user-form">
-    <?php
-    if(Yii::$app->user->can('administrate')) {
-        echo "ADMIN";
-    }
-    ?>
+
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'username')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
