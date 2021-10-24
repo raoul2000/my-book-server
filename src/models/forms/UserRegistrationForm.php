@@ -16,6 +16,8 @@ use app\components\PasswordValidator;
  */
 class UserRegistrationForm extends Model
 {
+
+    const SCENARIO_NORMAL_USER        = 'normal_user';
     private $user_id;
     private $account_activation_token;
     public $username;
@@ -23,6 +25,7 @@ class UserRegistrationForm extends Model
     public $password;
     public $password_confirm;
     public $verifyCode;
+    public $status;
 
     /**
      * @return array the validation rules.
@@ -41,23 +44,15 @@ class UserRegistrationForm extends Model
             ['password', PasswordValidator::class],
             ['password_confirm', 'compare', 'compareAttribute' => 'password',
                 'message' => 'mot de passe différent'],
-            ['verifyCode', 'captcha'],
+            ['verifyCode', 'captcha', 'when' => function($model) {
+                return Yii::$app->user->can('administrate') === false;
+            }],
+            ['status', 'required', 'when' => function($model) {
+                return Yii::$app->user->can('administrate');
+            }]
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
- /*    public function attributeLabels()
-    {
-        return [
-            'username' => 'Pseudo',
-            'password' => 'Mot de passe',
-            'password_confirm' => 'Confirmer mot de passe',
-            'email' => 'Adresse email',
-            'verifyCode' => 'Code de Vérification',
-        ];
-    } */
     public function getUserId()
     {
         return $this->user_id;
@@ -111,6 +106,8 @@ class UserRegistrationForm extends Model
                 $this->password_confirm = '';
             }
             return $success;
+        } else {
+            return false;
         }
     }
 }

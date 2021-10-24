@@ -4,6 +4,7 @@
 - In book-ping/form, booking number parsing should be case insensitive and ignore missing '-' character
 - **fix**: user should be able to ping more than one book. Today, the session does not inclide ticketId so when the isSaved variable session is TRUE, ping is not possible anymore for this ticketId *but also for any other ticketId*
 - Timezone should be a property of the user account and not hard coded in the configuration
+- admin should be able to change user account status
 
 
 ## Book Travel Management
