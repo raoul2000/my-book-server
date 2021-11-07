@@ -1,8 +1,10 @@
 <?php
 
+use app\models\UserToken;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
+$tokenTypeList = UserToken::getTypeList();
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\SearchUserToken */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -31,10 +33,10 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'type',
                 'label'     => 'Type',
-                'filter'    => $searchModel->tokenTypeList,
-                'value'     => function ($model, $key, $index, $column) use ($searchModel) {
+                'filter'    => $tokenTypeList,
+                'value'     => function ($model, $key, $index, $column) use ($tokenTypeList) {
                     return $model->type != null
-                        ? Html::encode($searchModel->tokenTypeList[$model->type])
+                        ? Html::encode($tokenTypeList[$model->type])
                         : null;
                 }
             ],

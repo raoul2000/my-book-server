@@ -32,7 +32,7 @@ AppAsset::register($this);
     <div class="wrap">
         <?php
         NavBar::begin([
-            'brandLabel' => Yii::$app->name . (Yii::$app->user->id == 1 ? ' - <small>' . APP_BUILD_NUMBER . '</small>': ''),
+            'brandLabel' => Yii::$app->name . (Yii::$app->user->can('administrate') ? ' - <small>' . APP_BUILD_NUMBER . '</small>': ''),
             'brandUrl' => Yii::$app->homeUrl,
             'options' => [
                 'class' => 'navbar-fixed-top navbar-default',
@@ -41,7 +41,7 @@ AppAsset::register($this);
         echo Nav::widget([
             'options' => ['class' => 'navbar-nav navbar-right'],
             'items' => [
-                (Yii::$app->user->isGuest === false && Yii::$app->user->id == 1)
+                Yii::$app->user->can('administrate') 
                     ? ([
                         'label' => 'Admin',
                         'items' => [
