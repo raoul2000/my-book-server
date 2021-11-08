@@ -2,3 +2,5 @@
 node_modules
 build
 *.prod.php
+.clj-kondo
+.lsp

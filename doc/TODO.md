@@ -7,6 +7,7 @@
 - admin should be able to change user account status
 
 
+
 ## Book Travel Management
 - how to handle the fact that the travel of a book is suspended while being read ?. One option is 'steps' : the travel is a list of steps. Or maybe
 just don't manage this part ! What if the person who found and read the travaling book is a user and wants to add this book to his/her book list ?
@@ -22,6 +23,7 @@ Rule:
 - a book traveling CANNOT be modified : title, subtitle, author, isbn, etc ....
 
 # DONE
+- **add**: user logged-in on the site should be able to open the app without authentication
 - **fix**: build and zip does not preserve empty folder `web/files/qr-codes`
 - **fix**: remove *foo* alias
 - FEATURE: allow user to download all books data in CSV format

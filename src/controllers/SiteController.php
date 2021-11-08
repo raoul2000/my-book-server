@@ -10,6 +10,7 @@ use yii\filters\VerbFilter;
 use app\models\forms\LoginForm;
 use app\models\forms\ContactForm;
 use app\models\UserBook;
+use app\models\UserToken;
 
 class SiteController extends Controller
 {
@@ -70,8 +71,14 @@ class SiteController extends Controller
                     'user_id' => Yii::$app->user->getId()
                 ])->count();
 
+            $userToken = UserToken::findOne([
+                'user_id' => Yii::$app->user->id,
+                'type' => UserToken::TYPE_API_KEY
+            ]);
+
             return $this->render('index-logged', [
-                'totalBookCount' => $totalBookCount
+                'totalBookCount' => $totalBookCount,
+                'apiKey' => ($userToken !== null ? $userToken->token : null)
             ]);
         }
     }

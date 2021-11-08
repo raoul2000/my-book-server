@@ -16,7 +16,7 @@ return [
         /**
          * URL of the app "Mes Livres" (mobile and desktop)
          */        
-        'bookAppUrl' => 'http://localhost:3000/'
+        'bookAppUrl' => 'http://localhost:3000/#/signin-key'
     ],
 
     'mailer' => [
