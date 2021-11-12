@@ -34,7 +34,7 @@ class BookPingController extends \yii\web\Controller
     }
 
     /**
-     * Displays the ping review form for the given traval ticket id.
+     * Displays the ping review form for the given travel ticket id.
      */
     private function pingForm($ticketId)
     {
@@ -43,12 +43,20 @@ class BookPingController extends \yii\web\Controller
             ->with('book')
             ->one();
 
+        // ticket must exist
         if ($ticket === null) {
             return $this->render('ping-dead', [
                 'message' => "Ce numéro de réservation n'est pas répertorié.. ou il ne l'est plus.
                 <p class=\"text-muted\">
                 Est-il possible aussi que vos doigts aient glissés, heurtant au passage une autre touche
                 que celle que vous visiez ?</p>"
+            ]);
+        }
+        $book = $ticket->book;
+        // book must be traveling
+        if(!$book->is_traveling) {
+            return $this->render('ping-dead', [
+                'message' => "Ce numéro de réservation ne correspond pas à un ticket utilisé."
             ]);
         }
 
