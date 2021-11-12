@@ -132,7 +132,7 @@ class BookTicket extends \yii\db\ActiveRecord
     }
     private function createQrCode()
     {
-        $pingReviewUrl = Yii::$app->params['bookPingUrl'] . "&id=" . $this->id;
+        $pingReviewUrl = Yii::$app->params['qrcodeUrl'] . "&id=" . $this->id;
         $qrCode = (new QrCode($pingReviewUrl))
             ->setSize(150)
             ->setMargin(5);
@@ -203,7 +203,7 @@ class BookTicket extends \yii\db\ActiveRecord
             return $date->format(\DateTimeInterface::ISO8601);
         };
         $fields['checkpoint_url'] = function ($model) {
-            return Yii::$app->params['bookPingUrl'];
+            return Yii::$app->params['checkpointUrl'];
         };
         return $fields;
     }

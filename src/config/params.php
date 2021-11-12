@@ -18,12 +18,15 @@ return [
          */        
         'bookAppUrl'  => 'http://localhost:3000/#/signin-key',
         /**
-         * URL of the book ping page when no ticket Id is provided. Usage:
-         * - to redirect (see '/web/ping-redirect/index.php)
-         * - to set checkpoint URL value
-         * - to set QRCode value (suffix : '&id=BOOK_TICKET_ID')
-         */
-        'bookPingUrl' => 'http://localhost:8080/index.php?r=book-ping',
+         * URL encoded in the QR-Code with suffix : '&id=BOOK_TICKET_ID'.
+         * Also used to redirect from the checkpoint Url (see '/web/ping-redirect/index.php)
+         */        
+        'qrcodeUrl'     => 'http://localhost:8080/index.php?r=book-ping',        
+        /**
+         * URL of the checkpoint as it appears on the book ticket.
+         * Should point to a redirect page to qrcodeUrl (with no book_ticket_id)
+         */ 
+        'checkpointUrl' => 'http://localhost:8080/ping-redirect',            
         /**
          * Captcha Policy settings
          */
