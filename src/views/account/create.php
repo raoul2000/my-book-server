@@ -26,9 +26,11 @@ $emailFieldHintText = isset($activationRequired) && $activationRequired === true
         <?= $form->field($model, 'password')->passwordInput()->hint('' . PasswordValidator::PWD_MIN_LENGTH . ' caractères minimum, majuscules, minuscules et chiffres') ?>
         <?= $form->field($model, 'password_confirm')->passwordInput() ?>
 
-        <?= $form->field($model, 'verifyCode')->widget(Captcha::class, [
-            'template' => '<div class="row"><div class="col-lg-3" title="cliquez pour obtenir un nouveau code" style="cursor:pointer;">{image}</div><div class="col-lg-3">{input}</div></div>',
-        ]) ?>
+        <?php if(Yii::$app->params['enableVerifyCodeOnCreateAccount']): ?>
+            <?= $form->field($model, 'verifyCode')->widget(Captcha::class, [
+                'template' => '<div class="row"><div class="col-lg-3" title="cliquez pour obtenir un nouveau code" style="cursor:pointer;">{image}</div><div class="col-lg-3">{input}</div></div>',
+            ]) ?>
+        <?php endif; ?>
 
         <div class="form-group">
             <div class="col-sm-offset-3 col-sm-9">

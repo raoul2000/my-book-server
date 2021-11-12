@@ -31,7 +31,9 @@ class LoginForm extends Model
                 'message' => 'veuillez saisir une valeur'],
             ['rememberMe', 'boolean'],
             ['password', 'validatePassword'],
-            ['verifyCode', 'captcha'],
+            ['verifyCode', 'captcha','when'=> function($model)  {
+                return Yii::$app->params['enableVerifyCodeOnLogin'];
+            }],
         ];
     }
     public function attributeLabels()

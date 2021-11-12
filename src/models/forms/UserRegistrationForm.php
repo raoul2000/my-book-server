@@ -43,7 +43,7 @@ class UserRegistrationForm extends Model
             ['password_confirm', 'compare', 'compareAttribute' => 'password',
                 'message' => 'mot de passe différent'],
             ['verifyCode', 'captcha', 'when' => function($model) {
-                return Yii::$app->user->can('administrate') === false;
+                return Yii::$app->user->can('administrate') === false && Yii::$app->params['enableVerifyCodeOnCreateAccount'];
             }],
             ['status', 'required', 'when' => function($model) {
                 return Yii::$app->user->can('administrate');
