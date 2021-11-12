@@ -50,7 +50,16 @@ class UserRegistrationForm extends Model
             }]
         ];
     }
-
+    public function attributeLabels()
+    {
+        return [
+            'username' => 'Pseudo',
+            'password' => 'Mot de passe',
+            'password_confirm' => 'Mot de passe (confirmation)',
+            'email' => 'Adresse Email',
+            'verifyCode' => 'Code de Vérification',
+        ];
+    }
     public function getUserId()
     {
         return $this->user_id;
