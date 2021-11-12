@@ -16,7 +16,12 @@ return [
         /**
          * URL of the app "Mes Livres" (mobile and desktop)
          */        
-        'bookAppUrl' => 'http://localhost:3000/#/signin-key',
+        'bookAppUrl'  => 'http://localhost:3000/#/signin-key',
+        /**
+         * URL of the book ping page when no ticket Id is provided
+         * Used to redirect (see '/web/ping-redirect/index.php)
+         */
+        'bookPingUrl' => '/index.php?r=book-ping',
         /**
          * Captcha Policy settings
          */
