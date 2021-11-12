@@ -43,14 +43,23 @@ class UserRegistrationForm extends Model
             ['password_confirm', 'compare', 'compareAttribute' => 'password',
                 'message' => 'mot de passe différent'],
             ['verifyCode', 'captcha', 'when' => function($model) {
-                return Yii::$app->user->can('administrate') === false;
+                return Yii::$app->user->can('administrate') === false && Yii::$app->params['enableVerifyCodeOnCreateAccount'];
             }],
             ['status', 'required', 'when' => function($model) {
                 return Yii::$app->user->can('administrate');
             }]
         ];
     }
-
+    public function attributeLabels()
+    {
+        return [
+            'username' => 'Pseudo',
+            'password' => 'Mot de passe',
+            'password_confirm' => 'Mot de passe (confirmation)',
+            'email' => 'Adresse Email',
+            'verifyCode' => 'Code de Vérification',
+        ];
+    }
     public function getUserId()
     {
         return $this->user_id;

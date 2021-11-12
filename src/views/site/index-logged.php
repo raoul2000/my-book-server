@@ -27,19 +27,21 @@ if ($totalBookCount === 0) {
         </p>
 
     </div>
-    <div style="display: flex;
-    flex-direction: column;
-    align-items: center;">
-        <div>
-            <?= Html::a(
-                'ouvrir l\'application <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>', 
-                Yii::$app->params['bookAppUrl'], 
-                [
-                    'class'  => 'btn btn-primary btn-lg', 
-                    'target' => 'blank',
-                    'title'  => 'ouvrir dans un nouvel onglet'
-                ]
-            ) ?>
+    <?php if(!empty($apiKey)) : ?>
+        <div style="display: flex;
+        flex-direction: column;
+        align-items: center;">
+            <div>
+                <?= Html::a(
+                    'ouvrir l\'application <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>', 
+                    Yii::$app->params['bookAppUrl'] . '/' . $apiKey, 
+                    [
+                        'class'  => 'btn btn-primary btn-lg', 
+                        'target' => 'blank',
+                        'title'  => 'ouvrir dans un nouvel onglet'
+                    ]
+                ) ?>
+            </div>
         </div>
-    </div>
+    <?php endif ?>
 </div>
