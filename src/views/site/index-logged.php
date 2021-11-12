@@ -34,7 +34,7 @@ if ($totalBookCount === 0) {
             <div>
                 <?= Html::a(
                     'ouvrir l\'application <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>', 
-                    Yii::$app->params['bookAppUrl'] . '?key=' . $apiKey, 
+                    Yii::$app->params['bookAppUrl'] . '/' . $apiKey, 
                     [
                         'class'  => 'btn btn-primary btn-lg', 
                         'target' => 'blank',
