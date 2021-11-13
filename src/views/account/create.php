@@ -20,10 +20,10 @@ $emailFieldHintText = isset($activationRequired) && $activationRequired === true
         'layout' => 'horizontal'
     ]); ?>
 
-        <?= $form->field($model, 'username')->textInput(['autofocus' => true, 'autocomplete' => 'off']) ?>
+        <?= $form->field($model, 'username')->textInput(['autocomplete' => 'off']) ?>
         <?= $form->field($model, 'email')->textInput(['autocomplete' => 'off'])->hint($emailFieldHintText) ?>
 
-        <?= $form->field($model, 'password')->passwordInput()->hint('' . PasswordValidator::PWD_MIN_LENGTH . ' caractères minimum, majuscules, minuscules et chiffres') ?>
+        <?= $form->field($model, 'password')->passwordInput()->hint('⚠️ doit contenir ' . PasswordValidator::PWD_MIN_LENGTH . ' caractères minimum, majuscules, minuscules et chiffres') ?>
         <?= $form->field($model, 'password_confirm')->passwordInput() ?>
 
         <?php if(Yii::$app->params['enableVerifyCodeOnCreateAccount']): ?>

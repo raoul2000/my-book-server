@@ -18,7 +18,7 @@ $this->title = 'Se Connecter';
         'layout' => 'horizontal'
     ]); ?>
 
-        <?= $form->field($model, 'username')->textInput(['autofocus' => true, 'autocomplete' => 'off']) ?>
+        <?= $form->field($model, 'username')->textInput(['autocomplete' => 'off']) ?>
 
         <?= $form->field($model, 'password')->passwordInput() ?>
 
