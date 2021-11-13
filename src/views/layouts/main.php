@@ -32,7 +32,7 @@ AppAsset::register($this);
     <div class="wrap">
         <?php
         NavBar::begin([
-            'brandLabel' => Yii::$app->name . (Yii::$app->user->can('administrate') ? ' - <small>' . APP_BUILD_NUMBER . '</small>': ''),
+            'brandLabel' => '<img src="favicon.svg"/>' . Yii::$app->name . (Yii::$app->user->can('administrate') ? ' - <small>' . APP_BUILD_NUMBER . '</small>': ''),
             'brandUrl' => Yii::$app->homeUrl,
             'options' => [
                 'class' => 'navbar-fixed-top navbar-default',
