@@ -1,4 +1,6 @@
 <?php
 use yii\helpers\Url;
 ?>
-reset password link : <?= $resetPasswordUrl ?>
+Re-initialiser le mot de passe : <?= $resetPasswordUrl ?>
+
+(copiez ce lien dans un navigateur et laissez-vous guider)
