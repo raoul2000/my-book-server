@@ -8,7 +8,8 @@ use yii\helpers\Html;
     <div class="intro">
         <?= $message ?><br />
         <p>
-            <?= Html::a('réessayer', ['/book-ping']) ?>
+            <?= Html::a('réessayer', ['/book-ping'],['class' => 'btn btn-primary']) ?>
+            <?= Html::a('en savoir plus', ['/'], ['class' => 'btn btn-default'])?>
         </p>
     </div>
 </div>

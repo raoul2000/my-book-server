@@ -7,7 +7,7 @@ use yii\helpers\Html;
     <h1>Merci</h1>
     <div class="intro">
         Pour que ce livre puisse continuer son voyage,
-        offrez-le ou désposez-le dehors, à l'abri.<br />Il a sans doute
-        encore d'autres lecteurs à rencontrer...
+        offrez-le ou désposez-le dehors, à l'abri, à la rencontre de son prochain lecteur.<br/>
     </div>
+    <div style="margin-top:2em;"><?= Html::a('en savoir plus', ['/'], ['class' => 'btn btn-default'])?></div>
 </div>
