@@ -11,6 +11,7 @@ use app\models\forms\LoginForm;
 use app\models\forms\ContactForm;
 use app\models\UserBook;
 use app\models\UserToken;
+use Da\QrCode\QrCode;
 
 class SiteController extends Controller
 {
@@ -75,10 +76,19 @@ class SiteController extends Controller
                 'user_id' => Yii::$app->user->id,
                 'type' => UserToken::TYPE_API_KEY
             ]);
+            $apiKey = ($userToken !== null ? $userToken->token : null);
+            $qrCode = null;
+            if ($apiKey) {
+                $qrCode = (new QrCode(Yii::$app->params['bookAppUrl'] . '/' . $apiKey, ))
+                    ->setSize(250)
+                    ->setMargin(5)
+                    ->useForegroundColor(51, 122, 183);
+            }
 
             return $this->render('index-logged', [
                 'totalBookCount' => $totalBookCount,
-                'apiKey' => ($userToken !== null ? $userToken->token : null)
+                'apiKey' => $apiKey,
+                'qrCode' => $qrCode
             ]);
         }
     }

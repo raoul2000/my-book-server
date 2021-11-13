@@ -5,8 +5,15 @@
 - **fix**: user should be able to ping more than one book. Today, the session does not inclide ticketId so when the isSaved variable session is TRUE, ping is not possible anymore for this ticketId *but also for any other ticketId*
 - Timezone should be a property of the user account and not hard coded in the configuration
 - admin should be able to change user account status
-
-
+- Access the app on a device (mobile) for the first time
+  - assuming user created an account on the site and then wants to open the app on its mobile device, how to make this process simple ?
+    - [ ] generate a shorten url of the app and enter it manually
+    - [X] scan the QR code from the user account page
+    - [ ] send an email containing the link to the app
+    - [ ] send an SMS containing the link to the app
+- after registration user should be able to access all features without having validated registration (via email)
+  - feature could be all available but in a limited way. For example, no more than 20 books
+  - while the account has not been validated, a banner is displayed to the user to remember that validation should be done. This banner could contain a button to *re-send* validation email.
 
 ## Book Travel Management
 - how to handle the fact that the travel of a book is suspended while being read ?. One option is 'steps' : the travel is a list of steps. Or maybe
