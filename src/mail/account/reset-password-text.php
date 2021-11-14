@@ -1,6 +1,8 @@
 <?php
 use yii\helpers\Url;
 ?>
-Re-initialiser le mot de passe : <?= $resetPasswordUrl ?>
+Une demande de réinitialisation de votre mot de passe pour votre compte a été faite.
+Vous pouvez maintenant réinitialiser votre mot de passe en copiant le lien ci-dessous dans votre navigateur : 
 
-(copiez ce lien dans un navigateur et laissez-vous guider)
+<?= $resetPasswordUrl ?>
+

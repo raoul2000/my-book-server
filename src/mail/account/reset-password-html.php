@@ -1,10 +1,10 @@
 <?php
-use yii\helpers\Url;
 use yii\helpers\Html;
 ?>
 <p>
-    <?= Html::a('Réinitialiser le mot de passe', $resetPasswordUrl ) ?><br/>
-    (cliquez sur ce lien et laissez-vous guider)
+    Une demande de réinitialisation de votre mot de passe pour votre compte a été faite. <br/>
+    Vous pouvez maintenant réinitialiser votre mot de passe en cliquant sur le lien ci-dessous ou en le copiant dans votre navigateur : <br/>
+    <?= Html::a($resetPasswordUrl, $resetPasswordUrl ) ?>
 </p>
 
 
