@@ -19,7 +19,7 @@ $totalProcessed = count($records_created) + count($records_error);
 
                 <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
                     <?= $form->field($model, 'dataFile')->fileInput() ?>
-                    <?= Html::submitButton(\Yii::t('app', 'Import'), ['class' => 'btn btn-primary']) ?>
+                    <?= Html::submitButton('Import', ['class' => 'btn btn-primary']) ?>
                 <?php ActiveForm::end() ?>
 
             <?php else : ?>
