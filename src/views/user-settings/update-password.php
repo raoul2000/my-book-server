@@ -7,6 +7,8 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use app\models\forms\UpdatePasswordForm;
+use app\components\PasswordValidator;
+
 if($model->getScenario() === UpdatePasswordForm::SCENARIO_UPDATE)  {
     $this->title = 'Change le mot de passe';
     $this->params['breadcrumbs'][] = ['label' => 'Paramètres', 'url' => ['/user-settings']];
@@ -23,7 +25,8 @@ if($model->getScenario() === UpdatePasswordForm::SCENARIO_UPDATE)  {
             <?= $form->field($model, 'old_password')->passwordInput() ?>
         <?php endif; ?>
         
-        <?= $form->field($model, 'new_password')->passwordInput() ?>
+        <?= $form->field($model, 'new_password')->passwordInput()
+            ->hint('⚠️ doit contenir ' . PasswordValidator::PWD_MIN_LENGTH . ' caractères minimum, majuscules, minuscules et chiffres') ?>
         <?= $form->field($model, 'new_password_confirm')->passwordInput() ?>
 
         <div class="form-group">
