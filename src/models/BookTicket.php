@@ -132,8 +132,8 @@ class BookTicket extends \yii\db\ActiveRecord
     }
     private function createQrCode()
     {
-        // TODO: replace QRCode Id with ping url
-        $qrCode = (new QrCode($this->id))
+        $pingReviewUrl = Yii::$app->params['qrcodeUrl'] . "&id=" . $this->id;
+        $qrCode = (new QrCode($pingReviewUrl))
             ->setSize(150)
             ->setMargin(5);
         $qrCode->writeFile($this->getQrCodeFilePath());
@@ -201,6 +201,9 @@ class BookTicket extends \yii\db\ActiveRecord
         $fields['departure_at'] = function ($model) {
             $date = new \DateTime($model->departure_at, new \DateTimeZone('UTC'));
             return $date->format(\DateTimeInterface::ISO8601);
+        };
+        $fields['checkpoint_url'] = function ($model) {
+            return Yii::$app->params['checkpointUrl'];
         };
         return $fields;
     }

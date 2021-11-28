@@ -9,7 +9,7 @@ $this->title = 'Mes Livres';
 <div class="site-index">
   <div class="jumbotron">
     <h1>Mes Livres</h1>
-    <p class="lead">Gérez votre collection de livres</p>
+    <p class="lead">Gérez votre collection de livres<br/>Faites les voyager</p>
   </div>
   
   <div class="row">

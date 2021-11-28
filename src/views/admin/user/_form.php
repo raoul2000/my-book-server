@@ -20,7 +20,7 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'password_confirm')->passwordInput() ?>
     <?php endif; ?>
     <?= $form->field($model, 'status')
-        ->dropDownList(User::getStatusList(), ['prompt' => \Yii::t('app', 'select a status ...')])
+        ->dropDownList(User::getStatusList(), ['prompt' => 'select a status ...'])
         ->hint("⚠️ le token utilisateur doit être créé manuellement et correspondre au status sélectionné") ?>
 
     <div class="form-group">

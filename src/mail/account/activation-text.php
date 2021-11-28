@@ -1,6 +1,9 @@
 <?php
 use yii\helpers\Url;
 ?>
-hello <?= $username ?>
+Bonjour <?= $username ?>
+Pour activer votre compte, rendez-vous à l'adresse suivante:
 
-account activation : <?= $activationUrl ?>
+<?= $activationUrl ?>
+
+

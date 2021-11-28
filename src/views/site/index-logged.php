@@ -27,10 +27,12 @@ if ($totalBookCount === 0) {
         </p>
 
     </div>
+
     <?php if(!empty($apiKey)) : ?>
         <div style="display: flex;
-        flex-direction: column;
-        align-items: center;">
+            flex-direction: column;
+            align-items: center;">
+
             <div>
                 <?= Html::a(
                     'ouvrir l\'application <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>', 
@@ -42,6 +44,16 @@ if ($totalBookCount === 0) {
                     ]
                 ) ?>
             </div>
+
+            <?php if(!empty($qrCode)): ?>                    
+                <div style="margin-top: 6em;">
+                    <div style="text-align:center;">
+                        <img src="<?=  $qrCode->writeDataUri()?>" title=" QR code" alt="qr code"/>
+                        <p style="font-size:0.8em;">Scannez le QR Code pour accéder à l'application<br/>depuis un autre appareil</p>
+                    </div>
+                </div>
+            <?php endif ?> 
+
         </div>
     <?php endif ?>
 </div>

@@ -43,25 +43,18 @@ class UserSettingsController extends \yii\web\Controller
     {
         $userModel = $this->findModel(Yii::$app->user->id);
 
-        $apiKey = UserToken::find()
+        $userToken = UserToken::find()
             ->where([
                 'type'    => UserToken::TYPE_API_KEY,
                 'user_id' => $userModel->id
             ])
             ->one();
         
-        $qrCode = null;
-        if ($apiKey) {
-            $qrCode = (new QrCode($apiKey->token))
-                ->setSize(250)
-                ->setMargin(5)
-                ->useForegroundColor(51, 153, 255);
-        }
+        $apiKey = ($userToken !== null ? $userToken->token : null);
 
         return $this->render('index', [
             'userModel' => $userModel,
-            'apiKey' => $apiKey,
-            'qrCode' => $qrCode
+            'apiKey' => $apiKey
         ]);
     }
 

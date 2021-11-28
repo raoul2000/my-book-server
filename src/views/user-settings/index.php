@@ -28,12 +28,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="row">
             <div class="col-sm-2"><strong>Clé API</strong></div>
             <div class="col-sm-10">
-                
-                <?php if(!empty($qrCode)): ?>
-                    <?= $apiKey->token ?><br/>
-                    <img src="<?=  $qrCode->writeDataUri()?>" title=" QR code" alt="api key qr code"/>
-                    <div><em>*scannez le QR code depuis l'application<br/>
-                    pour vous connecter en un clin d'oeil</em></div>
+                <?php if(!empty($apiKey)): ?>
+                    disponible
                 <?php else: ?>
                     <em>indisponible</em>
                 <?php endif ?>
