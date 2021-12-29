@@ -42,7 +42,7 @@ php yii serve
 From the MySQL installation folder:
 - start 
 ```
-mysqld
+mysqld --console
 ```
 - stop 
 ```
