@@ -57,7 +57,7 @@ class LoginForm extends Model
             $user = $this->getUser();
 
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'mot de pase ou pseudo incorrect.');
+                $this->addError($attribute, 'mot de passe ou pseudo incorrect.');
             }
         }
     }
