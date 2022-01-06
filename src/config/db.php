@@ -1,8 +1,8 @@
 <?php
-
+// DEV
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=my_data',
+    'dsn' => 'mysql:host=localhost;dbname=my_books',
     'username' => 'root',
     'password' => '',
     'charset' => 'utf8',

@@ -8,7 +8,12 @@ const chmod = require("gulp-chmod");
 const { buildTarget, TARGET_DEV, TARGET_PROD } = require("./target-env.js");
 
 const workingDir = path.join(__dirname, "..", "..", "..");
-console.log("target = " + buildTarget);
+const pkg = JSON.parse(
+    fs.readFileSync(path.join(workingDir, "package.json"))
+);
+console.log("target  = " + buildTarget);
+console.log("version = " + pkg.version);
+
 function createBuildTs() {
     const now = new Date();
     return [
@@ -29,9 +34,7 @@ function createBuildTs() {
  */
 function updateIndex() {
     // @ts-ignore
-    var pkg = JSON.parse(
-        fs.readFileSync(path.join(workingDir, "package.json"))
-    );
+
 
     return new Promise((resolve, reject) => {
         const filepath = path.join(workingDir, "build/source/web/index.php");
@@ -86,6 +89,9 @@ function copySource() {
         [
             "src/**",
             "!src/README.md",
+            "!src/config/db*.php",
+            "!src/config/params*.php",
+            "!src/config/test*",
             "!src/LICENSE.md",
             "!src/*.yml",
             "!src/composer.*",
@@ -113,7 +119,7 @@ function createRuntimeFolders() {
 }
 
 function copyConfig(cb) {
-    if (buildTarget === TARGET_DEV) {
+    if (buildTarget === TARGET_DEV) { // default is DEV - no need to do anything
         cb();
     } else {
         return src(["../../src/config/*." + buildTarget + ".php"], {
@@ -121,16 +127,6 @@ function copyConfig(cb) {
         })
             .pipe(
                 rename((filePath) => {
-                    const toUpdateFilePath = path.join(
-                        workingDir,
-                        "build",
-                        "source",
-                        filePath.dirname,
-                        `${filePath.basename}${filePath.extname}`
-                    );
-                    console.log(`delete : ${toUpdateFilePath}`);
-                    fs.unlinkSync(toUpdateFilePath);
-
                     filePath.basename = filePath.basename.replace(/\..*$/, "");
                     console.log("copy : " + filePath.basename);
                 })
@@ -146,7 +142,7 @@ function copyConfig(cb) {
 function zipSource() {
     return src(["build/source/**"], { cwd: workingDir })
         .pipe(chmod(0o755, 0o755))
-        .pipe(zip("source.zip"))
+        .pipe(zip("source-"+ buildTarget + "-" + pkg.version + ".zip"))
         .pipe(dest("build/zip", { cwd: workingDir }));
 }
 

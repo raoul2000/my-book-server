@@ -32,7 +32,7 @@ $this->title = 'Se Connecter';
             <div class="col-sm-offset-3 col-sm-9">
                 <?= Html::submitButton('Se Connecter', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
                 <span style="margin-left:1em">
-                    <?= html::a('Mot de passe Oublié ?', ['password-reset/request']) ?>
+                    <?= html::a('J\'ai oublié mon mot de passe', ['password-reset/request']) ?>
                 </span>
             </div>
         </div>

@@ -1,15 +1,16 @@
 {
-  "name": "project",
-  "version": "0.0.1",
-  "description": "project",
+  "name": "my-books",
+  "version": "1.2020.1",
+  "description": "Manage your book list",
   "main": "index.js",
   "directories": {
     "doc": "doc"
   },
   "scripts": {
     "start-server": "php ./src/yii serve",
-    "build": "cross-env NODE_ENV=prod gulp --gulpfile ./tools/gulp/gulpfile.js",
-    "build-dev": "gulp --gulpfile ./tools/gulp/gulpfile.js"
+    "build-dev": "gulp --gulpfile ./tools/gulp/gulpfile.js",
+    "build-qa": "cross-env NODE_ENV=qa gulp --gulpfile ./tools/gulp/gulpfile.js",
+    "build-prod": "cross-env NODE_ENV=prod gulp --gulpfile ./tools/gulp/gulpfile.js"
   },
   "repository": {
     "type": "git",
