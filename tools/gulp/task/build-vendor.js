@@ -28,7 +28,7 @@ function copyComposer() {
 
 function composerInstall() {
     return new Promise((resolve, reject) => {
-        const composerPath =  path.join(workingDir, 'tools/composer');
+        const composerPath =  path.join(workingDir, 'tools/composer.phar');
 
         const composer = exec(`php ${composerPath} install --no-dev --prefer-dist`,
             {

@@ -85,7 +85,11 @@ function copySource() {
     return src(
         [
             "src/**",
+
             "!src/README.md",
+            "!src/config/db*.php",
+            "!src/config/params*.php",
+            "!src/config/test*",
             "!src/LICENSE.md",
             "!src/*.yml",
             "!src/composer.*",
@@ -128,8 +132,8 @@ function copyConfig(cb) {
                         filePath.dirname,
                         `${filePath.basename}${filePath.extname}`
                     );
-                    console.log(`delete : ${toUpdateFilePath}`);
-                    fs.unlinkSync(toUpdateFilePath);
+                    //console.log(`delete : ${toUpdateFilePath}`);
+                    //fs.unlinkSync(toUpdateFilePath);
 
                     filePath.basename = filePath.basename.replace(/\..*$/, "");
                     console.log("copy : " + filePath.basename);

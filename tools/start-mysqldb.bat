@@ -1,1 +1,1 @@
-mysqld &
+mysqld --console &
