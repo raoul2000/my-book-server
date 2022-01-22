@@ -44,14 +44,19 @@ function updateIndex() {
             if (err) {
                 reject(err);
             } else {
+
+                const yii_debug = buildTarget === TARGET_DEV
+                ? 'true'
+                : 'false';
+
                 const result = data
                     .replace(
                         "defined('YII_DEBUG') || define('YII_DEBUG', true);",
-                        "//defined('YII_DEBUG') || define('YII_DEBUG', true);"
+                        `defined('YII_DEBUG') || define('YII_DEBUG', ${yii_debug});`
                     )
                     .replace(
                         "defined('YII_ENV') || define('YII_ENV', 'dev');",
-                        "//defined('YII_ENV') || define('YII_ENV', 'dev');"
+                        `defined('YII_ENV') || define('YII_ENV', '${buildTarget}');`
                     )
                     .replace("%%VERSION%%", pkg.version)
                     .replace("%%BUILD%%", buildTs);

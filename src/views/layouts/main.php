@@ -12,6 +12,17 @@ use app\assets\AppAsset;
 
 AppAsset::register($this);
 
+if (YII_ENV !== ENV_PROD) {
+    if(YII_ENV === ENV_DEV) {
+        $bgColor = "green";
+        $versionInfo = "dev";    
+    } elseif(YII_ENV === ENV_QA) {
+        $bgColor = "blue";
+        $versionInfo = APP_BUILD_NUMBER;
+    }
+    $envAddOn = '<small class="versionAddon" style="background-color:'.$bgColor.';color:white" title="'.YII_ENV.'">' . $versionInfo . '</small>';
+}
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -27,12 +38,14 @@ AppAsset::register($this);
 </head>
 
 <body>
+    <div id="version" style="display:none"><?= APP_BUILD_NUMBER ?></div>
     <?php $this->beginBody() ?>
 
     <div class="wrap">
         <?php
         NavBar::begin([
-            'brandLabel' => '<img src="favicon.svg"/>' . Yii::$app->name . (Yii::$app->user->can('administrate') ? ' - <small>' . APP_BUILD_NUMBER . '</small>': ''),
+            //'brandLabel' => '<img src="favicon.svg"/>' . Yii::$app->name . (Yii::$app->user->can('administrate') ? ' - <small>' . APP_BUILD_NUMBER . '</small>': ''),
+            'brandLabel' => '<img src="favicon.svg"/>' . Yii::$app->name . $envAddOn,
             'brandUrl' => Yii::$app->homeUrl,
             'options' => [
                 'class' => 'navbar-fixed-top navbar-default',
