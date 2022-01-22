@@ -35,6 +35,7 @@ if (YII_ENV !== ENV_PROD) {
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+    <link rel="icon" href="favicon.svg">
 </head>
 
 <body>
