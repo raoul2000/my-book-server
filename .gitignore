@@ -6,3 +6,5 @@ build
 .clj-kondo
 .lsp
 tools/composer.phar
+test-results/
+playwright-report/

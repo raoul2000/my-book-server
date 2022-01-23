@@ -12,7 +12,7 @@ return [
          * When TRUE, user must validate account after registration (email registration).
          * Otherwise, account is immediatly active and user can login.
          */
-        'enableAccountActivation' => false,
+        'enableAccountActivation' => true,
         /**
          * URL of the app "Mes Livres" (mobile and desktop)
          */        

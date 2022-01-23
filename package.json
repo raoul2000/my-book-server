@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/raoul2000/my-books-server#readme",
   "devDependencies": {
+    "@playwright/test": "^1.18.0",
     "cross-env": "^7.0.3",
     "gulp": "^4.0.2",
     "gulp-chmod": "^3.0.0",

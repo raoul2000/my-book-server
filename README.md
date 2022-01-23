@@ -65,3 +65,25 @@ $ mysqld --console
 ```bash
 $ mysqladmin -u root shutdown
 ```
+
+
+## Tests
+
+End-to-end tests are handled by [playwright](https://playwright.dev).
+
+### Run all tests
+
+```bash
+# headless way
+$ npx playwright test
+
+# headed way 
+$ npx playwright test --headed
+```
+
+### Recard Tests
+
+```bash
+$ npx playwright codegen http://localhost:8080/
+``` 
+
