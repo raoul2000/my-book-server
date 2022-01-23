@@ -32,7 +32,8 @@ class InfoController extends Controller
     public function actionIndex()
     {
         return  [
-            'version' => APP_BUILD_NUMBER
+            'version' => APP_VERSION,
+            'build'   => APP_BUILD_NUMBER
         ];
     }
 
