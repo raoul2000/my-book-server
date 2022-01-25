@@ -37,7 +37,7 @@ return [
         /**
          * Alias for the URL to QR Codes
          */
-        'qrcodeUrlAlias' => 'http://assets.exdata.info/assets/qr-code',        
+        'qrcodeUrlAlias' => 'http://localhost:8080/files/qr-codes',        
         /**
          * Alias for the path where QR codes are stored
          */

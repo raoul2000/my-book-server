@@ -55,6 +55,21 @@ $this->params['breadcrumbs'][] = $this->title;
           <td><?= Yii::$app->params['enableVerifyCodeOnCreateAccount'] ? 'true' : 'false'?></td>
           <td>Captcha on/off</td>
         </tr>
+        <tr>
+          <th scope="row">bookAppUrl</th>
+          <td><?= Html::a(Yii::$app->params['bookAppUrl'],Yii::$app->params['bookAppUrl'], ['target' => '_blank'])?></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row">qrcodeUrl</th>
+          <td><?= Html::a(Yii::$app->params['qrcodeUrl'],Yii::$app->params['qrcodeUrl'], ['target' => '_blank'])?></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row">checkpointUrl</th>
+          <td><?= Html::a(Yii::$app->params['checkpointUrl'],Yii::$app->params['checkpointUrl'], ['target' => '_blank'])?></td>
+          <td></td>
+        </tr>
       </tbody>
     </table>
 
