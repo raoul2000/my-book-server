@@ -1,6 +1,8 @@
 <?php
 // DEV
 return [
+
+
     'app' => [
         /**
          * Name and Email of the sender of all email
@@ -31,7 +33,15 @@ return [
          * Captcha Policy settings
          */
         'enableVerifyCodeOnLogin'           => false,
-        'enableVerifyCodeOnCreateAccount'   => false
+        'enableVerifyCodeOnCreateAccount'   => false,
+        /**
+         * Alias for the URL to QR Codes
+         */
+        'qrcodeUrlAlias' => 'http://assets.exdata.info/assets/qr-code',        
+        /**
+         * Alias for the path where QR codes are stored
+         */
+        'qrcodePath'     => '@app/web/files/qr-codes',        
     ],
 
     'mailer' => [

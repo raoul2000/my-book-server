@@ -121,14 +121,16 @@ class BookTicket extends \yii\db\ActiveRecord
      */
     public function getQrCodeFilePath()
     {
-        return Yii::getAlias('@app/web/files/qr-codes/' . $this->id . '.png');
+        //return Yii::getAlias('@app/web/files/qr-codes/' . $this->id . '.png');
+        return Yii::getAlias('@qrcodePath/' . $this->id . '.png');
     }
     /**
      * @return string - URL of the QRCode
      */
     public function getQrCodeUrl()
     {
-        return Url::to('@web/files/qr-codes/' . $this->id . '.png', true);
+        //return Url::to('@web/files/qr-codes/' . $this->id . '.png', true);
+        return Url::to('@qrcodeUrl/' . $this->id . '.png', true);
     }
     private function createQrCode()
     {
