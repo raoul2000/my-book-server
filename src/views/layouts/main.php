@@ -59,6 +59,8 @@ if (YII_ENV !== ENV_PROD) {
                     ? ([
                         'label' => 'Admin',
                         'items' => [
+                            ['label' => 'Settings',      'url' => ['/admin/settings']],
+                            '<li class="divider"></li>',
                             ['label' => 'Users',         'url' => ['/admin/user']],
                             ['label' => 'User Token',    'url' => ['/admin/user-token']],
                             ['label' => 'Session',       'url' => ['/admin/session']],
