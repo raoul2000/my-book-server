@@ -6,3 +6,4 @@ build
 .clj-kondo
 .lsp
 tools/composer.phar
+assets/
