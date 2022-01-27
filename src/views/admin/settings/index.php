@@ -14,8 +14,6 @@ $this->params['breadcrumbs'][] = $this->title;
     </h1>
     <hr />
 
-
-
     <table class="table table-striped table-hover ">
       <thead>
         <tr>
@@ -24,17 +22,6 @@ $this->params['breadcrumbs'][] = $this->title;
           <th>Descr.</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <th scope="row">@qrcodeUrl</th>
-          <td><?= Yii::getAlias('@qrcodeUrl') ?></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row">@qrcodePath</th>
-          <td><?= Yii::getAlias('@qrcodePath') ?></td>
-          <td></td>
-        </tr>
         <tr>
           <th scope="row">saveBookPing</th>
           <td><?= Yii::$app->params['saveBookPing'] ? 'true' : 'false'?></td>
@@ -56,20 +43,42 @@ $this->params['breadcrumbs'][] = $this->title;
           <td>Captcha on/off</td>
         </tr>
         <tr>
+          <th scope="row">saveBookPing</th>
+          <td><?= Yii::$app->params['saveBookPing'] ? 'true' : 'false'?></td>
+          <td></td>
+        </tr>
+        <tr>
           <th scope="row">bookAppUrl</th>
           <td><?= Html::a(Yii::$app->params['bookAppUrl'],Yii::$app->params['bookAppUrl'], ['target' => '_blank'])?></td>
           <td></td>
         </tr>
         <tr>
-          <th scope="row">qrcodeUrl</th>
-          <td><?= Html::a(Yii::$app->params['qrcodeUrl'],Yii::$app->params['qrcodeUrl'], ['target' => '_blank'])?></td>
-          <td></td>
+          <th scope="row">qrcodePath (alias)</th>
+          <td>
+            <?= Yii::$app->params['qrcodePathAlias']?><br/>
+            <small><?= Yii::getAlias('@qrcodePath')?></small>
+          </td>
+          <td>
+            <?php if(! is_dir(Yii::getAlias('@qrcodePath'))):?>
+              <div class="alert alert-danger">invalid path</div>
+            <?php endif; ?>
+          </td>
         </tr>
         <tr>
           <th scope="row">checkpointUrl</th>
           <td><?= Html::a(Yii::$app->params['checkpointUrl'],Yii::$app->params['checkpointUrl'], ['target' => '_blank'])?></td>
           <td></td>
         </tr>
+        <tr>
+          <th scope="row">senderEmail</th>
+          <td><?= Yii::$app->params['senderEmail'] ?></td>
+          <td></td>
+        </tr>        
+        <tr>
+          <th scope="row">senderName</th>
+          <td><?= Yii::$app->params['senderName'] ?></td>
+          <td></td>
+        </tr>        
       </tbody>
     </table>
 

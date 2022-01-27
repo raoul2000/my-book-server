@@ -22,8 +22,6 @@ $config = require __DIR__ . '/../config/web.php';
 
 $application = new yii\web\Application($config);
 
-//Yii::setAlias('@qrcodeUrl', '@webroot/files/qr-codes');
-Yii::setAlias('@qrcodeUrl',  Yii::$app->params['qrcodeUrlAlias']);
-Yii::setAlias('@qrcodePath', Yii::$app->params['qrcodePath']);
+Yii::setAlias('@qrcodePath', Yii::$app->params['qrcodePathAlias']);
 
 $application->run();
