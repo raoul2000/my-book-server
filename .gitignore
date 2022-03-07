@@ -7,3 +7,4 @@ build
 .lsp
 tools/composer.phar
 assets/
+playwright-report/
