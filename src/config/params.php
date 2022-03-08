@@ -42,10 +42,23 @@ return [
          * Used to create alias '@qrcodePath' in 'web/index.php'
          */      
         'qrcodePathAlias'=> '@app/../assets/files/qr-codes',        
+
+        /**
+         * Parameters related to cron jobs
+         */
+        'cron' => [
+            /**
+             * API Key to perform DB backup
+             */
+            'dbBackupKey' => 'e49d8ddd-bd3e-420d-bfc8-f04cd96fa26a'
+        ]        
     ],
 
     'mailer' => [
         'class'            => 'yii\swiftmailer\Mailer',
         'useFileTransport' => true          
-    ]
+    ],
+
+
+
 ];
