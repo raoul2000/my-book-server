@@ -71,6 +71,8 @@ if (YII_ENV !== ENV_PROD) {
                             ['label' => 'User/Book',    'url' => ['/admin/user-book']],
                             ['label' => 'Book Ticket',  'url' => ['/admin/book-ticket']],
                             ['label' => 'Book Ping',    'url' => ['/admin/book-ping']],
+                            '<li class="divider"></li>',
+                            ['label' => 'DB Backup',    'url' => ['/db-manager']],
                         ]
                     ]) : '',
 

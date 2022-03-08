@@ -58,6 +58,24 @@ $config = [
         'api' => [
             'class' => 'app\modules\api\Module',
         ],
+        'db-manager' => [
+            'class' => 'bs\dbManager\Module',
+            // path to directory for the dumps
+            'path' => '@app/../backup-db',
+            // list of registerd db-components
+            'dbList' => ['db'],
+            // Flysystem adapter (optional) creocoder\flysystem\LocalFilesystem will be used as default. 
+            //'flySystemDriver' => 'creocoder\flysystem\LocalFilesystem',          
+            'as access' => [
+                'class' => 'yii\filters\AccessControl',
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['admin'],
+                    ],
+                ],
+            ],
+        ],        
     ],    
 ];
 

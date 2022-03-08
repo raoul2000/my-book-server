@@ -8,3 +8,4 @@ build
 tools/composer.phar
 assets/
 playwright-report/
+backup-db

@@ -40,8 +40,8 @@ Composer version 2.2.3 2021-12-31 12:18:53
 ```
 - install PHP dependencies with *Composer*
 ```bash
-$ cd <PROJECT_ROOT>
-$ php ../tools/composer install
+$ cd <PROJECT_ROOT>/src
+$ php ../tools/composer.phar require ....package
 ```
 
 ### Usage
@@ -49,7 +49,7 @@ $ php ../tools/composer install
 #### Web Server
 - start the Web server embbeded in PHP 
 ```bash
-$ cd ./server
+$ cd ./src
 $ php yii serve 
 # To set server port: php yii serve --port=8888
 ```
