@@ -101,9 +101,10 @@ class BookTicket extends \yii\db\ActiveRecord
                 if (BookTicket::findOne($id) === null) {
                     $this->id = $id;
                     break;
-                }
+                } // TODO: id collision should be reported (log or elsewhere)
             }
             if (!isset($this->id)) {
+                
                 throw new \Exception("failed to generate Id");
             }
         }
@@ -121,18 +122,25 @@ class BookTicket extends \yii\db\ActiveRecord
      */
     public function getQrCodeFilePath()
     {
-        return Yii::getAlias('@app/web/files/qr-codes/' . $this->id . '.png');
+        return Yii::getAlias('@qrcodePath/' . $this->id . '.png');
     }
     /**
      * @return string - URL of the QRCode
      */
     public function getQrCodeUrl()
     {
-        return Url::to('@web/files/qr-codes/' . $this->id . '.png', true);
+        return Url::to(['/account/book-qr-code', 'id' => $this->id] , true);
     }
+
+    /**
+     * Create and save the QR code image
+     * The QR code content is the URL of the ping form for this book
+     */
     private function createQrCode()
     {
-        $pingReviewUrl = Yii::$app->params['qrcodeUrl'] . "&id=" . $this->id;
+        // see also parameter 'bookPingUrl' in src\config\params.php
+        $pingReviewUrl = Url::to(['/book-ping', 'id' => $this->id], true);
+
         $qrCode = (new QrCode($pingReviewUrl))
             ->setSize(150)
             ->setMargin(5);

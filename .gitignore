@@ -6,3 +6,6 @@ build
 .clj-kondo
 .lsp
 tools/composer.phar
+assets/
+playwright-report/
+backup-db

@@ -1,6 +1,6 @@
 {
   "name": "my-books",
-  "version": "1.2020.1",
+  "version": "1.2020.2",
   "description": "Manage your book list",
   "main": "index.js",
   "directories": {

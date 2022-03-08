@@ -12,6 +12,17 @@ use app\assets\AppAsset;
 
 AppAsset::register($this);
 
+if (YII_ENV !== ENV_PROD) {
+    if(YII_ENV === ENV_DEV) {
+        $bgColor = "green";
+        $versionInfo = "dev";    
+    } elseif(YII_ENV === ENV_QA) {
+        $bgColor = "blue";
+        $versionInfo = APP_BUILD_NUMBER;
+    }
+    $envAddOn = '<small class="versionAddon" style="background-color:'.$bgColor.';color:white" title="'.YII_ENV.'">' . $versionInfo . '</small>';
+}
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -24,15 +35,18 @@ AppAsset::register($this);
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+    <link rel="icon" href="favicon.svg">
 </head>
 
 <body>
+    <div id="version" style="display:none"><?= APP_BUILD_NUMBER ?></div>
     <?php $this->beginBody() ?>
 
     <div class="wrap">
         <?php
         NavBar::begin([
-            'brandLabel' => '<img src="favicon.svg"/>' . Yii::$app->name . (Yii::$app->user->can('administrate') ? ' - <small>' . APP_BUILD_NUMBER . '</small>': ''),
+            //'brandLabel' => '<img src="favicon.svg"/>' . Yii::$app->name . (Yii::$app->user->can('administrate') ? ' - <small>' . APP_BUILD_NUMBER . '</small>': ''),
+            'brandLabel' => '<img src="favicon.svg"/>' . Yii::$app->name . $envAddOn,
             'brandUrl' => Yii::$app->homeUrl,
             'options' => [
                 'class' => 'navbar-fixed-top navbar-default',
@@ -45,6 +59,8 @@ AppAsset::register($this);
                     ? ([
                         'label' => 'Admin',
                         'items' => [
+                            ['label' => 'Settings',      'url' => ['/admin/settings']],
+                            '<li class="divider"></li>',
                             ['label' => 'Users',         'url' => ['/admin/user']],
                             ['label' => 'User Token',    'url' => ['/admin/user-token']],
                             ['label' => 'Session',       'url' => ['/admin/session']],
@@ -55,6 +71,8 @@ AppAsset::register($this);
                             ['label' => 'User/Book',    'url' => ['/admin/user-book']],
                             ['label' => 'Book Ticket',  'url' => ['/admin/book-ticket']],
                             ['label' => 'Book Ping',    'url' => ['/admin/book-ping']],
+                            '<li class="divider"></li>',
+                            ['label' => 'DB Backup',    'url' => ['/db-manager']],
                         ]
                     ]) : '',
 

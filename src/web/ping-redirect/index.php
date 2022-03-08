@@ -1,7 +1,7 @@
 <?php
 $params = require __DIR__ . '/../../config/params.php';
 
-$redirectUrl = $params['app']['qrcodeUrl'];
+$redirectUrl = $params['app']['bookPingUrl'];
 ?>
 <!DOCTYPE HTML>
 <html lang="en-US">

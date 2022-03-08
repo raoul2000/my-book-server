@@ -10,32 +10,55 @@ return [
         'saveBookPing' => true,
         /**
          * When TRUE, user must validate account after registration (email registration).
-         * Otherwise, account is immediatly active and user can login.
+         * Otherwise, account is immediately active and user can login.
          */
         'enableAccountActivation' => false,
         /**
          * URL of the app "Mes Livres" (mobile and desktop)
          */        
-        'bookAppUrl'  => 'http://localhost:3000/#/signin-key',
+        'bookAppUrl'  => 'http://localhost:3000/#/signin-key', 
         /**
-         * URL encoded in the QR-Code with suffix : '&id=BOOK_TICKET_ID'.
-         * Also used to redirect from the checkpoint Url (see '/web/ping-redirect/index.php)
-         */        
-        'qrcodeUrl'     => 'http://localhost:8080/index.php?r=book-ping',        
+         * URL of the book ping page.
+         * 
+         * Used by  the redirection defined in '/web/ping-redirect/index.php'.
+         * This URL should match the URL set in the QR code content on BookTicket creation
+         * (see src\models\BookTicket.php - createQrCode() )
+         */
+        'bookPingUrl'        => 'http://localhost:8080/index.php?r=book-ping',
         /**
          * URL of the checkpoint as it appears on the book ticket.
-         * Should point to a redirect page to qrcodeUrl (with no book_ticket_id)
+         * 
+         * This URL must point to the redirection page defined in '/web/ping-redirect/index.php'
+         * and where final URL (the book ping page) is configured in 'bookPingUrl'
          */ 
         'checkpointUrl' => 'http://localhost:8080/ping-redirect',            
         /**
          * Captcha Policy settings
          */
         'enableVerifyCodeOnLogin'           => false,
-        'enableVerifyCodeOnCreateAccount'   => false
+        'enableVerifyCodeOnCreateAccount'   => false,   
+        /**
+         * Alias for the path where QR codes image files are stored.
+         * Used to create alias '@qrcodePath' in 'web/index.php'
+         */      
+        'qrcodePathAlias'=> '@app/../assets/files/qr-codes',        
+
+        /**
+         * Parameters related to cron jobs
+         */
+        'cron' => [
+            /**
+             * API Key to perform DB backup
+             */
+            'dbBackupKey' => 'e49d8ddd-bd3e-420d-bfc8-f04cd96fa26a'
+        ]        
     ],
 
     'mailer' => [
         'class'            => 'yii\swiftmailer\Mailer',
         'useFileTransport' => true          
-    ]
+    ],
+
+
+
 ];

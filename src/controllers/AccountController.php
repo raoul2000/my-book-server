@@ -84,4 +84,23 @@ class AccountController extends \yii\web\Controller
             'activationRequired' => Yii::$app->params['enableAccountActivation']
         ]);
     }
+
+    /**
+     * Returns the QR code image for the given book id.
+     */
+    public function actionBookQrCode($id) {
+        $filePath = Yii::getAlias('@qrcodePath/' . $id . '.png');
+        $this->downloadFile($filePath);
+    }
+
+    public function downloadFile($fullpath){
+      if(!empty($fullpath)){ 
+          header("Content-type:image/png");
+          // uncomment to download
+          //header('Content-Disposition: attachment; filename="'.basename($fullpath).'"'); 
+          header('Content-Length: ' . filesize($fullpath));
+          readfile($fullpath);
+          Yii::$app->end();
+      }
+    }    
 }
