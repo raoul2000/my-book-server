@@ -1,24 +1,21 @@
 //import { unlinkSync, readFileSync } from 'fs';
 const fs = require('fs');
 
-const emailFolderPath = './src/runtime/mail';
+const emailFolderPath = './src/runtime/logs/e2e-test.log';
 
 
 const clearEmailFolder = () => {
     fs.unlinkSync(emailFolderPath);
 }
 
-const readAccountActivationToken = () => {
+const readAccountActivationToken = (username, filePath) => {
 
-    const emailFiles = fs.readdirSync(emailFolderPath);
-    if(emailFiles.length !== 1) {
-        throw new Error('single email file not found : found ' + emailFiles.length + ' file(s) instead of 1');
-    }
-    const emailFilename = emailFiles[0];
 
-    const regex = /<strong>.*token=(.*)">/s;
+
+    // example: [e2e] activation_token:user-c:RVKsL8R_losoLMV3kVBwv3AA8_3wV8JA
+    const re = new RegExp(".*\\[e2e\\] activation_token:" + username + ":(.*)");
     const fileContent = fs.readFileSync(`${emailFolderPath}/${emailFilename}`).toString();
-    const token = regex.exec(fileContent);
+    const token = re.exec(fileContent);
     if(!token) {
         throw new Error('failed to extract token from account activation email');
     }
@@ -26,7 +23,7 @@ const readAccountActivationToken = () => {
     return token[1];
 }
 
-readAccountActivationToken();
+readAccountActivationToken("user-c", emailFolderPath);
 /*
 export {
     readAccountActivationToken

@@ -8,3 +8,5 @@ build
 tools/composer.phar
 test-results/
 playwright-report/
+assets/
+backup-db/
