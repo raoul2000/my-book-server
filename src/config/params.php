@@ -9,6 +9,10 @@ return [
         'senderName'   => 'Raoul',
         'saveBookPing' => true,
         /**
+         * recipient of contact email
+         */
+        'contactEmail' => 'mes.livres@exdata.info',
+        /**
          * When TRUE, user must validate account after registration (email registration).
          * Otherwise, account is immediately active and user can login.
          */
