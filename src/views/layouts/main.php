@@ -75,7 +75,6 @@ if (YII_ENV !== ENV_PROD) {
                             ['label' => 'DB Backup',    'url' => ['/db-manager']],
                         ]
                     ]) : '',
-
                 Yii::$app->user->isGuest
                     ? (['label' => 'Créer un compte', 'url' => ['/account/create']])
                     : ['label' => 'Paramètres',  'url' => ['/user-settings']],
@@ -104,6 +103,15 @@ if (YII_ENV !== ENV_PROD) {
         </div>
     </div>
 
+    <footer class="footer">
+        <div class="container">
+            <p class="pull-left">&copy; Mes Livres <?= date('Y') ?></p>
+
+            <p class="pull-right">Un souci ? Un problème ? 
+                <?= Html::a('contactez-nous',['site/contact'])?>
+            </p>
+        </div>
+    </footer>
     <?php $this->endBody() ?>
 </body>
 

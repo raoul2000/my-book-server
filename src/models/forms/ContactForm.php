@@ -24,21 +24,23 @@ class ContactForm extends Model
     {
         return [
             // name, email, subject and body are required
-            [['name', 'email', 'subject', 'body'], 'required'],
+            [['name', 'email', 'body'], 'required'],
             // email has to be a valid email address
             ['email', 'email'],
             // verifyCode needs to be entered correctly
             ['verifyCode', 'captcha'],
         ];
     }
-
     /**
-     * @return array customized attribute labels
+     * {@inheritdoc}
      */
     public function attributeLabels()
     {
         return [
-            'verifyCode' => 'Verification Code',
+            'name' => 'Votre pseudo',
+            'email' => 'Votre Email',
+            'body' => "Votre message",
+            'verifyCode' => 'Code de Vérification',
         ];
     }
 
@@ -54,7 +56,7 @@ class ContactForm extends Model
                 ->setTo($email)
                 ->setFrom([Yii::$app->params['senderEmail'] => Yii::$app->params['senderName']])
                 ->setReplyTo([$this->email => $this->name])
-                ->setSubject($this->subject)
+                ->setSubject("contact utilisateur")
                 ->setTextBody($this->body)
                 ->send();
 
