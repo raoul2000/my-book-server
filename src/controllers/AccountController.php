@@ -38,14 +38,11 @@ class AccountController extends \yii\web\Controller
      * Create a user Account
      */
     public function actionCreate()
-    {
+    {       
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-        /* return $this->render('create-success', [
-            'activationRequired' => Yii::$app->params['enableAccountActivation'],
-            'email'              => 'bob@email.com'
-        ]); */
+
         $model = new UserRegistrationForm();
         if ($model->load(Yii::$app->request->post()) && $model->register()) {
 
