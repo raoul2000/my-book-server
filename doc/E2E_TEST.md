@@ -16,4 +16,8 @@ $ npx playwright codegen http://localhost:8080
 $ npx playwright test
 # headed browser
 $ npx playwright test --headed
+# filter tests to run
+$ npx playwright test --headed login-*
 ```
+
+Read more about [CLI options](https://playwright.dev/docs/test-cli)
