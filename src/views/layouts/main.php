@@ -108,7 +108,7 @@ if (YII_ENV !== ENV_PROD) {
             <p class="pull-left">&copy; Mes Livres <?= date('Y') ?></p>
 
             <p class="pull-right">Un souci ? Un problème ? 
-                <?= Html::a('contactez-nous',['site/contact'])?>
+                <?= Html::a('Contactez-nous',['site/contact'])?>
             </p>
         </div>
     </footer>

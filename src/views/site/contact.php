@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php else: ?>
         <p>
-            Si vous rencontrez un problème sur le site ou bien si vous avez une question, utilisez le formulaire souivant pour nous soumettre votre demande.
+            Si vous rencontrez un problème sur le site ou bien si vous avez une question, utilisez le formulaire suivant pour nous soumettre votre demande.
         </p>
 
         <div class="row">

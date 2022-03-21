@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
+## [unreleased] 
+
+### Fixed
+- Typos
+
+
 ## [1.2022.2] - 2022-03-12
 - initial release - deployed to PROD
 
