@@ -14,6 +14,9 @@ $this->params['breadcrumbs'][] = $this->title;
     </h1>
     <hr />
 
+    <h3>
+        Application
+    </h3>
     <table class="table table-striped table-hover ">
       <thead>
         <tr>
@@ -78,8 +81,34 @@ $this->params['breadcrumbs'][] = $this->title;
           <th scope="row">senderName</th>
           <td><?= Yii::$app->params['senderName'] ?></td>
           <td></td>
-        </tr>        
+        </tr>               
       </tbody>
     </table>
 
+
+    <h3>
+        Framework
+    </h3>
+
+    <table class="table table-striped table-hover ">
+      <thead>
+        <tr>
+          <th>Param. Name</th>
+          <th>value</th>
+          <th>Descr.</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr>
+          <th scope="row">session GC Probability</th>
+          <td><?= Yii::$app->session->getGCProbability()?> %</td>
+          <td></td>
+        </tr>        
+        <tr>
+          <th scope="row">session timeout</th>
+          <td><?= Yii::$app->session->getTimeout()?>sec <em>(<?= Yii::$app->session->getTimeout() / 60?>min)</em></td>
+          <td></td>
+        </tr> 
+      </tbody>
+    </table>
 </div>
