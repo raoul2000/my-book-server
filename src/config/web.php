@@ -50,7 +50,8 @@ $config = [
             'datetimeFormat' => 'php:Y-m-d H:i:00'
         ],
         'session' => [
-            'class' => 'yii\web\DbSession',
+            'class'         => 'yii\web\DbSession',
+            'gCProbability' => 50    // 50% change to perform session GC
         ],        
     ],
     'params' => $params['app'],
