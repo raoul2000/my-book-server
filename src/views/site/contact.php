@@ -30,15 +30,18 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>
 
-                    <?= $form->field($model, 'name')->textInput(['autofocus' => true, 'autocomplete' => 'off']) ?>
-
-                    <?= $form->field($model, 'email') ?>
+                    <?php if($minimalContactForm === false): ?>
+                        <?= $form->field($model, 'name' )->textInput(['autofocus' => true, 'autocomplete' => 'off']) ?>
+                        <?= $form->field($model, 'email')->textInput(['autocomplete' => 'off']) ?>
+                    <?php endif; ?>
 
                     <?= $form->field($model, 'body')->textarea(['rows' => 6]) ?>
 
-                    <?= $form->field($model, 'verifyCode')->widget(Captcha::class, [
-                        'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',
-                    ]) ?>
+                    <?php if ( $model->applyCaptcha ): ?>
+                        <?= $form->field($model, 'verifyCode')->widget(Captcha::class, [
+                            'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',
+                        ]) ?>
+                    <?php endif; ?>
 
                     <div class="form-group">
                         <?= Html::submitButton('Envoyer', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>

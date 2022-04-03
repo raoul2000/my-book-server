@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning].
 - GC probability set to 50%
 - redesign settings page
 - displays session related runtime settings in the settings page
-
+- *contact* form doesn't require fields *pseudo*, *email* and *verification code* when the user is logged-in
 
 ### Fixed
 - Typos

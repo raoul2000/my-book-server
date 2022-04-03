@@ -11,6 +11,7 @@ use app\models\forms\LoginForm;
 use app\models\forms\ContactForm;
 use app\models\UserBook;
 use app\models\UserToken;
+use app\models\User;
 use Da\QrCode\QrCode;
 
 class SiteController extends Controller
@@ -136,13 +137,28 @@ class SiteController extends Controller
     public function actionContact()
     {
         $model = new ContactForm();
+
+        if (!Yii::$app->user->isGuest) {
+            $model->applyCaptcha = false;
+            $minimalContactForm = true;
+
+            $user =  User::findOne(Yii::$app->user->id);
+            $model->email = $user->email;
+            $model->name = $user->username;
+
+        } else {
+            $model->applyCaptcha = true;
+            $minimalContactForm = false;
+        }
         
         if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['contactEmail'])) {
             Yii::$app->session->setFlash('contactFormSubmitted');
             return $this->refresh();
         }
+        
         return $this->render('contact', [
-            'model' => $model,
+            'model'              => $model,
+            'minimalContactForm' => $minimalContactForm
         ]);
     }
 
@@ -156,7 +172,7 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }*/
-    
+
     public function actionCgu()
     {
         return $this->render('cgu');
