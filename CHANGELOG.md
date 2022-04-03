@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
 ## [unreleased] 
+### Added
+- add page about CGU (condition générale d'utilisation)
+
+### Changed
+- GC probability set to 50%
+- redesign settings page
+- displays session related runtime settings in the settings page
+
 
 ### Fixed
 - Typos
