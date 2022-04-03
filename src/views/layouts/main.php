@@ -105,10 +105,12 @@ if (YII_ENV !== ENV_PROD) {
 
     <footer class="footer">
         <div class="container">
-            <p class="pull-left">&copy; Mes Livres <?= date('Y') ?></p>
-
+            <p class="pull-left">
+                &copy; Mes Livres <?= date('Y') ?>
+            </p>
             <p class="pull-right">Un souci ? Un problème ? 
-                <?= Html::a('Contactez-nous',['site/contact'])?>
+                <?= Html::a('Contactez-nous',['site/contact'])?><br/>
+                <small><?= Html::a('conditions d\'utilisation', ['site/cgu'])?></small>
             </p>
         </div>
     </footer>
