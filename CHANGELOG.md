@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning].
 ## [unreleased] 
 ### Added
 - add page about CGU (condition générale d'utilisation)
+- add field `read_at` to *UserBook* model. This field is optional and represent the date ta book has been read. 
 
 ### Changed
 - GC probability set to 50%
