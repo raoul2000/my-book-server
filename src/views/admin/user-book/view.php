@@ -21,9 +21,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
-            'data' => [
+            'data'  => [
                 'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
+                'method'  => 'post',
             ],
         ]) ?>
     </p>
@@ -35,22 +35,23 @@ $this->params['breadcrumbs'][] = $this->title;
             'user_id',
             'book_id',
             [
-                'label' => 'Read Status',
+                'label'  => 'Read Status',
                 'format' => 'raw',
-                'value' => function ($model) {
+                'value'  => function ($model) {
                     if ($model->read_status) {
                         return UserBook::getReadStatusList()[$model->read_status];
                     }
                 }
             ],
+            'read_at',
             [
-                'label' => 'Rate',
+                'label'  => 'Rate',
                 'format' => 'raw',
-                'value' => function ($model) {
+                'value'  => function ($model) {
                     if (isset($model->rate)) {
                         return  \yii2mod\rating\StarRating::widget([
-                            'name' => 'book_rate',
-                            'value' => $model->rate,
+                            'name'          => 'book_rate',
+                            'value'         => $model->rate,
                             'clientOptions' => [
                                 'readOnly' => true
                             ],

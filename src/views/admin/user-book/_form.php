@@ -21,6 +21,8 @@ use yii2mod\rating\StarRating;
     <?= $form->field($model, 'read_status')
         ->dropDownList(UserBook::getReadStatusList(), ['prompt' => 'select status ...']) ?>
 
+    <?= $form->field($model, 'read_at')->textInput(['autocomplete' => 'off']) ?>
+
     <?= $form->field($model, 'rate', ['template' => '{input}'])->widget(StarRating::class, [
         'options' => [
             'label' => 'Rate',

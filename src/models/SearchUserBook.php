@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use Yii;
+
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\UserBook;
@@ -19,6 +21,10 @@ class SearchUserBook extends UserBook
         return [
             [['id', 'user_id', 'read_status','rate'], 'integer'],
             [['book_id', 'created_at', 'updated_at'], 'safe'],
+            [
+                ['read_at'], 'date', 'format' => Yii::$app->formatter->dateFormat,   // 'php:Y-m-d H:i:s'
+                'message' => 'Format de date invalide : '. Yii::$app->formatter->dateFormat
+            ],             
         ];
     }
 
@@ -61,6 +67,7 @@ class SearchUserBook extends UserBook
             'id' => $this->id,
             'user_id' => $this->user_id,
             'read_status' => $this->read_status,
+            'read_at' => $this->read_at,
             'rate' => $this->rate,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

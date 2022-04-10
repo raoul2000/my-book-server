@@ -41,6 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         : null;
                 }
             ],
+            'read_at',
             'rate',
             'updated_at:datetime',
 
