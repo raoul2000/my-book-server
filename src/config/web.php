@@ -47,7 +47,8 @@ $config = [
         'formatter' => [
             'class' => 'yii\i18n\Formatter',
             'timeZone' => "Europe/Berlin",   // TODO: should be a user account attribute
-            'datetimeFormat' => 'php:Y-m-d H:i:00'
+            'datetimeFormat' => 'php:Y-m-d H:i:00',
+            'dateFormat' => 'php:Y-m-d'
         ],
         'session' => [
             'class'         => 'yii\web\DbSession',

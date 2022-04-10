@@ -13,6 +13,7 @@ use app\migrations\TableName;
  * @property int $user_id
  * @property string $book_id
  * @property int $read_status
+ * @property DateTime|null $read_at
  * @property int $rate
  * @property integer|null $created_at
  * @property integer|null $updated_at
@@ -66,6 +67,10 @@ class UserBook extends \yii\db\ActiveRecord
         return [
             [['user_id', 'book_id'], 'required'],
             [['user_id', 'read_status', 'rate'], 'integer'],
+            [
+                ['read_at'], 'date', 'format' => Yii::$app->formatter->dateFormat,   // 'php:Y-m-d H:i:s'
+                'message' => 'Format de date invalide : '. Yii::$app->formatter->dateFormat
+            ],             
             [['book_id'], 'string', 'max' => 40],
             [['book_id'], 'exist', 'skipOnError' => true, 'targetClass' => Book::class, 'targetAttribute' => ['book_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
@@ -82,6 +87,7 @@ class UserBook extends \yii\db\ActiveRecord
             'user_id' => 'User ID',
             'book_id' => 'Book ID',
             'read_status' => 'Read Status',
+            'read_at' => 'Read Date',
             'rate' => 'Rate',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
@@ -124,7 +130,7 @@ class UserBook extends \yii\db\ActiveRecord
 
         // remove fields that contain sensitive information
         unset($fields['id'], $fields['user_id']);
-
+        
         return $fields;
     }
 }

@@ -1,5 +1,5 @@
-@apiKey = rUaYz2HMFIBNpjDKC499NMeD2XSxOtgC
-@bookId = b7023e11-6ea4-4312-9e79-f23898ed32c1
+@apiKey = dzYL99feenXX0HP8QXmUE1uON_sq7_Aj
+@bookId = 8d9c9a1d-308f-4c9d-8880-40d210dce55a
 
 
 ### login ---------------------------------------------------
@@ -8,8 +8,8 @@ POST {{baseUrl}}?r=api/auth/login
 Content-Type: application/json
 
 {
-    "username": "bob",
-    "password": "bob"
+    "username": "user2",
+    "password": "Password1"
 }
 
 
@@ -76,7 +76,8 @@ X-Api-Key: {{apiKey}}
         "isbn" : "1224"
     },
     "userBook" : {
-        "read_status": 2
+        "read_status": 2,
+        "read_at": "2022-02-28"
     }
 }
 
@@ -103,9 +104,12 @@ Cookie: XDEBUG_SESSION=XDEBUG_ECLIPSE
         "isbn": "22222"
     },
     "userBook": {
-        "rate": 4
+        "rate": 4,
+        "read_at": "2022-10-01"
     }
 }
+
+# read_at : to reset set its value to null or "" (empty string)
 
 ### USER-BOOK - delete One
 DELETE {{baseUrl}}?r=api/user-book/delete&id={{bookId}}
