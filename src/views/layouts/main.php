@@ -75,20 +75,25 @@ if (YII_ENV !== ENV_PROD) {
                             ['label' => 'DB Backup',    'url' => ['/db-manager']],
                         ]
                     ]) : '',
+                    
                 Yii::$app->user->isGuest
-                    ? (['label' => 'Créer un compte', 'url' => ['/account/create']])
+                    ?  ''
+                    : ['label' => 'Tableau de bord',  'url' => ['/user-dashboard']],
+
+                Yii::$app->user->isGuest
+                    ? ['label' => 'Créer un compte', 'url' => ['/account/create']]
                     : ['label' => 'Paramètres',  'url' => ['/user-settings']],
 
                 Yii::$app->user->isGuest
-                    ? (['label' => 'Se connecter', 'url' => ['/site/login']])
-                    : ('<li>'
+                    ? ['label' => 'Se connecter', 'url' => ['/site/login']]
+                    : '<li>'
                         . Html::beginForm(['/site/logout'], 'post')
                         . Html::submitButton(
                             '<span class="glyphicon glyphicon-off" aria-hidden="true"></span> Se déconnecter (' . Yii::$app->user->identity->username . ')',
                             ['class' => 'btn btn-link logout']
                         )
                         . Html::endForm()
-                        . '</li>'),
+                        . '</li>',
             ],
         ]);
         NavBar::end();
