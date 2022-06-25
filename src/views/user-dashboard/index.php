@@ -14,7 +14,6 @@ if ($totalBookCount === 0) {
 <div class="site-index">
 
     <div class="jumbotron">
-
         <h1>Mes Livres</h1>
         <p class="lead">
             <?php if ($totalBookCount === 0) : ?>
@@ -25,7 +24,6 @@ if ($totalBookCount === 0) {
                 Vous avez actuellement <strong><?= $totalBookCount ?></strong> livres dans votre collection
             <?php endif; ?>
         </p>
-
     </div>
 
     <?php if(!empty($apiKey)) : ?>
@@ -44,12 +42,14 @@ if ($totalBookCount === 0) {
                     ]
                 ) ?>
             </div>
-
+            <div style="margin-top: 2em; width:50%">
+                <div class="or"> ou </div>
+            </div>
             <?php if(!empty($qrCode)): ?>                    
-                <div style="margin-top: 6em;">
+                <div style="margin-top: 2em;">
                     <div style="text-align:center;">
-                        <img src="<?=  $qrCode->writeDataUri()?>" title=" QR code" alt="qr code"/>
                         <p style="font-size:0.8em;">Scannez le QR Code pour accéder à l'application<br/>depuis un autre appareil</p>
+                        <img src="<?=  $qrCode->writeDataUri()?>" title=" QR code" alt="qr code"/>
                     </div>
                 </div>
             <?php endif ?> 
