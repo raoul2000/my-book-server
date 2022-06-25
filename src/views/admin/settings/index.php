@@ -13,7 +13,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::encode($this->title) ?>
     </h1>
     <hr />
-
+    <div class="alert alert-info">
+      <strong>Application Version : <?= APP_VERSION ?></strong>
+    </div>
     <h3>
         Application
     </h3>

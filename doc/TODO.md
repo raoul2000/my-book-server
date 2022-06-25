@@ -33,7 +33,6 @@ Access the app on a device (mobile) for the first time.
 
 
 ## Other
-- admin user should see the webapp version somewhere
 - notify user when one traveling book is signaled (ping)
 - admin should be able to change user account status
 - attribute is_traveling should be returned as boolean in REST response
@@ -57,6 +56,7 @@ Rule:
 - a book traveling CANNOT be modified : title, subtitle, author, isbn, etc ....
 
 # DONE
+- **add**: admin user should see the webapp version somewhere
 - **add**: user logged-in on the site should be able to open the app without authentication
 - **fix**: build and zip does not preserve empty folder `web/files/qr-codes`
 - **fix**: remove *foo* alias
