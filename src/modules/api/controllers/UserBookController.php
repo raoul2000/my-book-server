@@ -9,6 +9,7 @@ use yii\web\NotFoundHttpException;
 use app\models\Book;
 use app\models\UserBook;
 use yii\data\ActiveDataProvider;
+use app\components\helpers\ValidationErrorHelper;
 
 class UserBookController extends Controller
 {
@@ -64,10 +65,12 @@ class UserBookController extends Controller
                 return $userBook;
             } else {
                 $book->delete();    // rollback : delete book
-                throw new ServerErrorHttpException('Failed to create user book');
+                throw new ServerErrorHttpException('Failed to create user book : '
+                    . ValidationErrorHelper::mergeErrorMessages($userBook->getErrors()));
             }
         } else {
-            throw new ServerErrorHttpException('Failed to create book.');
+            throw new ServerErrorHttpException('Failed to create book : '
+                . ValidationErrorHelper::mergeErrorMessages($book->getErrors()));
         }
     }
 
@@ -99,7 +102,8 @@ class UserBookController extends Controller
                     $book->update();
                 };
             } else {
-                throw new ServerErrorHttpException('Failed to update book.');
+                throw new ServerErrorHttpException('Failed to update book :'
+                    . ValidationErrorHelper::mergeErrorMessages($book->getErrors()));
             }
         }
 
@@ -110,7 +114,8 @@ class UserBookController extends Controller
                     $userBook->update();
                 };
             } else {
-                throw new ServerErrorHttpException('Failed to update user-book.');
+                throw new ServerErrorHttpException('Failed to update user book : '
+                    . ValidationErrorHelper::mergeErrorMessages($userBook->getErrors()));
             }
         }
         // apply updates

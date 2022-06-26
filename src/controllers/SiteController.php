@@ -9,9 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\forms\LoginForm;
 use app\models\forms\ContactForm;
-use app\models\UserBook;
-use app\models\UserToken;
-use Da\QrCode\QrCode;
+use app\models\User;
 
 class SiteController extends Controller
 {
@@ -64,33 +62,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        if (Yii::$app->user->isGuest) {
-            return $this->render('index');
-        } else {
-            $totalBookCount = UserBook::find()
-                ->where([
-                    'user_id' => Yii::$app->user->getId()
-                ])->count();
-
-            $userToken = UserToken::findOne([
-                'user_id' => Yii::$app->user->id,
-                'type' => UserToken::TYPE_API_KEY
-            ]);
-            $apiKey = ($userToken !== null ? $userToken->token : null);
-            $qrCode = null;
-            if ($apiKey) {
-                $qrCode = (new QrCode(Yii::$app->params['bookAppUrl'] . '/' . $apiKey, ))
-                    ->setSize(250)
-                    ->setMargin(5)
-                    ->useForegroundColor(51, 122, 183);
-            }
-
-            return $this->render('index-logged', [
-                'totalBookCount' => $totalBookCount,
-                'apiKey' => $apiKey,
-                'qrCode' => $qrCode
-            ]);
-        }
+        return $this->render('index');
     }
 
     /**
@@ -106,7 +78,9 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            Yii::$app->session->setFlash('success','Vous êtes connectés à votre compte. Bienvenue !');
+            return $this->redirect(['/user-dashboard']);
+            //return $this->goBack();   // Yii::$app->user->getReturnUrl(); is = 'index.php' by default
         }
 
         $model->password = '';
@@ -136,13 +110,28 @@ class SiteController extends Controller
     public function actionContact()
     {
         $model = new ContactForm();
+
+        if (!Yii::$app->user->isGuest) {
+            $model->applyCaptcha = false;
+            $minimalContactForm = true;
+
+            $user =  User::findOne(Yii::$app->user->id);
+            $model->email = $user->email;
+            $model->name = $user->username;
+
+        } else {
+            $model->applyCaptcha = true;
+            $minimalContactForm = false;
+        }
         
         if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['contactEmail'])) {
             Yii::$app->session->setFlash('contactFormSubmitted');
             return $this->refresh();
         }
+        
         return $this->render('contact', [
-            'model' => $model,
+            'model'              => $model,
+            'minimalContactForm' => $minimalContactForm
         ]);
     }
 
@@ -151,8 +140,14 @@ class SiteController extends Controller
      *
      * @return string
      */
+    /*
     public function actionAbout()
     {
         return $this->render('about');
+    }*/
+
+    public function actionCgu()
+    {
+        return $this->render('cgu');
     }
 }

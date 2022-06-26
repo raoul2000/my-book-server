@@ -5,6 +5,7 @@ namespace app\models\forms;
 use Yii;
 use yii\base\Model;
 
+
 /**
  * ContactForm is the model behind the contact form.
  */
@@ -15,7 +16,7 @@ class ContactForm extends Model
     public $subject;
     public $body;
     public $verifyCode;
-
+    public $applyCaptcha;
 
     /**
      * @return array the validation rules.
@@ -28,7 +29,10 @@ class ContactForm extends Model
             // email has to be a valid email address
             ['email', 'email'],
             // verifyCode needs to be entered correctly
-            ['verifyCode', 'captcha'],
+            ['verifyCode', 'captcha', 'when' => function($model) {
+                return $model->applyCaptcha;
+                //return Yii::$app->user->isGuest;
+            }],
         ];
     }
     /**

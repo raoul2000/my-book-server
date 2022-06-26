@@ -167,6 +167,14 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return static::findOne(['email' => $email]);
     }
 
+    public static function findByUsernameOrEmail($usernameOrEmail)
+    {
+        return static::find()
+            ->where(['username' => $usernameOrEmail])
+            ->orWhere(['email'  => $usernameOrEmail])
+            ->one();
+    }
+
     /**
      * Validates password
      *

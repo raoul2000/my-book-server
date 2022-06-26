@@ -31,7 +31,7 @@ class LoginForm extends Model
                 'message' => 'veuillez saisir une valeur'],
             ['rememberMe', 'boolean'],
             ['password', 'validatePassword'],
-            ['verifyCode', 'captcha','when'=> function($model)  {
+            ['verifyCode', 'captcha','when'=> function()  {
                 return Yii::$app->params['enableVerifyCodeOnLogin'];
             }],
         ];
@@ -39,8 +39,8 @@ class LoginForm extends Model
     public function attributeLabels()
     {
         return [
-            'username' => 'Pseudo',
-            'password' => 'Mot de passe',
+            'username'   => 'Pseudo ou Email',
+            'password'   => 'Mot de passe',
             'verifyCode' => 'Code de Vérification',
         ];
     }
@@ -88,7 +88,7 @@ class LoginForm extends Model
     public function getUser()
     {
         if ($this->_user === false) {
-            $this->_user = User::findByUsername($this->username);
+            $this->_user = User::findByUsernameOrEmail($this->username);
         }
 
         return $this->_user;
