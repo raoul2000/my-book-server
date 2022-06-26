@@ -30,3 +30,4 @@ and this project adheres to [Semantic Versioning].
 
 <!-- Versions -->
 [1.2022.2]: https://github.com/raoul2000/my-books-server/releases/tag/1.2022.2
+[1.2022.6]: https://github.com/raoul2000/my-books-server/releases/tag/1.2022.6
